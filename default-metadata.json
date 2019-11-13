@@ -1,5 +1,5 @@
 {
-  "version": 662,
+  "version": 671,
   "tenantid": "uviproduction",
   "mobappid": 7240,
   "appName": "UVI PROD U8",
@@ -349,263 +349,263 @@
           "mapMarkers": 
           [
             {
+              "phone": "(340) 693-1160",
+              "long": "-64.975076",
+              "lat": "18.341002",
               "name": "Access and Enrollment Services, ACC",
-              "long": "-64.975076",
-              "lat": "18.341002",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1160"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Accounting, ACC",
+              "phone": "(340) 693-1430",
               "lat": "18.341002",
-              "phone": "(340) 693-1430"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
               "name": "Administration & Finance, Room No. 315",
-              "long": "-64.975076",
               "phone": "(340) 693-1400",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002"
+              "long": "-64.975076"
             },
             {
               "lat": "18.341002",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Admissions, ACC",
+              "phone": "(340) 693-1160",
               "long": "-64.975076",
-              "phone": "(340) 693-1160"
+              "name": "Admissions, ACC"
             },
             {
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1437",
               "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
               "name": "Cashier Services, ACC"
             },
             {
-              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1003",
+              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
               "lat": "18.341002"
             },
             {
-              "phone": "(340) 693-1090",
-              "long": "-64.975076",
-              "lat": "18.341002",
               "name": "Financial Aid, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1090",
               "lat": "18.341002",
-              "long": "-64.975076",
-              "name": "Human Resources, ACC",
-              "phone": "(340) 693-1410",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.975076"
             },
             {
-              "phone": "(340) 693-1000",
               "long": "-64.975076",
+              "phone": "(340) 693-1410",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002",
+              "name": "Human Resources, ACC"
+            },
+            {
+              "long": "-64.975076",
+              "lat": "18.341002",
+              "phone": "(340) 693-1000",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "President's Office, ACC"
             },
             {
               "phone": "(340) 693-1200",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Provost's Office, ACC",
               "long": "-64.975076",
+              "name": "Provost's Office, ACC",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002"
             },
             {
               "phone": "(340) 693-1057",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076",
-              "lat": "18.341002",
-              "name": "Public Relations, ACC"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Public Relations, ACC",
+              "lat": "18.341002"
             },
             {
-              "lat": "18.341002",
+              "phone": "(340) 693-1480",
+              "long": "-64.975076",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Purchasing, ACC",
-              "phone": "(340) 693-1480",
-              "long": "-64.975076"
-            },
-            {
-              "phone": "(340) 693-1151",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "name": "Registrar, ACC",
               "lat": "18.341002"
             },
             {
               "long": "-64.975076",
               "lat": "18.341002",
-              "name": "Research & Public Service",
+              "name": "Registrar, ACC",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1062"
+              "phone": "(340) 693-1151"
             },
             {
-              "lat": "18.341002",
-              "name": "Title III & Sponsored Programs",
+              "phone": "(340) 693-1062",
               "long": "-64.975076",
+              "lat": "18.341002",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Research & Public Service"
+            },
+            {
+              "name": "Title III & Sponsored Programs",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975076",
               "phone": "(340) 693-1054; (340) 693-1202"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Water Resources Research Institute (WRRI)",
               "lat": "18.341002",
+              "long": "-64.975076",
               "phone": "(340) 693-1392",
-              "long": "-64.975076"
+              "name": "Water Resources Research Institute (WRRI)"
             },
             {
+              "phone": null,
+              "name": "Athletic Fields",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.97061",
-              "phone": null,
-              "lat": "18.339663",
-              "name": "Athletic Fields"
+              "lat": "18.339663"
             },
             {
-              "phone": null,
               "long": "-64.972253",
-              "lat": "18.33984",
               "name": "Ball Fields",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "18.33984"
             },
             {
-              "long": "-64.971144",
               "name": "Basketball Courts",
-              "lat": "18.344103",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.971144",
+              "lat": "18.344103"
             },
             {
-              "phone": null,
-              "long": "-64.976263",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Beach Showers & Restrooms",
+              "phone": null,
+              "long": "-64.976263",
               "lat": "18.342838"
             },
             {
+              "phone": "(340) 693-1561",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.342573",
-              "name": "Bookstore",
-              "phone": "(340) 693-1561",
-              "long": "-64.972328"
+              "long": "-64.972328",
+              "name": "Bookstore"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Brewers Bay Beach",
+              "phone": null,
               "lat": "18.343094",
-              "phone": null,
-              "long": "-64.976613"
+              "long": "-64.976613",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": null,
-              "name": "Business, Chase Auditorium",
-              "lat": "18.34385",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.973079"
-            },
-            {
               "long": "-64.973079",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "18.34385",
+              "name": "Business, Chase Auditorium"
+            },
+            {
               "phone": "(340) 693-1300",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973079",
               "lat": "18.34385",
               "name": "Business, School of Business"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
+              "lat": "18.343789",
               "long": "-64.968683",
-              "name": "Campus East Housing",
-              "lat": "18.343789"
+              "name": "Campus East Housing"
             },
             {
+              "phone": "(340) 693-1628",
               "name": "Caribbean Green Technology Center",
               "long": "-64.969183",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1628",
               "lat": "18.343158"
             },
             {
-              "name": "CELL-Community Engagement and Lifelong Learning Center",
+              "lat": "18.343339",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.968472",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1100",
-              "lat": "18.343339"
+              "name": "CELL-Community Engagement and Lifelong Learning Center",
+              "phone": "(340) 693-1100"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.339413",
-              "long": "-64.974293",
+              "name": "Center for Advising & Tutorial Services",
               "phone": null,
-              "name": "Center for Advising & Tutorial Services"
-            },
-            {
-              "phone": "(340) 693-1583",
-              "long": "-64.974293",
-              "lat": "18.339413",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for Student Success (CBA)"
-            },
-            {
               "long": "-64.974293",
-              "phone": null,
-              "name": "Little Theatre, CAB",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.339413"
             },
             {
-              "name": "University Bound (CBA)",
               "lat": "18.339413",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.974293",
-              "phone": "(340) 693-1130"
+              "name": "Center for Student Success (CBA)",
+              "phone": "(340) 693-1583",
+              "long": "-64.974293"
             },
             {
-              "long": "-64.974293",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Little Theatre, CAB",
+              "lat": "18.339413",
+              "phone": null,
+              "long": "-64.974293"
+            },
+            {
+              "lat": "18.339413",
+              "long": "-64.974293",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1130",
+              "name": "University Bound (CBA)"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "long": "-64.974293",
               "name": "Classroom Administration Building",
               "lat": "18.339413"
             },
             {
               "long": "-64.969183",
-              "name": "CMES Annex",
-              "lat": "18.343158",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
+              "name": "CMES Annex",
+              "phone": null,
+              "lat": "18.343158"
             },
             {
-              "long": "-64.971589",
               "name": "Cooperative Extension Service",
-              "phone": "(340) 693-1080",
               "lat": "18.342438",
+              "phone": "(340) 693-1080",
+              "long": "-64.971589",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.3431",
               "long": "-64.972157",
               "name": "Dining Pavilion - Cafeteria, Food Services",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1139"
+              "phone": "(340) 693-1139",
+              "lat": "18.3431"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.342967",
               "long": "-64.968359",
               "name": "Eastern Caribbean Center (ECC), Eastern Caribbean Center (ECC)",
-              "phone": "(340) 693-1020",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": "(340) 693-1020"
             },
             {
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.968499",
               "phone": "(340) 693-1422",
-              "lat": "18.343436",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)"
+              "lat": "18.343436"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
@@ -615,291 +615,291 @@
               "phone": null
             },
             {
-              "name": "Faculty & Staff Housing",
-              "long": "-64.97588",
               "lat": "18.340998",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Faculty & Staff Housing",
+              "long": "-64.97588",
               "phone": null
             },
             {
               "long": "-64.969183",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "GeoCAS Institute",
+              "phone": "(340) 693-1647",
               "lat": "18.343158",
-              "phone": "(340) 693-1647"
+              "name": "GeoCAS Institute"
             },
             {
-              "long": "-64.973043",
               "lat": "18.342041",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973043",
               "phone": "(340) 693-1124",
-              "name": "Health Services Center, Health Services"
+              "name": "Health Services Center, Health Services",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "long": "-64.969852",
+              "phone": null,
+              "lat": "18.341193",
               "name": "Herman E. Moore Golf Course",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "lat": "18.341193"
+              "long": "-64.969852"
             },
             {
               "name": "Humanities",
-              "long": "-64.973863",
               "lat": "18.339658",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973863",
+              "phone": null
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "lat": "18.339975",
               "long": "-64.971164",
-              "phone": null,
-              "name": "Info Kiosk",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Info Kiosk"
             },
             {
               "lat": "18.340828",
-              "name": "Institutional Advancement",
               "phone": "(340) 693-1040",
-              "long": "-64.975806",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Institutional Advancement",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975806"
             },
             {
-              "lat": "18.340045",
               "long": "-64.976642",
               "name": "MMSC- Center for Marine & Environmental Studies (CMES)",
-              "phone": "(340) 693-1380",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.340045",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1380"
             },
             {
-              "lat": "18.342594",
-              "long": "-64.968913",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.968913",
               "phone": "(340) 693-1000",
+              "lat": "18.342594",
               "name": "Medical Building, School of Medicine"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
+              "name": "Music Center",
               "long": "-64.972544",
-              "lat": "18.341857",
-              "name": "Music Center"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341857"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.953474",
+              "name": "Nisky Shopping Center- (SBDC)",
               "lat": "18.336559",
+              "long": "-64.953474",
               "phone": "(340) 776-3206",
-              "name": "Nisky Shopping Center- (SBDC)"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.343563",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1290",
               "name": "Nursing, School of Nursing",
-              "long": "-64.973097"
+              "long": "-64.973097",
+              "lat": "18.343563",
+              "phone": "(340) 693-1290",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "name": "Penha House, ATM Cash Machine",
               "phone": null,
-              "long": "-64.971515",
+              "lat": "18.341548",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341548"
+              "long": "-64.971515"
             },
             {
               "lat": "18.341572",
-              "phone": "(340) 693-1530",
               "name": "Penha House, Security",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.971549",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": "(340) 693-1530"
             },
             {
-              "phone": "(340) 643-1670",
-              "name": "Penha House, WUVI Radio Station",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341548",
               "long": "-64.971515",
-              "lat": "18.341548"
+              "name": "Penha House, WUVI Radio Station",
+              "phone": "(340) 643-1670",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "lat": "18.341348",
+              "name": "Physical Plant",
               "long": "-64.967624",
               "phone": "(340) 693-1510",
-              "name": "Physical Plant",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "long": "-64.973027",
+              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
               "lat": "18.342906",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
-              "phone": "(340) 693-1178"
+              "phone": "(340) 693-1178",
+              "long": "-64.973027"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972841",
-              "phone": "(340) 693-1466",
               "lat": "18.344026",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1466",
               "name": "Ralph M. Paiewonsky Library, IT Services"
             },
             {
-              "phone": "(340) 693-1010",
+              "long": "-64.972841",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Ralph M. Paiewonsky Library, I R&P",
-              "long": "-64.972841",
+              "phone": "(340) 693-1010",
               "lat": "18.344026"
             },
             {
+              "long": "-64.972841",
+              "name": "Ralph M. Paiewonsky Library, Library",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1367",
-              "lat": "18.344026",
-              "name": "Ralph M. Paiewonsky Library, Library",
-              "long": "-64.972841"
+              "lat": "18.344026"
             },
             {
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.343847",
               "name": "Recreation Center",
-              "long": "-64.971202"
-            },
-            {
-              "name": "Reichhold Center for the Arts",
-              "lat": "18.345035",
-              "long": "-64.973724",
-              "phone": "(340) 693-1550",
+              "long": "-64.971202",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.343399",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Reichhold Center for the Arts",
+              "phone": "(340) 693-1550",
+              "long": "-64.973724",
+              "lat": "18.345035"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343399",
               "phone": "(340) 693-1062",
-              "name": "Research and Public Service",
-              "long": "-64.968547"
+              "long": "-64.968547",
+              "name": "Research and Public Service"
             },
             {
               "long": "-64.971744",
               "name": "Residence Hall - East Hall",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "lat": "18.343563",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.343563"
             },
             {
-              "phone": null,
-              "name": "Residence Hall - Middle Hall",
               "long": "-64.972378",
               "lat": "18.343524",
+              "phone": null,
+              "name": "Residence Hall - Middle Hall",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": null,
               "name": "Residence Hall - North Hall",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.972236",
               "lat": "18.344219",
-              "long": "-64.972236"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342837",
-              "long": "-64.972189",
-              "name": "Residence Hall - South Hall",
               "phone": null
             },
             {
+              "long": "-64.972189",
+              "lat": "18.342837",
+              "name": "Residence Hall - South Hall",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null
+            },
+            {
+              "lat": "18.343243",
               "phone": null,
               "name": "Residence Hall - West Hall",
-              "lat": "18.343243",
               "long": "-64.973581",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "long": "-64.972145",
-              "lat": "18.342",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1136",
-              "name": "Roupp House, Counseling & Career Services"
+              "lat": "18.342",
+              "name": "Roupp House, Counseling & Career Services",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "name": "Roupp House, Housing Services",
               "phone": "(340) 693-1110",
-              "lat": "18.342",
               "long": "-64.972145",
+              "lat": "18.342",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.343553",
               "name": "Science & Math, College of Science & Mathematics",
               "long": "-64.972871",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1230"
-            },
-            {
-              "lat": "18.3426381",
-              "phone": "(340) 693-1260",
-              "long": "-64.9735158",
-              "name": "Social Sciences, College of Liberal Arts and Social Sciences",
+              "phone": "(340) 693-1230",
+              "lat": "18.343553",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.342642",
+              "phone": "(340) 693-1260",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Social Sciences, Social Sciences",
+              "long": "-64.9735158",
+              "lat": "18.3426381",
+              "name": "Social Sciences, College of Liberal Arts and Social Sciences"
+            },
+            {
               "phone": null,
+              "name": "Social Sciences, Social Sciences",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.342642",
               "long": "-64.973531"
             },
             {
-              "name": "Sports & Fitness Center",
-              "long": "-64.972962",
+              "phone": null,
               "lat": "18.340004",
+              "long": "-64.972962",
+              "name": "Sports & Fitness Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "18.343517",
+              "long": "-64.971879",
+              "name": "St. Thomas Campus Dorms",
               "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "long": "-64.971879",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "lat": "18.343517",
-              "name": "St. Thomas Campus Dorms"
-            },
-            {
               "name": "Student Activities Center",
-              "phone": "(340) 693-1640",
               "lat": "18.343853",
               "long": "-64.972072",
+              "phone": "(340) 693-1640"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341981",
+              "name": "Student Laundry",
+              "phone": null,
+              "long": "-64.972995"
+            },
+            {
+              "lat": "18.343854",
+              "phone": "(340) 693-1320",
+              "name": "Teachers Education, School of Education",
+              "long": "-64.972807",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Teachers Education, VIUCEDD",
+              "long": "-64.972807",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343854",
+              "phone": "(340) 693-1322"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "long": "-64.972995",
-              "name": "Student Laundry",
-              "lat": "18.341981"
-            },
-            {
-              "long": "-64.972807",
-              "phone": "(340) 693-1320",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343854",
-              "name": "Teachers Education, School of Education"
-            },
-            {
-              "phone": "(340) 693-1322",
-              "name": "Teachers Education, VIUCEDD",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343854",
-              "long": "-64.972807"
-            },
-            {
               "name": "Tennis Courts",
               "lat": "18.343802",
-              "phone": null,
-              "long": "-64.97018",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.97018"
             },
             {
-              "lat": "18.339411",
-              "phone": "(340) 693-1075",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Wellness Center",
-              "long": "-64.973453"
+              "lat": "18.339411",
+              "long": "-64.973453",
+              "phone": "(340) 693-1075"
             }
           ],
           "mapcenter": "18.343563,-64.971744",
@@ -1296,7 +1296,7 @@
         {
           "pageid": "SignIn279",
           "pageTemplate": "<div><\/div>",
-          "pageprocessor": "function pageprocessorSignIn279(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n  try {\r\n    $rootScope.back = function() {\r\n      if ($.jStorage.get('tenantInfo').guestApp) {\r\n        $location.path(\"/app/Menu82/Menu82\");\r\n      } else {\r\n        // this should be rechecked if menu page should be displayed when guestapps are disabled\r\n        $location.path(\"/app/Menu82/Menu82\");\r\n      }\r\n    }\r\n\r\n    //if (!$.jStorage.get('tenantInfo').guestApp) {\r\n    //  $(\".backButtonArrow\").hide();\r\n    //}\r\n\r\n    $scope.termsServices = pagedef.termServices;\r\n    $scope.policy = pagedef.policy;\r\n    $scope.forgotPass = pagedef.forgotPass;\r\n\r\n    $scope.username = '';\r\n    $scope.password = '';\r\n    var authSuccess = function(data) {\r\n      if (!data.access_token) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Unable to login, please try again', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Unable to login, please try again')\r\n        }\r\n        return;\r\n      }\r\n\r\n\r\n      if (data.status && data.status == 500) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Invalid credentials', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Invalid credentials')\r\n        }\r\n        return;\r\n      }\r\n\r\n      $.jStorage.set(\"unifyedusername\", $scope.username);\r\n      $.jStorage.set(\"unifyedpassword\", $scope.password);\r\n\r\n      $rootScope.user['accessToken'] = data.access_token;\r\n      $rootScope.user['refreshToken'] = data.refresh_token;\r\n      $rootScope.user['providerData'] = data.access_token;\r\n      $rootScope.erpticket = {};\r\n      $rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n      $rootScope.loggedIn = true;\r\n      if ($.jStorage.get(\"homeScreen\") == null || $.jStorage.get(\"homeScreen\") == undefined) {\r\n        $.jStorage.set(\"homeScreen\", \"whatsup\");\r\n        $rootScope.homeScreen = \"whatsup\";\r\n      } else {\r\n        $rootScope.homeScreen = $.jStorage.get(\"homeScreen\");\r\n      }\r\n\r\n\r\n      // Draw dock icons\r\n      //angular.forEach($rootScope.appgroups, function(value, key) {\r\n      //  angular.forEach(value.apps, function(val1, key1) {\r\n      //  if (val1.displayname == \"WhatsUp\") {\r\n      //  val1.showInDock = ($rootScope.homeScreen == \"whatsup\") ? true : false;\r\n      // } else if (val1.displayname == \"QuickLaunch\") {\r\n      // val1.showInDock = val1.showInDock = ($rootScope.homeScreen == \"ql\") ? true : false;\r\n      // }\r\n      // });\r\n      // }); \r\n\r\n      // Redraw the dock icons\r\n      var data2 = '<div ng-repeat=\"ag in appgroups\">' +\r\n        '<div ng-repeat=\"app in ag.apps\" style=\"float:left;width:20%;text-align:center;\" ng-show=\"app.showInDock\" class=\"div{{app.displayname}}\">' +\r\n        '<a ng-if=\"app.displayname != \\'Notifications\\'\" aria-label=\"{{app.displayname}}\" href=\"#/app/{{app.name}}/{{app.name}}\" class=\"divA{{app.displayname}}\" style=\"width: 100%;display: block;\">' +\r\n        '<img style=\"width:20px;\" src=\"{{app.logo}}\" alt=\"\">' +\r\n        '<\/a><\/div>' +\r\n        '<div class=\"clearfix\"><\/div>'\r\n      '<\/div>';\r\n      //var htmlView = $compile($(data2))($scope);\r\n\r\n      //$(\"#footerContentContainer\").html(htmlView);\r\n\r\n      var options = {\r\n        method: 'GET',\r\n        url: $rootScope.user.oauthUserInfoUrl,\r\n        qs: {\r\n          schema: 'openid'\r\n        },\r\n        headers: {\r\n          Authorization: 'Bearer ' + $rootScope.user.accessToken\r\n        }\r\n      };\r\n\r\n      $rootScope.callOpenAPI(options, function(err, userInfo) {\r\n\r\n        if (err) {\r\n          $.unblockUI();\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Unable to login, please try again', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Unable to login, please try again')\r\n          }\r\n          return;\r\n        }\r\n\r\n\r\n        var subVal = userInfo.sub;\r\n        $rootScope.username = \"\";\r\n        if (subVal) {\r\n          var userSplit = subVal.split('/');\r\n          $rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n          console.log(\"user sub= \" + $rootScope.username);\r\n        }\r\n\r\n        $rootScope.password = $scope.password;\r\n\r\n        $.jStorage.set(\"userSub\", userInfo.sub);\r\n\r\n        $rootScope.user['email'] = userInfo.email;\r\n        $rootScope.user['firstName'] = userInfo.first_name || userInfo.given_name;\r\n        $rootScope.user['lastName'] = userInfo.last_name || userInfo.family_name;\r\n        try {\r\n          // alert(userInfo.groups)\r\n          if (typeof userInfo.groups == \"string\") {\r\n            if (userInfo.groups) {\r\n              userInfo.groups = userInfo.groups.replace(/cn=/g, 'CN=');\r\n            }\r\n            $rootScope.user.role = userInfo.groups.match(/(?:CN=)(\\w+)-*[^,]*(\\s)*(\\w+)/g).toString().replace(/CN=/g, \"\").split(\",\");\r\n          } else if (typeof userInfo.groups == \"object\") {\r\n            $rootScope.user.role = []\r\n            $.each(userInfo.groups, function(key, value) {\r\n              let groupVal = value;\r\n              if (groupVal) groupVal = groupVal.replace(/cn=/g, 'CN=');\r\n              $rootScope.user.role.concat(groupVal.match(/(?:CN=)(\\w+)-*[^,]*(\\s)*(\\w+)/g).toString().replace(/CN=/g, \"\").split(\",\"))\r\n            });\r\n          } else {\r\n            $rootScope.user.role = []\r\n            console.log(\"Error: The user has no roles !\");\r\n          }\r\n\r\n        } catch (ex) {\r\n          $rootScope.user.role = [];\r\n          console.log(\"Error while fetching roles from QL groups:\");\r\n          console.log(ex);\r\n        }\r\n\r\n        $rootScope.isUserTenantAdmin = $rootScope.user.admins.indexOf($rootScope.user['email']) !== -1;\r\n\r\n        var url = '/unifydidentity/user/search/findOneByEmail?email=' + userInfo.email;\r\n\r\n        $rootScope.callAPI(url, 'GET', {}, function(res) {\r\n\r\n\r\n          if (!res || !res.data) {\r\n            $rootScope.firstTimeUser = true;\r\n          } else {\r\n            var data = res.data;\r\n            $rootScope.firstTimeUser = false;\r\n            $rootScope.user['id'] = data['id'];\r\n            $rootScope.user['profileBackground'] = data['profileBackground'];\r\n            $rootScope.user['firstName'] = data['firstName'];\r\n            $rootScope.user['lastName'] = data['lastName'];\r\n            $rootScope.user['profileImage'] = data['profileImage'];\r\n            $rootScope.user['role'] = data['role'];\r\n            $rootScope.user['tenant'] = data['tenant'];\r\n            $rootScope.user['email'] = data['email'];\r\n            $rootScope.user['phone'] = data['phone'];\r\n            $rootScope.user['countryCode'] = data['countryCode'];\r\n            $rootScope.user['provider'] = data['provider'];\r\n            $rootScope.user['gender'] = data['gender'];\r\n            $rootScope.user['devices'] = data['devices'];\r\n            $rootScope.user['areaOfInterest'] = data['areaOfInterest'] || [];\r\n            $rootScope.tenantUrl = $rootScope.user['domain'];\r\n            //$rootScope.firstTimeUser = $rootScope.user['areaOfInterest'].length === 0 || !$rootScope.user['gender'] || !$rootScope.user['phone'];\r\n\r\n            $.jStorage.set(\"user\", $rootScope.user);\r\n\r\n            /******************************************************************************************************************************************/\r\n          }\r\n\r\n\r\n          /*var url = \"/unifydplatform/internal/isTenantAdmin?tenantid=\"+$rootScope.user['tenant']+\"&email=\"+$rootScope.user['email'];\r\n          $rootScope.callAPI(url, 'GET', {}, function(res) {\r\n            $rootScope.isUserTenantAdmin = res.data;\r\n            $rootScope.user.isUserTenantAdmin = res.data;\r\n            $.jStorage.set(\"user\", $rootScope.user);\r\n          });*/\r\n\r\n          try {\r\n            if (window.device) {\r\n              var push = PushNotification.init({\r\n                android: {\r\n                  senderID: \"1012473507211\"\r\n                },\r\n                browser: {\r\n                  pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n                },\r\n                ios: {\r\n                  alert: \"true\",\r\n                  badge: \"true\",\r\n                  sound: \"true\"\r\n                },\r\n                windows: {}\r\n              });\r\n\r\n              push.on('registration', function(res) {\r\n                console.log('res----', JSON.stringify(res));\r\n                var deviceId = res.registrationId;\r\n                /* Using array filter method to check if device is already registered */\r\n                if ($rootScope.user['devices']) {\r\n                  var checkDeviceIDs = $rootScope.user['devices'].filter(function(val) {\r\n                    return val.id == deviceId;\r\n                  }, deviceId);\r\n\r\n                  if (checkDeviceIDs.length == 0) {\r\n                    /* Add the devices to user collection */\r\n                    var url = '/unifydidentity/user/addDevice';\r\n                    var deviceData = {\r\n                      \"email\": $rootScope.user['email'],\r\n                      \"type\": device.platform,\r\n                      \"deviceId\": deviceId\r\n                    }\r\n                    $rootScope.callAPI(url, 'PUT', deviceData, function(res) {\r\n                      $rootScope.user['devices'] = res.data['devices'];\r\n                      $.jStorage.set(\"user\", $rootScope.user);\r\n                    });\r\n                  }\r\n                } else {\r\n                  var url = '/unifydidentity/user/addDevice';\r\n                  var deviceData = {\r\n                    \"email\": $rootScope.user['email'],\r\n                    \"type\": device.platform,\r\n                    \"deviceId\": deviceId\r\n                  }\r\n                  $rootScope.callAPI(url, 'PUT', deviceData, function(res) {\r\n                    $rootScope.user['devices'] = res.data['devices'];\r\n                    $.jStorage.set(\"user\", $rootScope.user);\r\n                  });\r\n                }\r\n              });\r\n              $rootScope.inAppNotificationHandler(push);\r\n            }\r\n          } catch (e) {\r\n            alert(e)\r\n          }\r\n          /* Getting Device ID Ends*/\r\n          /*\r\n                              /!* Checking if user has set security questions or not *!/\r\n                              var tenantID = $rootScope.user.qlId;\r\n                              //var uName = $rootScope.user.email.split(\"@\")[0]\r\n                              var uName = $rootScope.username;\r\n                              var apiUrl = \"https://pwms.quicklaunchsso.com/api/open/validate?tenantId=\" + tenantID + \"&userName=\" + uName;\r\n                              try {\r\n                                  $http.get(apiUrl).then(function (resp) {\r\n\r\n                                      $.unblockUI();\r\n\r\n                                      if (resp.data.accountValidationFailed === true && resp.data.isMandatory === true) {\r\n                                          $.jStorage.set('setSecurityQuestion', true);\r\n                                      } else {\r\n                                          $.jStorage.set('setSecurityQuestion', false);\r\n                                      }\r\n\r\n                                      /!* End of checking if user has set security questions or not *!/\r\n\r\n                                      /!* redirecting user to home screen after registering the device *!/\r\n\r\n                                      if ($.jStorage.get('setSecurityQuestion') === true) {\r\n                                          $location.path(\"/app/SignIn279/SignIn279Page2\");\r\n                                      } else {\r\n                                          $location.path(\"/app/Settings2/Settings2Page9\");\r\n                                      }\r\n                                  }, function (err) {\r\n                                      alert('Error' +JSON.stringify(err));\r\n                                  });\r\n                              } catch (e) {\r\n                                  alert(e);\r\n                              }*/\r\n          $location.path(\"/app/Settings2/Settings2Page9\");\r\n        });\r\n      });\r\n    };\r\n\r\n    var authFailure = function(data) {\r\n      $.unblockUI();\r\n      $rootScope.loggedIn = false;\r\n      if (window.device) {\r\n        navigator.notification.alert(\r\n          'Unable to login, please try again', // message\r\n          null, // callback\r\n          'Error', // title\r\n          'OK' // buttonName\r\n        );\r\n      } else {\r\n        alert('Unable to login, please try again')\r\n      }\r\n    }\r\n\r\n\r\n    setTimeout(function() {\r\n      try {\r\n        var data1 = $compile($(pagedef.datatemplate))($scope);\r\n        $(\"#appContent\").html(data1);\r\n\r\n        $rootScope.$apply();\r\n\r\n        $(\".app-body\").addClass(\"slideInDown\");\r\n        $(\".app-body\").addClass(\"animated\");\r\n\r\n        //if (!$rootScope.user) {\r\n        if (true) {\r\n          $.blockUI();\r\n          $rootScope.user = {};\r\n          console.log($rootScope.environment);\r\n\r\n          //if (window.device) {\r\n          switch ($rootScope.environment) {\r\n            case 'dev':\r\n              {\r\n                var url = ('https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n            case 'stage':\r\n              {\r\n                var url = ('https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n            case 'prod':\r\n              {\r\n                var url = ('https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n          }\r\n          /*} else {\r\n            $.unblockUI();\r\n            var url = ('https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n          }*/\r\n\r\n          var req = {\r\n            headers: {\r\n              'Content-Type': 'application/json',\r\n              'Accept': 'application/json',\r\n              'X-TENANT-ID': ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant)\r\n            },\r\n            url: url,\r\n            method: 'GET'\r\n          };\r\n          $http(req).then(function successCallback(res) {\r\n            $.unblockUI();\r\n            var data = res['data'];\r\n            $rootScope.user.tenant = data['tenantid'];\r\n\r\n            /* Only for testing authentication on container app */\r\n            //$rootScope.user.tenantDummy = 'QueensCollege';\r\n            /* End for testing authentication on container app */\r\n\r\n            $rootScope.user.tenantdomain = data['idpTenantDomain'];\r\n            $rootScope.GatewayUrl = 'https://' + data['domain'] + data['gatewaypath'];\r\n            $rootScope.user.domain = data['domain'];\r\n            $rootScope.user.gatewaypath = data['gatewaypath'];\r\n            $rootScope.user.admins = data['admins'] || [];\r\n            $rootScope.user.oauthUserInfoUrl = data['oauthUserInfoUrl'];\r\n            $rootScope.user.products = data['products'];\r\n            $rootScope.user.qlId = data['qlTenantid'];\r\n            $rootScope.user.siteId = data['siteId'];\r\n          }, function errorCallback(res) {\r\n\r\n          });\r\n        } else {\r\n          //alert(\"else\");\r\n        }\r\n      } catch (e) {\r\n        //alert(e)\r\n      }\r\n    }, 200);\r\n\r\n    $scope.openSignUp = function() {\r\n      $location.path(\"/app/IIITDMobile/IIITDMobile\");\r\n    };\r\n\r\n    $scope.openForgotPassword = function() {\r\n      $location.path(\"/app/ForgotPassword2/ForgotPassword2\");\r\n    };\r\n\r\n    $scope.byPassLogin = function() {\r\n\r\n      if ($scope.username == '') {\r\n\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Missing Email Id', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Missing Email Id')\r\n        }\r\n\r\n        return;\r\n      }\r\n      if ($scope.password == '') {\r\n\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Missing password', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Missing password')\r\n        }\r\n\r\n        return;\r\n      }\r\n      if ($scope.username.indexOf('@') !== -1) {\r\n        if ($scope.username.split('@')[1] !== $rootScope.user.tenantdomain) {\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Invalid user domain', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Invalid user domain')\r\n          }\r\n          return;\r\n        }\r\n      } else {\r\n        $scope.username = $scope.username + '@' + $rootScope.user.tenantdomain;\r\n      }\r\n\r\n      setTimeout(function() {\r\n        $.blockUI();\r\n        window['authFunction']($scope.username, $scope.password, $http, $rootScope, authSuccess, authFailure)\r\n      }, 500);\r\n\r\n    };\r\n\r\n\r\n    $scope.openUrl = function(url) {\r\n      window.open(url, '_blank');\r\n    }\r\n\r\n    $scope.$on(\"$destroy\", function() {\r\n      $(\".backButtonArrow\").show();\r\n    });\r\n\r\n    $scope.openForgotPass = function() {\r\n      if ($scope.forgotPass) {\r\n        window.open($scope.forgotPass, '_blank');\r\n      } else {\r\n        window.open('https://pwms.quicklaunchsso.com/api/open/showOpenChangePassword?tenantDomain=' + $rootScope.user.tenantdomain, '_blank');\r\n      }\r\n    }\r\n\r\n  } catch (e) {\r\n    alert(e)\r\n  }\r\n\r\n}",
+          "pageprocessor": "function pageprocessorSignIn279(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n  try {\r\n    $rootScope.back = function() {\r\n      if ($.jStorage.get('tenantInfo').guestApp) {\r\n        $location.path(\"/app/Menu82/Menu82\");\r\n      } else {\r\n        // this should be rechecked if menu page should be displayed when guestapps are disabled\r\n        $location.path(\"/app/Menu82/Menu82\");\r\n      }\r\n    }\r\n\r\n    //if (!$.jStorage.get('tenantInfo').guestApp) {\r\n    //  $(\".backButtonArrow\").hide();\r\n    //}\r\n\r\n    $scope.termsServices = pagedef.termServices;\r\n    $scope.policy = pagedef.policy;\r\n    $scope.forgotPass = pagedef.forgotPass;\r\n\r\n    $scope.username = '';\r\n    $scope.password = '';\r\n    var authSuccess = function(data) {\r\n      if (!data.access_token) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Unable to login, please try again', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Unable to login, please try again')\r\n        }\r\n        return;\r\n      }\r\n\r\n\r\n      if (data.status && data.status == 500) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Invalid credentials', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Invalid credentials')\r\n        }\r\n        return;\r\n      }\r\n\r\n      $.jStorage.set(\"unifyedusername\", $scope.username);\r\n      $.jStorage.set(\"unifyedpassword\", $scope.password);\r\n\r\n      $rootScope.user['accessToken'] = data.access_token;\r\n      $rootScope.user['refreshToken'] = data.refresh_token;\r\n      $rootScope.user['providerData'] = data.access_token;\r\n      $rootScope.erpticket = {};\r\n      $rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n      $rootScope.loggedIn = true;\r\n      if ($.jStorage.get(\"homeScreen\") == null || $.jStorage.get(\"homeScreen\") == undefined) {\r\n        $.jStorage.set(\"homeScreen\", \"whatsup\");\r\n        $rootScope.homeScreen = \"whatsup\";\r\n      } else {\r\n        $rootScope.homeScreen = $.jStorage.get(\"homeScreen\");\r\n      }\r\n\r\n\r\n      // Draw dock icons\r\n      //angular.forEach($rootScope.appgroups, function(value, key) {\r\n      //  angular.forEach(value.apps, function(val1, key1) {\r\n      //  if (val1.displayname == \"WhatsUp\") {\r\n      //  val1.showInDock = ($rootScope.homeScreen == \"whatsup\") ? true : false;\r\n      // } else if (val1.displayname == \"QuickLaunch\") {\r\n      // val1.showInDock = val1.showInDock = ($rootScope.homeScreen == \"ql\") ? true : false;\r\n      // }\r\n      // });\r\n      // }); \r\n\r\n      // Redraw the dock icons\r\n      var data2 = '<div ng-repeat=\"ag in appgroups\">' +\r\n        '<div ng-repeat=\"app in ag.apps\" style=\"float:left;width:20%;text-align:center;\" ng-show=\"app.showInDock\" class=\"div{{app.displayname}}\">' +\r\n        '<a ng-if=\"app.displayname != \\'Notifications\\'\" aria-label=\"{{app.displayname}}\" href=\"#/app/{{app.name}}/{{app.name}}\" class=\"divA{{app.displayname}}\" style=\"width: 100%;display: block;\">' +\r\n        '<img style=\"width:20px;\" src=\"{{app.logo}}\" alt=\"\">' +\r\n        '<\/a><\/div>' +\r\n        '<div class=\"clearfix\"><\/div>'\r\n      '<\/div>';\r\n      //var htmlView = $compile($(data2))($scope);\r\n\r\n      //$(\"#footerContentContainer\").html(htmlView);\r\n\r\n      var options = {\r\n        method: 'GET',\r\n        url: $rootScope.user.oauthUserInfoUrl,\r\n        qs: {\r\n          schema: 'openid'\r\n        },\r\n        headers: {\r\n          Authorization: 'Bearer ' + $rootScope.user.accessToken\r\n        }\r\n      };\r\n\r\n      $rootScope.callOpenAPI(options, function(err, userInfo) {\r\n\r\n        if (err) {\r\n          $.unblockUI();\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Unable to login, please try again', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Unable to login, please try again')\r\n          }\r\n          return;\r\n        }\r\n\r\n\r\n        var subVal = userInfo.sub;\r\n        $rootScope.username = \"\";\r\n        if (subVal) {\r\n          var userSplit = subVal.split('/');\r\n          $rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n          console.log(\"user sub= \" + $rootScope.username);\r\n        }\r\n\r\n        $rootScope.password = $scope.password;\r\n\r\n        $.jStorage.set(\"userSub\", userInfo.sub);\r\n\r\n        $rootScope.user['email'] = userInfo.email;\r\n        $rootScope.user['firstName'] = userInfo.first_name || userInfo.given_name;\r\n        $rootScope.user['lastName'] = userInfo.last_name || userInfo.family_name;\r\n        try {\r\n          // alert(userInfo.groups)\r\n          if (typeof userInfo.groups == \"string\") {\r\n            if (userInfo.groups) {\r\n              userInfo.groups = userInfo.groups.replace(/cn=/g, 'CN=');\r\n            }\r\n            $rootScope.user.role = userInfo.groups.match(/(?:CN=)(\\w+)-*[^,]*(\\s)*(\\w+)/g).toString().replace(/CN=/g, \"\").split(\",\");\r\n          } else if (typeof userInfo.groups == \"object\") {\r\n            $rootScope.user.role = []\r\n            $.each(userInfo.groups, function(key, value) {\r\n              let groupVal = value;\r\n              if (groupVal) groupVal = groupVal.replace(/cn=/g, 'CN=');\r\n              $rootScope.user.role.concat(groupVal.match(/(?:CN=)(\\w+)-*[^,]*(\\s)*(\\w+)/g).toString().replace(/CN=/g, \"\").split(\",\"))\r\n            });\r\n          } else {\r\n            $rootScope.user.role = []\r\n            console.log(\"Error: The user has no roles !\");\r\n          }\r\n\r\n        } catch (ex) {\r\n          $rootScope.user.role = [];\r\n          console.log(\"Error while fetching roles from QL groups:\");\r\n          console.log(ex);\r\n        }\r\n\r\n        $rootScope.isUserTenantAdmin = $rootScope.user.admins.indexOf($rootScope.user['email']) !== -1;\r\n\r\n        var url = '/unifydidentity/user/search/findOneByEmail?email=' + userInfo.email;\r\n\r\n        $rootScope.callAPI(url, 'GET', {}, function(res) {\r\n\r\n\r\n          if (!res || !res.data) {\r\n            $rootScope.firstTimeUser = true;\r\n          } else {\r\n            var data = res.data;\r\n            $rootScope.firstTimeUser = false;\r\n            $rootScope.user['id'] = data['id'];\r\n            $rootScope.user['profileBackground'] = data['profileBackground'];\r\n            $rootScope.user['firstName'] = data['firstName'];\r\n            $rootScope.user['lastName'] = data['lastName'];\r\n            $rootScope.user['profileImage'] = data['profileImage'];\r\n            $rootScope.user['role'] = data['role'];\r\n            $rootScope.user['tenant'] = data['tenant'];\r\n            $rootScope.user['email'] = data['email'];\r\n            $rootScope.user['phone'] = data['phone'];\r\n            $rootScope.user['countryCode'] = data['countryCode'];\r\n            $rootScope.user['provider'] = data['provider'];\r\n            $rootScope.user['gender'] = data['gender'];\r\n            $rootScope.user['devices'] = data['devices'];\r\n            $rootScope.user['areaOfInterest'] = data['areaOfInterest'] || [];\r\n            $rootScope.tenantUrl = $rootScope.user['domain'];\r\n            //$rootScope.firstTimeUser = $rootScope.user['areaOfInterest'].length === 0 || !$rootScope.user['gender'] || !$rootScope.user['phone'];\r\n\r\n            $.jStorage.set(\"user\", $rootScope.user);\r\n\r\n            /******************************************************************************************************************************************/\r\n          }\r\n\r\n\r\n          var url = \"/unifydplatform/internal/isTenantAdmin?tenantid=\"+$rootScope.user['tenant']+\"&email=\"+$rootScope.user['email'];\r\n          $rootScope.callAPI(url, 'GET', {}, function(res) {\r\n            $rootScope.isUserTenantAdmin = res.data;\r\n            $rootScope.user.isUserTenantAdmin = res.data;\r\n            $.jStorage.set(\"user\", $rootScope.user);\r\n          });\r\n\r\n          try {\r\n            if (window.device) {\r\n              var push = PushNotification.init({\r\n                android: {\r\n                  senderID: \"1012473507211\"\r\n                },\r\n                browser: {\r\n                  pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n                },\r\n                ios: {\r\n                  alert: \"true\",\r\n                  badge: \"true\",\r\n                  sound: \"true\"\r\n                },\r\n                windows: {}\r\n              });\r\n\r\n              push.on('registration', function(res) {\r\n                console.log('res----', JSON.stringify(res));\r\n                var deviceId = res.registrationId;\r\n                /* Using array filter method to check if device is already registered */\r\n                if ($rootScope.user['devices']) {\r\n                  var checkDeviceIDs = $rootScope.user['devices'].filter(function(val) {\r\n                    return val.id == deviceId;\r\n                  }, deviceId);\r\n\r\n                  if (checkDeviceIDs.length == 0) {\r\n                    /* Add the devices to user collection */\r\n                    var url = '/unifydidentity/user/addDevice';\r\n                    var deviceData = {\r\n                      \"email\": $rootScope.user['email'],\r\n                      \"type\": device.platform,\r\n                      \"deviceId\": deviceId\r\n                    }\r\n                    $rootScope.callAPI(url, 'PUT', deviceData, function(res) {\r\n                      $rootScope.user['devices'] = res.data['devices'];\r\n                      $.jStorage.set(\"user\", $rootScope.user);\r\n                    });\r\n                  }\r\n                } else {\r\n                  var url = '/unifydidentity/user/addDevice';\r\n                  var deviceData = {\r\n                    \"email\": $rootScope.user['email'],\r\n                    \"type\": device.platform,\r\n                    \"deviceId\": deviceId\r\n                  }\r\n                  $rootScope.callAPI(url, 'PUT', deviceData, function(res) {\r\n                    $rootScope.user['devices'] = res.data['devices'];\r\n                    $.jStorage.set(\"user\", $rootScope.user);\r\n                  });\r\n                }\r\n              });\r\n              $rootScope.inAppNotificationHandler(push);\r\n            }\r\n          } catch (e) {\r\n            alert(e)\r\n          }\r\n          /* Getting Device ID Ends*/\r\n          /*\r\n                              /!* Checking if user has set security questions or not *!/\r\n                              var tenantID = $rootScope.user.qlId;\r\n                              //var uName = $rootScope.user.email.split(\"@\")[0]\r\n                              var uName = $rootScope.username;\r\n                              var apiUrl = \"https://pwms.quicklaunchsso.com/api/open/validate?tenantId=\" + tenantID + \"&userName=\" + uName;\r\n                              try {\r\n                                  $http.get(apiUrl).then(function (resp) {\r\n\r\n                                      $.unblockUI();\r\n\r\n                                      if (resp.data.accountValidationFailed === true && resp.data.isMandatory === true) {\r\n                                          $.jStorage.set('setSecurityQuestion', true);\r\n                                      } else {\r\n                                          $.jStorage.set('setSecurityQuestion', false);\r\n                                      }\r\n\r\n                                      /!* End of checking if user has set security questions or not *!/\r\n\r\n                                      /!* redirecting user to home screen after registering the device *!/\r\n\r\n                                      if ($.jStorage.get('setSecurityQuestion') === true) {\r\n                                          $location.path(\"/app/SignIn279/SignIn279Page2\");\r\n                                      } else {\r\n                                          $location.path(\"/app/Settings2/Settings2Page9\");\r\n                                      }\r\n                                  }, function (err) {\r\n                                      alert('Error' +JSON.stringify(err));\r\n                                  });\r\n                              } catch (e) {\r\n                                  alert(e);\r\n                              }*/\r\n          $location.path(\"/app/Settings2/Settings2Page9\");\r\n        });\r\n      });\r\n    };\r\n\r\n    var authFailure = function(data) {\r\n      $.unblockUI();\r\n      $rootScope.loggedIn = false;\r\n      if (window.device) {\r\n        navigator.notification.alert(\r\n          'Unable to login, please try again', // message\r\n          null, // callback\r\n          'Error', // title\r\n          'OK' // buttonName\r\n        );\r\n      } else {\r\n        alert('Unable to login, please try again')\r\n      }\r\n    }\r\n\r\n\r\n    setTimeout(function() {\r\n      try {\r\n        var data1 = $compile($(pagedef.datatemplate))($scope);\r\n        $(\"#appContent\").html(data1);\r\n\r\n        $rootScope.$apply();\r\n\r\n        $(\".app-body\").addClass(\"slideInDown\");\r\n        $(\".app-body\").addClass(\"animated\");\r\n\r\n        //if (!$rootScope.user) {\r\n        if (true) {\r\n          $.blockUI();\r\n          $rootScope.user = {};\r\n          console.log($rootScope.environment);\r\n\r\n          //if (window.device) {\r\n          switch ($rootScope.environment) {\r\n            case 'dev':\r\n              {\r\n                var url = ('https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n            case 'stage':\r\n              {\r\n                var url = ('https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n            case 'prod':\r\n              {\r\n                var url = ('https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n                break;\r\n              }\r\n          }\r\n          /*} else {\r\n            $.unblockUI();\r\n            var url = ('https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/tenant/search/findOneByTenantid?tenantid=') + ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant);\r\n          }*/\r\n\r\n          var req = {\r\n            headers: {\r\n              'Content-Type': 'application/json',\r\n              'Accept': 'application/json',\r\n              'X-TENANT-ID': ($.jStorage.get('tenantInfo') != null ? $.jStorage.get('tenantInfo').tenantId : MyCampusApp.config.tenant)\r\n            },\r\n            url: url,\r\n            method: 'GET'\r\n          };\r\n          $http(req).then(function successCallback(res) {\r\n            $.unblockUI();\r\n            var data = res['data'];\r\n            $rootScope.user.tenant = data['tenantid'];\r\n\r\n            /* Only for testing authentication on container app */\r\n            //$rootScope.user.tenantDummy = 'QueensCollege';\r\n            /* End for testing authentication on container app */\r\n\r\n            $rootScope.user.tenantdomain = data['idpTenantDomain'];\r\n            $rootScope.GatewayUrl = 'https://' + data['domain'] + data['gatewaypath'];\r\n            $rootScope.user.domain = data['domain'];\r\n            $rootScope.user.gatewaypath = data['gatewaypath'];\r\n            $rootScope.user.admins = data['admins'] || [];\r\n            $rootScope.user.oauthUserInfoUrl = data['oauthUserInfoUrl'];\r\n            $rootScope.user.products = data['products'];\r\n            $rootScope.user.qlId = data['qlTenantid'];\r\n            $rootScope.user.siteId = data['siteId'];\r\n          }, function errorCallback(res) {\r\n\r\n          });\r\n        } else {\r\n          //alert(\"else\");\r\n        }\r\n      } catch (e) {\r\n        //alert(e)\r\n      }\r\n    }, 200);\r\n\r\n    $scope.openSignUp = function() {\r\n      $location.path(\"/app/IIITDMobile/IIITDMobile\");\r\n    };\r\n\r\n    $scope.openForgotPassword = function() {\r\n      $location.path(\"/app/ForgotPassword2/ForgotPassword2\");\r\n    };\r\n\r\n    $scope.byPassLogin = function() {\r\n\r\n      if ($scope.username == '') {\r\n\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Missing Email Id', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Missing Email Id')\r\n        }\r\n\r\n        return;\r\n      }\r\n      if ($scope.password == '') {\r\n\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Missing password', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Missing password')\r\n        }\r\n\r\n        return;\r\n      }\r\n      if ($scope.username.indexOf('@') !== -1) {\r\n        if ($scope.username.split('@')[1] !== $rootScope.user.tenantdomain) {\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Invalid user domain', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Invalid user domain')\r\n          }\r\n          return;\r\n        }\r\n      } else {\r\n        $scope.username = $scope.username + '@' + $rootScope.user.tenantdomain;\r\n      }\r\n\r\n      setTimeout(function() {\r\n        $.blockUI();\r\n        window['authFunction']($scope.username, $scope.password, $http, $rootScope, authSuccess, authFailure)\r\n      }, 500);\r\n\r\n    };\r\n\r\n\r\n    $scope.openUrl = function(url) {\r\n      window.open(url, '_blank');\r\n    }\r\n\r\n    $scope.$on(\"$destroy\", function() {\r\n      $(\".backButtonArrow\").show();\r\n    });\r\n\r\n    $scope.openForgotPass = function() {\r\n      if ($scope.forgotPass) {\r\n        window.open($scope.forgotPass, '_blank');\r\n      } else {\r\n        window.open('https://pwms.quicklaunchsso.com/api/open/showOpenChangePassword?tenantDomain=' + $rootScope.user.tenantdomain, '_blank');\r\n      }\r\n    }\r\n\r\n  } catch (e) {\r\n    alert(e)\r\n  }\r\n\r\n}",
           "datatemplate": "<style>\r\n  #fixedHeaderContent {\r\n    display: none;\r\n  }\r\n .appheader div[aria-label=\"Profile\"] {\r\n    margin: 10px;\r\n}\r\n  .footerGroupIcons {\r\n    display: none !important;\r\n  }\r\n  \r\n  .signInBoxMob {\r\n    padding: 0 18px;\r\n  }\r\n  \r\n  .app-body {\r\n    background-color: #fff;\r\n    background: #fff;\r\n  }\r\n  \r\n  .btnHover:hover,\r\n  .btnHover:focus {\r\n    color: #FFFFFF;\r\n  }\r\n  \r\n  #branding {\r\n    display: none;\r\n  }\r\n  \r\n  /* MM:\r\n  .loginPageBackButton {\r\n    display: none !important;\r\n  }\r\n  */\r\n  \r\n/*.navbar-app {\r\n    display: none;\r\n  }\r\n  .headerFooterBg {\r\n        display: none;\r\n    }*/\r\n  \r\n  .createbutton {\r\n    background: transparent;\r\n    background-color: transparent;\r\n  }\r\n  \r\n  .createbutton:active {\r\n    background: #dac229 !important;\r\n    background-color: #dac229 !important;\r\n    border-color: #dac229 !important;\r\n    color: #fff !important;\r\n    outline: none !important;\r\n  }\r\n  \r\n  .createbutton:hover {\r\n    background: #dac229 !important;\r\n    background-color: #dac229 !important;\r\n    border-color: #dac229 !important;\r\n    color: #fff !important;\r\n    outline: none !important;\r\n  }\r\n  \r\n  .has-navbar-top .app-body {\r\n    padding-top: 0px;\r\n  }\r\n  \r\n  #bottomPoweredBy {\r\n    display: block;\r\n  }\r\n<\/style>\r\n<div class=\"greytext proximaFont\">\r\n  <div class=\"signInBoxMob\" style=\"margin-top:22%;\">\r\n    <div>\r\n      <div class=\"textcenter\"><img style='width:95%;max-width: 95%;' src=\"{{brandingUrl}}\" /><\/div>\r\n    <\/div>\r\n    <form ng-submit=\"byPassLogin();\">\r\n      <div class='list-group marginTop40'>\r\n        <li class=\"list-group-item backgroundNone listitemborderSolid colPadding listItemTop15Padding\">\r\n          <input name=\"loginUsername\" id=\"loginUsername\" type=\"text\" class=\"form-control fontSize16 backgroundNone borderNone leftPadding5px  greytext boxShadowNone\" placeholder=\"Username\" autocomplete=\"off\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"false\"\r\n          ng-model=\"username\">\r\n        <\/li>\r\n\r\n        <li class=\"list-group-item backgroundNone listitemborderSolid rounded-0 colPadding listItemTop15Padding\">\r\n          <input name=\"loginUsername\" id=\"loginUsername\" type=\"password\" class=\"form-control fontSize16 backgroundNone borderNone leftPadding5px greytext boxShadowNone\" placeholder=\"Password\" autocomplete=\"off\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"false\"\r\n          ng-model=\"password\">\r\n        <\/li>\r\n      <\/div>\r\n      <div class=\"list-group-item backgroundNone borderNone colPadding marginTop40 proximaSemiBoldFont whiteTextColor fontSize16\">\r\n        <input type=\"submit\" value=\"LOG IN\" class=\"btn btn-block whiteTextColor borderRadius6 btnTopBottomPadding btnHover\">LOG IN\r\n      <\/div>\r\n    <\/form>\r\n    <div class=\"list-group-item backgroundNone borderNone colPadding marginTop15 proximaSemiBoldFont greytext fontSize14\">\r\n      <!--Forgot Password<span class=\"fontb3b3b3\">&nbsp;|&nbsp;<\/span>First Time User-->\r\n      <span ng-click=\"openForgotPass();\">Forgot Password<\/span>\r\n    <\/div>\r\n\r\n    <div class=\"list-group-item backgroundNone borderNone colPadding marginTop15 proximaFont fontb3b3b3 fontSize14\">\r\n      By logging in, you agree to our <span ng-click=\"openUrl(termsServices);\"><u>Terms of Services<\/u><\/span> and <span ng-click=\"openUrl(policy);\"><u>Privacy Policy<\/u><\/span>.\r\n    <\/div>\r\n  <\/div>\r\n  <!-- <div class=\"list-group-item backgroundNone borderNone colPadding proximaSemiBoldFont fontSize16 padding18px\" style=\"width: 100%; margin-top:28px;\">\r\n          <div class=\"textcenter borderRadius6 btnTopBottomPadding backgroundNone btnBorder createbutton\" style=\"\" ontouchstart>CREATE YOUR ACCOUNT\r\n          <\/div>\r\n      <\/div> -->\r\n\r\n<\/div>",
           "termServices": "https://online.uvi.edu/privacy-policy/",
           "policy": "https://online.uvi.edu/privacy-policy/",
@@ -1384,305 +1384,305 @@
           "mapMarkers": 
           [
             {
-              "lat": "17.71991",
+              "long": "-64.796226",
               "name": "Agricultural Experiment Station, Field Labs",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4041",
-              "long": "-64.796226"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.71991"
             },
             {
               "lat": "17.718069",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
               "long": "-64.799381",
-              "name": "Campus Information Center, Map, Phone"
+              "name": "Campus Information Center, Map, Phone",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.796441",
               "lat": "17.714822",
               "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Animal Science"
             },
             {
-              "long": "-64.798715",
-              "lat": "17.716113",
               "img": null,
               "phone": "(340) 692-4162",
+              "lat": "17.716113",
+              "long": "-64.798715",
               "name": "Bookstore"
             },
             {
-              "lat": "17.715507",
+              "name": "Center for Marine & Environmental Studies (CMES)",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4046",
+              "lat": "17.715507",
               "long": "-64.799784",
-              "name": "Center for Marine & Environmental Studies (CMES)"
+              "phone": "(340) 692-4046"
             },
             {
+              "long": "-64.799280",
               "phone": null,
-              "lat": "17.716563",
               "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
+              "lat": "17.716563",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C",
+              "lat": "17.716563",
+              "long": "-64.799280",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null
+            },
+            {
+              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.716563",
+              "phone": "(340) 692-4280",
               "long": "-64.799280"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716563",
               "phone": null,
-              "long": "-64.799280",
-              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C"
-            },
-            {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4280",
-              "lat": "17.716563",
-              "long": "-64.799280",
-              "name": "Human Resources, Delta M. Jackson Dorsch Complex"
-            },
-            {
               "long": "-64.799643",
-              "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
               "lat": "17.716445",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
+              "name": "Residence Halls, Delta M. Jackson Dorsch Complex"
             },
             {
+              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.716563",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799280",
               "phone": "(340) 692-4272",
-              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex"
+              "long": "-64.799280"
             },
             {
-              "long": "-64.797374",
-              "phone": null,
+              "name": "Academic Affairs, Evans Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "lat": "17.717391",
-              "name": "Academic Affairs, Evans Center"
+              "long": "-64.797374"
             },
             {
-              "long": "-64.797374",
+              "lat": "17.717391",
               "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Business Affairs, Evans Center",
+              "long": "-64.797374"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.797374",
+              "phone": null,
+              "name": "Campus Operations, Evans Center",
               "lat": "17.717391"
             },
             {
-              "long": "-64.797374",
-              "name": "Campus Operations, Evans Center",
-              "lat": "17.717391",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
-            },
-            {
-              "name": "Classrooms, Evans Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
               "long": "-64.797374",
-              "lat": "17.717391"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.717391",
+              "name": "Classrooms, Evans Center"
             },
             {
-              "long": "-64.797374",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Counseling & Placement, Evans Center",
               "lat": "17.717391",
-              "phone": "(340) 692-4187"
-            },
-            {
-              "phone": "(340) 692-4193",
-              "name": "Financial Aid, Evans Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797374",
-              "lat": "17.717391"
-            },
-            {
-              "lat": "17.717391",
-              "phone": "(340) 692-4130",
-              "name": "Library, Evans Center",
-              "long": "-64.797374",
+              "phone": "(340) 692-4187",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 692-4155",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Financial Aid, Evans Center",
               "lat": "17.717391",
-              "name": "Security, Evans Center",
+              "phone": "(340) 692-4193",
               "long": "-64.797374"
             },
             {
+              "phone": "(340) 692-4130",
+              "long": "-64.797374",
+              "lat": "17.717391",
+              "name": "Library, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "17.717391",
+              "long": "-64.797374",
+              "name": "Security, Evans Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Student Affairs, Evans Center",
+              "phone": "(340) 692-4155"
+            },
+            {
               "phone": "(340) 692-4188",
               "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Student Affairs, Evans Center",
               "long": "-64.797374"
             },
             {
               "phone": null,
               "long": "-64.797374",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Student Government, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.717391"
             },
             {
-              "long": "-64.799638",
               "lat": "17.715638",
+              "long": "-64.799638",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4003",
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House"
             },
             {
+              "lat": "17.715638",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.799638",
-              "name": "Health Services, Great House",
-              "lat": "17.715638",
-              "phone": "(340) 692-4214"
+              "phone": "(340) 692-4214",
+              "name": "Health Services, Great House"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.715638",
-              "name": "President's Office, Great House",
               "phone": "(340) 692-4024",
-              "long": "-64.799638"
+              "name": "President's Office, Great House",
+              "long": "-64.799638",
+              "lat": "17.715638"
             },
             {
-              "phone": "(340) 692-4022",
-              "long": "-64.799638",
               "lat": "17.715638",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799638",
+              "phone": "(340) 692-4022",
               "name": "Provost's Office, Great House"
             },
             {
-              "phone": null,
               "lat": "17.715371",
               "long": "-64.799561",
-              "name": "Modular Building, Math Center/Writing Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "name": "Modular Building, Math Center/Writing Center"
+            },
+            {
+              "phone": null,
+              "lat": "17.717682",
+              "long": "-64.797771",
+              "name": "North West Wing, Classrooms & Computer Lab",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717682",
-              "phone": null,
-              "long": "-64.797771",
-              "name": "North West Wing, Classrooms & Computer Lab"
-            },
-            {
               "lat": "17.717682",
               "name": "North West Wing, Great Hall",
               "long": "-64.797771",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": null
             },
             {
-              "name": "North West Wing, Information Technology Services",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4130",
               "long": "-64.797771",
               "lat": "17.717682",
+              "name": "North West Wing, Information Technology Services"
+            },
+            {
+              "lat": "17.716742",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4010",
+              "name": "Nursing, School of Nursing",
+              "long": "-64.796902"
+            },
+            {
+              "name": "Physical Plant",
+              "lat": "17.715507",
+              "long": "-64.799784",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4171"
+            },
+            {
+              "long": "-64.797331",
+              "lat": "17.718009",
+              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension",
+              "phone": "(340) 692-4230",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.796902",
-              "name": "Nursing, School of Nursing",
-              "phone": "(340) 692-4010",
-              "lat": "17.716742"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Physical Plant",
-              "phone": "(340) 692-4171",
-              "lat": "17.715507",
-              "long": "-64.799784"
-            },
-            {
-              "phone": "(340) 692-4230",
-              "long": "-64.797331",
               "lat": "17.718009",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension"
-            },
-            {
-              "phone": "(340) 692-4080",
               "name": "Cooperative Extension Service, Research & Extension",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.718009",
+              "phone": "(340) 692-4080",
               "long": "-64.797331"
             },
             {
               "name": "Institutional Advancement, Research & Extension",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.718009",
+              "long": "-64.797331",
               "phone": "(340) 692-4023",
-              "long": "-64.797331"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.718009"
             },
             {
-              "lat": "17.718009",
-              "long": "-64.797331",
               "name": "President's Office, Research & Extension",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.797331",
+              "lat": "17.718009",
               "phone": "(340) 692-4024"
             },
             {
+              "phone": "(340) 692-4282",
               "long": "-64.800617",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "College of Science & Mathematics, Research and Technology Park",
-              "lat": "17.719256",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4282"
+              "lat": "17.719256"
             },
             {
-              "phone": "(340) 773-5000",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.719256",
               "long": "-64.800617",
-              "name": "Research and Technology Park"
+              "lat": "17.719256",
+              "name": "Research and Technology Park",
+              "phone": "(340) 773-5000"
             },
             {
+              "phone": null,
+              "long": "-64.798945",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Soccer Fields",
               "lat": "17.713916",
-              "phone": null,
-              "long": "-64.798945"
+              "name": "Soccer Fields"
             },
             {
-              "long": "-64.798345",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Cafeteria, Student Center",
+              "phone": null,
               "lat": "17.716272",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "name": "Cafeteria, Student Center"
+              "long": "-64.798345"
             },
             {
+              "lat": "17.716231",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Snack Bar, Student Center",
-              "long": "-64.798527",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "lat": "17.716231"
+              "long": "-64.798527"
             },
             {
-              "phone": "(340) 692-4228",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.798527",
               "name": "Student Activities Center, Student Center",
-              "long": "-64.798527",
-              "lat": "17.716231"
+              "lat": "17.716231",
+              "phone": "(340) 692-4228",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.714845",
               "long": "-64.798738",
+              "lat": "17.714845",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Tennis/Basketball Courts"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.715507",
+              "long": "-64.799784",
               "phone": "(340) 692-4182",
-              "name": "University Bound",
-              "long": "-64.799784"
+              "name": "University Bound"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "lat": "17.720293",
-              "long": "-64.797009",
               "name": "UVI Farm Store",
-              "phone": null
+              "long": "-64.797009",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             }
           ],
           "mapcenter": "17.718009, -64.797331",
@@ -1937,32 +1937,32 @@
               "number": "(340) 778-1620"
             },
             {
-              "name": "Albert A. Sheen Campus Security",
-              "number": "(340) 692-4155"
+              "number": "(340) 692-4155",
+              "name": "Albert A. Sheen Campus Security"
             },
             {
-              "number": "(340) 692-4168",
-              "name": "Albert A. Sheen Campus Hotline"
+              "name": "Albert A. Sheen Campus Hotline",
+              "number": "(340) 692-4168"
             },
             {
-              "number": "(340) 776-9200",
-              "name": "St. Thomas Campus Main"
+              "name": "St. Thomas Campus Main",
+              "number": "(340) 776-9200"
             },
             {
               "name": "St. Thomas Campus Security",
               "number": "(340) 693-1530"
             },
             {
-              "name": "St. Thomas Campus Hotline",
-              "number": "(340) 693-1016"
+              "number": "(340) 693-1016",
+              "name": "St. Thomas Campus Hotline"
             },
             {
               "number": "911",
               "name": "Virgin Islands Emergency Services"
             },
             {
-              "number": "(340) 693-1466",
-              "name": "ITS Help Desk"
+              "name": "ITS Help Desk",
+              "number": "(340) 693-1466"
             }
           ]
         }
