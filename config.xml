@@ -167,11 +167,9 @@
 </edit-config>
 
 
-<platform name="android">
-
+    <!--<platform name="android">
         <resource-file src="google-services.json" target="/google-services.json" />
-
-    </platform>
+    </platform>-->
 
     
 
