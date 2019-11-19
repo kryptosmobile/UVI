@@ -1,10 +1,10 @@
 {
-  "version": 683,
+  "version": 684,
   "tenantid": "uviproduction",
   "mobappid": 7240,
   "appName": "UVI PROD U8",
   "appDisplayName": "UVI PROD U8",
-  "homeScreenTemplate": "<script>\r\n  MyCampusApp.rootScope.mobileAppName = \"UVI Mobile\";\r\n\r\n  function exitApp() {\r\n    navigator.app.exitApp();\r\n  }\r\n  try {\r\n    (function(w, d, s, g, js, fs) {\r\n      g = w.gapi || (w.gapi = {});\r\n      g.analytics = {\r\n        q: [],\r\n        ready: function(f) {\r\n          this.q.push(f);\r\n        }\r\n      };\r\n      js = d.createElement(s);\r\n      fs = d.getElementsByTagName(s)[0];\r\n      js.src = 'https://apis.google.com/js/platform.js';\r\n      fs.parentNode.insertBefore(js, fs);\r\n      js.onload = function() {\r\n        g.load('analytics');\r\n      };\r\n    }(window, document, 'script'));\r\n\r\n    function successAuth(data) {\r\n      if (!data) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Some error occurred. Please try again', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Some error occurred. Please try again')\r\n        }\r\n        navigator.app.exitApp();\r\n        return;\r\n      }\r\n\r\n      MyCampusApp.rootScope.user['accessToken'] = data.access_token;\r\n      MyCampusApp.rootScope.user['refreshToken'] = data.refresh_token;\r\n      MyCampusApp.rootScope.user['providerData'] = data.access_token;\r\n      MyCampusApp.rootScope.erpticket = {};\r\n      MyCampusApp.rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n      MyCampusApp.rootScope.loggedIn = true;\r\n\r\n      /* User info for logging into ERP/LMS */\r\n      var subVal = $.jStorage.get(\"userSub\")\r\n      MyCampusApp.rootScope.username = \"\";\r\n      if (subVal) {\r\n        var userSplit = subVal.split('/');\r\n        MyCampusApp.rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n        console.log(\"user sub= \" + MyCampusApp.rootScope.username);\r\n      }\r\n      MyCampusApp.rootScope.password = $.jStorage.get(\"unifyedpassword\");\r\n\r\n      MyCampusApp.rootScope.isUserTenantAdmin = MyCampusApp.rootScope.user.admins.indexOf(MyCampusApp.rootScope.user['email']) !== -1;\r\n      \r\n\r\n      /*if ($.jStorage.get('setSecurityQuestion') === true){\r\n          window.location.href = '#/app/SignIn279/SignIn279Page2';\r\n      }else {\r\n          window.location.href = '#/app/Settings2/Settings2Page9';\r\n      }*/\r\n      window.location.href = '#/app/Settings2/Settings2Page9';\r\n    }\r\n\r\n    function failureAuth(err) {\r\n      $.unblockUI();\r\n      MyCampusApp.rootScope.loggedIn = false;\r\n      if (window.device) {\r\n        navigator.notification.alert(\"Unable to login, please check your credentials\", exitApp, '', 'Ok');\r\n      } else {\r\n        alert(\"Unable to login, please check your credentials\");\r\n      }\r\n    }\r\n\r\n    var redirectUser = function() {\r\n      /* Check if the user is logged in */\r\n      if ($.jStorage.get(\"unifyedusername\") && $.jStorage.get(\"unifyedpassword\")) {\r\n        MyCampusApp.rootScope.user = $.jStorage.get('user');\r\n        MyCampusApp.rootScope.GatewayUrl = 'https://' + MyCampusApp.rootScope.user['domain'] + MyCampusApp.rootScope.user['gatewaypath'];\r\n\r\n        var settings = {\r\n          \"async\": true,\r\n          \"crossDomain\": true,\r\n          \"url\": MyCampusApp.rootScope.GatewayUrl + \"/unifydidentity/open/oauth2/token\",\r\n          \"method\": \"POST\",\r\n          \"headers\": {\r\n            \"Content-Type\": \"application/x-www-form-urlencoded\",\r\n            \"X-TENANT-ID\": MyCampusApp.rootScope.user.tenant,\r\n            \"X-TENANT-DOMAIN\": MyCampusApp.rootScope.user.idpTenantDomain,\r\n          },\r\n          \"data\": {\r\n            \"username\": $.jStorage.get(\"unifyedusername\"),\r\n            \"password\": $.jStorage.get(\"unifyedpassword\")\r\n          }\r\n        }\r\n\r\n        $.ajax(settings).done(successAuth).fail(failureAuth);\r\n\r\n      } else {\r\n        MyCampusApp.rootScope.loggedIn = false;\r\n        /* Check if app has only guest applets */\r\n        if ($.jStorage.get('tenantInfo').guestApp) {\r\n          MyCampusApp.rootScope.user = null;\r\n\r\n          window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to home page */\r\n        } else {\r\n          window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to signin page since it doesn't have guest applets */\r\n        }\r\n      }\r\n    }\r\n\r\n    /* Check if the app is running as standalone app */\r\n    if (MyCampusApp.rootScope.standaloneApp) {\r\n      /* Get insititution details from tenant Id */\r\n      var settings = {\r\n        \"async\": true,\r\n        \"crossDomain\": true,\r\n        \"method\": \"GET\",\r\n        \"headers\": {\r\n          \"content-type\": \"application/json\",\r\n          \"x-tenant-id\": \"123123\"\r\n        }\r\n      };\r\n\r\n      //MyCampusApp.rootScope.environment = \"stage\";\r\n\r\n      switch (MyCampusApp.rootScope.environment) {\r\n        case 'dev':\r\n          {\r\n            settings['url'] = 'https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n        case 'stage':\r\n          {\r\n            settings['url'] = 'https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n        case 'prod':\r\n          {\r\n            settings['url'] = 'https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n      }\r\n\r\n      try {\r\n        $.blockUI();\r\n        $.ajax(settings).done(function(response) {\r\n          $.unblockUI();\r\n          $.jStorage.set('tenantInfo', response.content[0]);\r\n          redirectUser();\r\n        });\r\n      } catch (e) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert('Something went wrong, please try after sometime.', exitApp, '', 'Ok');\r\n        } else {\r\n          alert('Something went wrong, please try after sometime.');\r\n        }\r\n      }\r\n    } else {\r\n      redirectUser();\r\n    }\r\n\r\n    var handleSwitch = function(btn) {\r\n      if (btn == 1) {\r\n        window.location.href = '#/amakerhome';\r\n      }\r\n    }\r\n    var switchApp = function() {\r\n      if (window.device) {\r\n        navigator.notification.confirm(\"Do you want to switch app?\", handleSwitch, 'Switch App', ['Yes', 'No']);\r\n      }\r\n    }\r\n\r\n    var onBackKeyDown = function(event) {\r\n      var loc = window.location;\r\n      MyCampusApp.rootScope.leftToRight = true;\r\n      if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && MyCampusApp.rootScope.standaloneApp) {\r\n        exitApp();\r\n      } else if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && !MyCampusApp.rootScope.standaloneApp) {\r\n        switchApp();\r\n      } else if (loc.hash == \"#/app/WhatsUp/WhatsUp\") {\r\n        exitApp();\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && $.jStorage.get('tenantInfo').guestApp) {\r\n        window.location.href = \"#/app/Menu82/Menu82\";\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && MyCampusApp.rootScope.standaloneApp) {\r\n        window.location.href = \"#/app/Menu82/Menu82\";\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && !MyCampusApp.rootScope.standaloneApp) {\r\n        switchApp();\r\n      } else {\r\n        navigator.app.backHistory();\r\n      }\r\n    }\r\n    document.addEventListener(\"backbutton\", onBackKeyDown, true);\r\n\r\n    var Notification = PushNotification.init({\r\n      android: {\r\n        senderID: \"1012473507211\"\r\n      },\r\n      browser: {\r\n        pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n      },\r\n      ios: {\r\n        alert: \"true\",\r\n        badge: \"true\",\r\n        sound: \"true\"\r\n      },\r\n      windows: {}\r\n    });\r\n\r\n    Notification.on('registration', function(data) {\r\n      var devicePushID = data.registrationId;\r\n    });\r\n\r\n    MyCampusApp.rootScope.inAppNotificationHandler(Notification);\r\n  } catch (e) {}\r\n\r\n  $('input:text').focusout(function() {\r\n    $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n    $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n\r\n  });\r\n\r\n  $('input:text').focusin(function() {\r\n\r\n    $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n    $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n  });\r\n<\/script>",
+  "homeScreenTemplate": "<script>\r\n  MyCampusApp.rootScope.mobileAppName = \"UVI Mobile\";\r\n\r\n  function exitApp() {\r\n    navigator.app.exitApp();\r\n  }\r\n  try {\r\n    (function(w, d, s, g, js, fs) {\r\n      g = w.gapi || (w.gapi = {});\r\n      g.analytics = {\r\n        q: [],\r\n        ready: function(f) {\r\n          this.q.push(f);\r\n        }\r\n      };\r\n      js = d.createElement(s);\r\n      fs = d.getElementsByTagName(s)[0];\r\n      js.src = 'https://apis.google.com/js/platform.js';\r\n      fs.parentNode.insertBefore(js, fs);\r\n      js.onload = function() {\r\n        g.load('analytics');\r\n      };\r\n    }(window, document, 'script'));\r\n\r\n    function successAuth(data) {\r\n      if (!data) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert(\r\n            'Some error occurred. Please try again', // message\r\n            null, // callback\r\n            'Error', // title\r\n            'OK' // buttonName\r\n          );\r\n        } else {\r\n          alert('Some error occurred. Please try again')\r\n        }\r\n        navigator.app.exitApp();\r\n        return;\r\n      }\r\n\r\n      MyCampusApp.rootScope.user['accessToken'] = data.access_token;\r\n      MyCampusApp.rootScope.user['refreshToken'] = data.refresh_token;\r\n      MyCampusApp.rootScope.user['providerData'] = data.access_token;\r\n      MyCampusApp.rootScope.erpticket = {};\r\n      MyCampusApp.rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n      MyCampusApp.rootScope.loggedIn = true;\r\n\r\n      /* User info for logging into ERP/LMS */\r\n      var subVal = $.jStorage.get(\"userSub\")\r\n      MyCampusApp.rootScope.username = \"\";\r\n      if (subVal) {\r\n        var userSplit = subVal.split('/');\r\n        MyCampusApp.rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n        console.log(\"user sub= \" + MyCampusApp.rootScope.username);\r\n      }\r\n      MyCampusApp.rootScope.password = $.jStorage.get(\"unifyedpassword\");\r\n\r\n      MyCampusApp.rootScope.isUserTenantAdmin = MyCampusApp.rootScope.user.admins.indexOf(MyCampusApp.rootScope.user['email']) !== -1;\r\n\r\n\r\n      /*if ($.jStorage.get('setSecurityQuestion') === true){\r\n          window.location.href = '#/app/SignIn279/SignIn279Page2';\r\n      }else {\r\n          window.location.href = '#/app/Settings2/Settings2Page9';\r\n      }*/\r\n      window.location.href = '#/app/Settings2/Settings2Page9';\r\n    }\r\n\r\n    function failureAuth(err) {\r\n      $.unblockUI();\r\n      MyCampusApp.rootScope.loggedIn = false;\r\n      if (window.device) {\r\n        navigator.notification.alert(\"Unable to login, please check your credentials\", exitApp, '', 'Ok');\r\n      } else {\r\n        alert(\"Unable to login, please check your credentials\");\r\n      }\r\n    }\r\n\r\n    var redirectUser = function() {\r\n      /* Check if the user is logged in */\r\n      if ($.jStorage.get(\"unifyedusername\") && $.jStorage.get(\"unifyedpassword\")) {\r\n        MyCampusApp.rootScope.user = $.jStorage.get('user');\r\n        MyCampusApp.rootScope.GatewayUrl = 'https://' + MyCampusApp.rootScope.user['domain'] + MyCampusApp.rootScope.user['gatewaypath'];\r\n\r\n        var settings = {\r\n          \"async\": true,\r\n          \"crossDomain\": true,\r\n          \"url\": MyCampusApp.rootScope.GatewayUrl + \"/unifydidentity/open/oauth2/token\",\r\n          \"method\": \"POST\",\r\n          \"headers\": {\r\n            \"Content-Type\": \"application/x-www-form-urlencoded\",\r\n            \"X-TENANT-ID\": MyCampusApp.rootScope.user.tenant,\r\n            \"X-TENANT-DOMAIN\": MyCampusApp.rootScope.user.idpTenantDomain,\r\n          },\r\n          \"data\": {\r\n            \"username\": $.jStorage.get(\"unifyedusername\"),\r\n            \"password\": $.jStorage.get(\"unifyedpassword\")\r\n          }\r\n        }\r\n\r\n        $.ajax(settings).done(successAuth).fail(failureAuth);\r\n\r\n      } else {\r\n        MyCampusApp.rootScope.loggedIn = false;\r\n        /* Check if app has only guest applets */\r\n        if ($.jStorage.get('tenantInfo').guestApp) {\r\n          MyCampusApp.rootScope.user = null;\r\n\r\n          window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to home page */\r\n        } else {\r\n          window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to signin page since it doesn't have guest applets */\r\n        }\r\n      }\r\n    }\r\n\r\n    /* Check if the app is running as standalone app */\r\n    if (MyCampusApp.rootScope.standaloneApp) {\r\n      /* Get insititution details from tenant Id */\r\n      var settings = {\r\n        \"async\": true,\r\n        \"crossDomain\": true,\r\n        \"method\": \"GET\",\r\n        \"headers\": {\r\n          \"content-type\": \"application/json\",\r\n          \"x-tenant-id\": \"uviproduction\"\r\n        }\r\n      };\r\n\r\n      //MyCampusApp.rootScope.environment = \"stage\";\r\n\r\n      switch (MyCampusApp.rootScope.environment) {\r\n        case 'dev':\r\n          {\r\n            settings['url'] = 'https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n        case 'stage':\r\n          {\r\n            settings['url'] = 'https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n        case 'prod':\r\n          {\r\n            settings['url'] = 'https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n            break;\r\n          }\r\n      }\r\n\r\n      try {\r\n        $.blockUI();\r\n        $.ajax(settings).done(function(response) {\r\n          $.unblockUI();\r\n          $.jStorage.set('tenantInfo', response.content[0]);\r\n          redirectUser();\r\n        });\r\n      } catch (e) {\r\n        $.unblockUI();\r\n        if (window.device) {\r\n          navigator.notification.alert('Something went wrong, please try after sometime.', exitApp, '', 'Ok');\r\n        } else {\r\n          alert('Something went wrong, please try after sometime.');\r\n        }\r\n      }\r\n    } else {\r\n      redirectUser();\r\n    }\r\n\r\n    var handleSwitch = function(btn) {\r\n      if (btn == 1) {\r\n        window.location.href = '#/amakerhome';\r\n      }\r\n    }\r\n    var switchApp = function() {\r\n      if (window.device) {\r\n        navigator.notification.confirm(\"Do you want to switch app?\", handleSwitch, 'Switch App', ['Yes', 'No']);\r\n      }\r\n    }\r\n\r\n    var onBackKeyDown = function(event) {\r\n      var loc = window.location;\r\n      MyCampusApp.rootScope.leftToRight = true;\r\n      if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && MyCampusApp.rootScope.standaloneApp) {\r\n        exitApp();\r\n      } else if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && !MyCampusApp.rootScope.standaloneApp) {\r\n        switchApp();\r\n      } else if (loc.hash == \"#/app/WhatsUp/WhatsUp\") {\r\n        exitApp();\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && $.jStorage.get('tenantInfo').guestApp) {\r\n        window.location.href = \"#/app/Menu82/Menu82\";\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && MyCampusApp.rootScope.standaloneApp) {\r\n        window.location.href = \"#/app/Menu82/Menu82\";\r\n      } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && !MyCampusApp.rootScope.standaloneApp) {\r\n        switchApp();\r\n      } else {\r\n        navigator.app.backHistory();\r\n      }\r\n    }\r\n    document.addEventListener(\"backbutton\", onBackKeyDown, true);\r\n\r\n    var Notification = PushNotification.init({\r\n      android: {\r\n        senderID: \"1012473507211\"\r\n      },\r\n      browser: {\r\n        pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n      },\r\n      ios: {\r\n        alert: \"true\",\r\n        badge: \"true\",\r\n        sound: \"true\"\r\n      },\r\n      windows: {}\r\n    });\r\n\r\n    Notification.on('registration', function(data) {\r\n      var devicePushID = data.registrationId;\r\n    });\r\n\r\n    MyCampusApp.rootScope.inAppNotificationHandler(Notification);\r\n  } catch (e) {}\r\n\r\n  $('input:text').focusout(function() {\r\n    $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n    $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n\r\n  });\r\n\r\n  $('input:text').focusin(function() {\r\n\r\n    $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n    $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n  });\r\n<\/script>",
   "middlewareServerUrl": null,
   "feedbackEmail": "support@unifyed.com",
   "backgroundurl": "uviproduction/background.png",
@@ -368,557 +368,557 @@
           "mapMarkers": 
           [
             {
-              "long": "-64.975076",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1160",
               "name": "Access and Enrollment Services, ACC",
-              "lat": "18.341002"
-            },
-            {
-              "name": "Accounting, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "phone": "(340) 693-1430",
-              "lat": "18.341002"
-            },
-            {
-              "name": "Administration & Finance, Room No. 315",
-              "lat": "18.341002",
-              "phone": "(340) 693-1400",
-              "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
               "lat": "18.341002",
               "phone": "(340) 693-1160",
-              "name": "Admissions, ACC"
-            },
-            {
-              "phone": "(340) 693-1437",
-              "lat": "18.341002",
-              "name": "Cashier Services, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076"
             },
             {
               "long": "-64.975076",
-              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
+              "lat": "18.341002",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1003",
-              "lat": "18.341002"
+              "name": "Accounting, ACC",
+              "phone": "(340) 693-1430"
             },
             {
               "lat": "18.341002",
+              "long": "-64.975076",
+              "name": "Administration & Finance, Room No. 315",
+              "phone": "(340) 693-1400",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Admissions, ACC",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1160",
+              "lat": "18.341002",
+              "long": "-64.975076"
+            },
+            {
+              "long": "-64.975076",
+              "name": "Cashier Services, ACC",
+              "lat": "18.341002",
+              "phone": "(340) 693-1437",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
+              "phone": "(340) 693-1003",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
+              "long": "-64.975076"
+            },
+            {
               "phone": "(340) 693-1090",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975076",
               "name": "Financial Aid, ACC",
-              "long": "-64.975076"
+              "lat": "18.341002"
             },
             {
+              "lat": "18.341002",
+              "long": "-64.975076",
               "name": "Human Resources, ACC",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1410",
-              "lat": "18.341002",
-              "long": "-64.975076"
+              "phone": "(340) 693-1410"
             },
             {
-              "long": "-64.975076",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1000",
               "name": "President's Office, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
-              "phone": "(340) 693-1000"
-            },
-            {
-              "lat": "18.341002",
-              "name": "Provost's Office, ACC",
-              "phone": "(340) 693-1200",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076"
             },
             {
-              "long": "-64.975076",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002",
-              "phone": "(340) 693-1057",
+              "phone": "(340) 693-1200",
+              "long": "-64.975076",
+              "name": "Provost's Office, ACC"
+            },
+            {
+              "long": "-64.975076",
               "name": "Public Relations, ACC",
+              "phone": "(340) 693-1057",
+              "lat": "18.341002",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.341002",
               "long": "-64.975076",
               "phone": "(340) 693-1480",
+              "lat": "18.341002",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Purchasing, ACC"
             },
             {
-              "name": "Registrar, ACC",
-              "phone": "(340) 693-1151",
               "long": "-64.975076",
+              "phone": "(340) 693-1151",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002"
+              "lat": "18.341002",
+              "name": "Registrar, ACC"
             },
             {
-              "lat": "18.341002",
               "name": "Research & Public Service",
               "long": "-64.975076",
+              "lat": "18.341002",
               "phone": "(340) 693-1062",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1054; (340) 693-1202",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Title III & Sponsored Programs",
-              "lat": "18.341002",
-              "long": "-64.975076"
+              "phone": "(340) 693-1054; (340) 693-1202",
+              "long": "-64.975076",
+              "lat": "18.341002"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Water Resources Research Institute (WRRI)",
               "lat": "18.341002",
               "long": "-64.975076",
-              "name": "Water Resources Research Institute (WRRI)",
               "phone": "(340) 693-1392"
             },
             {
-              "phone": null,
               "name": "Athletic Fields",
+              "lat": "18.339663",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.97061",
-              "lat": "18.339663"
+              "long": "-64.97061"
             },
             {
-              "long": "-64.972253",
+              "phone": null,
               "name": "Ball Fields",
               "lat": "18.33984",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.972253"
             },
             {
               "name": "Basketball Courts",
               "lat": "18.344103",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "long": "-64.971144"
             },
             {
               "name": "Beach Showers & Restrooms",
-              "lat": "18.342838",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "18.342838",
               "long": "-64.976263"
             },
             {
-              "long": "-64.972328",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Bookstore",
               "phone": "(340) 693-1561",
-              "lat": "18.342573"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.976613",
-              "phone": null,
-              "name": "Brewers Bay Beach",
-              "lat": "18.343094"
-            },
-            {
-              "name": "Business, Chase Auditorium",
-              "long": "-64.973079",
-              "lat": "18.34385",
-              "phone": null,
+              "long": "-64.972328",
+              "lat": "18.342573",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "lat": "18.343094",
+              "long": "-64.976613",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.34385",
-              "phone": "(340) 693-1300",
-              "long": "-64.973079",
-              "name": "Business, School of Business"
+              "name": "Brewers Bay Beach"
             },
             {
+              "long": "-64.973079",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.968683",
-              "lat": "18.343789",
+              "phone": null,
+              "lat": "18.34385",
+              "name": "Business, Chase Auditorium"
+            },
+            {
+              "name": "Business, School of Business",
+              "phone": "(340) 693-1300",
+              "lat": "18.34385",
+              "long": "-64.973079",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
               "name": "Campus East Housing",
-              "phone": null
+              "lat": "18.343789",
+              "phone": null,
+              "long": "-64.968683",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "name": "Caribbean Green Technology Center",
               "long": "-64.969183",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1628",
-              "lat": "18.343158"
+              "lat": "18.343158",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "long": "-64.968472",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1100",
-              "lat": "18.343339",
-              "name": "CELL-Community Engagement and Lifelong Learning Center"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "CELL-Community Engagement and Lifelong Learning Center",
+              "long": "-64.968472",
+              "lat": "18.343339"
             },
             {
-              "long": "-64.974293",
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Center for Advising & Tutorial Services",
-              "lat": "18.339413",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": "(340) 693-1583",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for Student Success (CBA)",
-              "lat": "18.339413",
-              "long": "-64.974293"
-            },
-            {
-              "phone": null,
-              "name": "Little Theatre, CAB",
-              "lat": "18.339413",
               "long": "-64.974293",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "lat": "18.339413",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.974293",
-              "phone": "(340) 693-1130",
-              "name": "University Bound (CBA)"
-            },
-            {
-              "long": "-64.974293",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.339413",
-              "name": "Classroom Administration Building",
               "phone": null
             },
             {
-              "lat": "18.343158",
+              "phone": "(340) 693-1583",
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.974293",
+              "name": "Center for Student Success (CBA)"
+            },
+            {
               "phone": null,
-              "long": "-64.969183",
-              "name": "CMES Annex",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.339413",
+              "name": "Little Theatre, CAB",
+              "long": "-64.974293"
+            },
+            {
+              "phone": "(340) 693-1130",
+              "name": "University Bound (CBA)",
+              "long": "-64.974293",
+              "lat": "18.339413",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1080",
+              "name": "Classroom Administration Building",
+              "lat": "18.339413",
+              "long": "-64.974293",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.969183",
+              "name": "CMES Annex",
+              "phone": null,
+              "lat": "18.343158"
+            },
+            {
               "long": "-64.971589",
               "name": "Cooperative Extension Service",
               "lat": "18.342438",
+              "phone": "(340) 693-1080",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.3431",
+              "name": "Dining Pavilion - Cafeteria, Food Services",
               "long": "-64.972157",
-              "phone": "(340) 693-1139",
+              "lat": "18.3431",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Dining Pavilion - Cafeteria, Food Services"
+              "phone": "(340) 693-1139"
             },
             {
-              "long": "-64.968359",
-              "lat": "18.342967",
-              "phone": "(340) 693-1020",
               "name": "Eastern Caribbean Center (ECC), Eastern Caribbean Center (ECC)",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.968359",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.342967",
+              "phone": "(340) 693-1020"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.968499",
               "lat": "18.343436",
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
               "phone": "(340) 693-1422",
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.968499"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.974733",
-              "phone": null,
-              "name": "FAA Tower",
-              "lat": "18.339273"
-            },
-            {
-              "phone": null,
-              "long": "-64.97588",
-              "name": "Faculty & Staff Housing",
+              "lat": "18.339273",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.340998"
+              "phone": null,
+              "name": "FAA Tower"
             },
             {
-              "phone": "(340) 693-1647",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.97588",
+              "lat": "18.340998",
+              "name": "Faculty & Staff Housing"
+            },
+            {
+              "lat": "18.343158",
               "name": "GeoCAS Institute",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343158",
+              "phone": "(340) 693-1647",
               "long": "-64.969183"
             },
             {
               "name": "Health Services Center, Health Services",
               "long": "-64.973043",
-              "phone": "(340) 693-1124",
+              "lat": "18.342041",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342041"
+              "phone": "(340) 693-1124"
             },
             {
               "lat": "18.341193",
-              "long": "-64.969852",
+              "name": "Herman E. Moore Golf Course",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "name": "Herman E. Moore Golf Course"
+              "long": "-64.969852"
             },
             {
               "name": "Humanities",
-              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.339658",
-              "long": "-64.973863",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": null,
+              "long": "-64.973863"
             },
             {
-              "long": "-64.971164",
-              "phone": null,
               "name": "Info Kiosk",
+              "lat": "18.339975",
+              "long": "-64.971164",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.339975"
-            },
-            {
-              "long": "-64.975806",
-              "phone": "(340) 693-1040",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.340828",
-              "name": "Institutional Advancement"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.976642",
-              "lat": "18.340045",
-              "phone": "(340) 693-1380",
-              "name": "MMSC- Center for Marine & Environmental Studies (CMES)"
-            },
-            {
-              "lat": "18.342594",
-              "long": "-64.968913",
-              "phone": "(340) 693-1000",
-              "name": "Medical Building, School of Medicine",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341857",
-              "long": "-64.972544",
-              "phone": null,
-              "name": "Music Center"
-            },
-            {
-              "long": "-64.953474",
-              "name": "Nisky Shopping Center- (SBDC)",
-              "lat": "18.336559",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 776-3206"
-            },
-            {
-              "phone": "(340) 693-1290",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343563",
-              "long": "-64.973097",
-              "name": "Nursing, School of Nursing"
-            },
-            {
-              "long": "-64.971515",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341548",
-              "name": "Penha House, ATM Cash Machine",
               "phone": null
             },
             {
-              "name": "Penha House, Security",
-              "lat": "18.341572",
-              "phone": "(340) 693-1530",
-              "long": "-64.971549",
+              "phone": "(340) 693-1040",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Institutional Advancement",
+              "lat": "18.340828",
+              "long": "-64.975806"
+            },
+            {
+              "name": "MMSC- Center for Marine & Environmental Studies (CMES)",
+              "phone": "(340) 693-1380",
+              "long": "-64.976642",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.340045"
+            },
+            {
+              "phone": "(340) 693-1000",
+              "long": "-64.968913",
+              "name": "Medical Building, School of Medicine",
+              "lat": "18.342594",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.341548",
-              "long": "-64.971515",
+              "long": "-64.972544",
+              "phone": null,
+              "name": "Music Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Penha House, WUVI Radio Station",
-              "phone": "(340) 643-1670"
+              "lat": "18.341857"
             },
             {
+              "name": "Nisky Shopping Center- (SBDC)",
+              "phone": "(340) 776-3206",
+              "long": "-64.953474",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.336559"
+            },
+            {
+              "name": "Nursing, School of Nursing",
+              "long": "-64.973097",
+              "phone": "(340) 693-1290",
+              "lat": "18.343563",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Penha House, ATM Cash Machine",
+              "long": "-64.971515",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341548"
+            },
+            {
+              "lat": "18.341572",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.971549",
+              "phone": "(340) 693-1530",
+              "name": "Penha House, Security"
+            },
+            {
+              "name": "Penha House, WUVI Radio Station",
+              "phone": "(340) 643-1670",
+              "lat": "18.341548",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.971515"
+            },
+            {
+              "long": "-64.967624",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1510",
               "lat": "18.341348",
-              "name": "Physical Plant",
-              "long": "-64.967624",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Physical Plant"
             },
             {
               "long": "-64.973027",
-              "phone": "(340) 693-1178",
               "lat": "18.342906",
-              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": "(340) 693-1178",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)"
             },
             {
               "name": "Ralph M. Paiewonsky Library, IT Services",
-              "lat": "18.344026",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972841",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.344026",
               "phone": "(340) 693-1466"
             },
             {
-              "lat": "18.344026",
-              "name": "Ralph M. Paiewonsky Library, I R&P",
-              "long": "-64.972841",
               "phone": "(340) 693-1010",
+              "name": "Ralph M. Paiewonsky Library, I R&P",
+              "lat": "18.344026",
+              "long": "-64.972841",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.344026",
-              "phone": "(340) 693-1367",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Ralph M. Paiewonsky Library, Library",
-              "long": "-64.972841"
+              "lat": "18.344026",
+              "long": "-64.972841",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1367"
             },
             {
-              "lat": "18.343847",
               "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Recreation Center",
               "long": "-64.971202",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.343847"
             },
             {
-              "name": "Reichhold Center for the Arts",
-              "long": "-64.973724",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.345035",
-              "phone": "(340) 693-1550"
+              "phone": "(340) 693-1550",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973724",
+              "name": "Reichhold Center for the Arts"
             },
             {
-              "lat": "18.343399",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Research and Public Service",
               "phone": "(340) 693-1062",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.968547",
-              "name": "Research and Public Service"
+              "lat": "18.343399",
+              "long": "-64.968547"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343563",
               "name": "Residence Hall - East Hall",
               "long": "-64.971744",
-              "phone": null
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "18.343563"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343524",
               "name": "Residence Hall - Middle Hall",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "long": "-64.972378",
-              "lat": "18.343524"
+              "long": "-64.972378"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.344219",
+              "phone": null,
               "name": "Residence Hall - North Hall",
-              "long": "-64.972236",
-              "phone": null,
-              "lat": "18.344219"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.972236"
             },
             {
+              "long": "-64.972189",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Residence Hall - South Hall",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342837",
-              "long": "-64.972189"
+              "lat": "18.342837"
             },
             {
-              "lat": "18.343243",
-              "name": "Residence Hall - West Hall",
               "long": "-64.973581",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
+              "lat": "18.343243",
+              "phone": null,
+              "name": "Residence Hall - West Hall"
             },
             {
               "name": "Roupp House, Counseling & Career Services",
               "lat": "18.342",
-              "phone": "(340) 693-1136",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1136",
               "long": "-64.972145"
             },
             {
               "name": "Roupp House, Housing Services",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1110",
+              "lat": "18.342",
               "long": "-64.972145",
-              "lat": "18.342"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1110"
             },
             {
-              "phone": "(340) 693-1230",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972871",
               "lat": "18.343553",
-              "name": "Science & Math, College of Science & Mathematics"
+              "name": "Science & Math, College of Science & Mathematics",
+              "phone": "(340) 693-1230",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1260",
-              "lat": "18.3426381",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.9735158",
+              "phone": "(340) 693-1260",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.3426381",
               "name": "Social Sciences, College of Liberal Arts and Social Sciences"
             },
             {
-              "long": "-64.973531",
-              "lat": "18.342642",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Social Sciences, Social Sciences",
-              "phone": null
+              "long": "-64.973531",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "18.342642"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Sports & Fitness Center",
               "lat": "18.340004",
-              "long": "-64.972962",
-              "phone": null
-            },
-            {
-              "name": "St. Thomas Campus Dorms",
-              "lat": "18.343517",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.971879",
-              "phone": null
-            },
-            {
-              "name": "Student Activities Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343853",
-              "long": "-64.972072",
-              "phone": "(340) 693-1640"
-            },
-            {
-              "lat": "18.341981",
               "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Sports & Fitness Center",
+              "long": "-64.972962"
+            },
+            {
+              "phone": null,
+              "long": "-64.971879",
+              "name": "St. Thomas Campus Dorms",
+              "lat": "18.343517",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "18.343853",
+              "name": "Student Activities Center",
+              "long": "-64.972072",
+              "phone": "(340) 693-1640",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
               "long": "-64.972995",
-              "name": "Student Laundry"
+              "name": "Student Laundry",
+              "lat": "18.341981",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Teachers Education, School of Education",
-              "lat": "18.343854",
+              "long": "-64.972807",
               "phone": "(340) 693-1320",
+              "lat": "18.343854",
+              "name": "Teachers Education, School of Education"
+            },
+            {
+              "phone": "(340) 693-1322",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Teachers Education, VIUCEDD",
+              "lat": "18.343854",
               "long": "-64.972807"
             },
             {
-              "lat": "18.343854",
-              "phone": "(340) 693-1322",
-              "long": "-64.972807",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Teachers Education, VIUCEDD"
-            },
-            {
-              "name": "Tennis Courts",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
               "long": "-64.97018",
-              "lat": "18.343802"
+              "lat": "18.343802",
+              "name": "Tennis Courts"
             },
             {
-              "long": "-64.973453",
-              "name": "Wellness Center",
-              "lat": "18.339411",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1075"
+              "long": "-64.973453",
+              "lat": "18.339411",
+              "phone": "(340) 693-1075",
+              "name": "Wellness Center"
             }
           ],
           "mapcenter": "18.343563,-64.971744",
@@ -1404,31 +1404,31 @@
           [
             {
               "long": "-64.796226",
-              "phone": "(340) 692-4041",
               "name": "Agricultural Experiment Station, Field Labs",
+              "lat": "17.71991",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.71991"
+              "phone": "(340) 692-4041"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799381",
-              "lat": "17.718069",
               "phone": null,
-              "name": "Campus Information Center, Map, Phone"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Campus Information Center, Map, Phone",
+              "long": "-64.799381",
+              "lat": "17.718069"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.796441",
-              "name": "Animal Science",
               "lat": "17.714822",
+              "name": "Animal Science",
               "phone": null
             },
             {
+              "phone": "(340) 692-4162",
               "img": null,
               "long": "-64.798715",
-              "phone": "(340) 692-4162",
-              "lat": "17.716113",
-              "name": "Bookstore"
+              "name": "Bookstore",
+              "lat": "17.716113"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
@@ -1438,269 +1438,269 @@
               "lat": "17.715507"
             },
             {
-              "lat": "17.716563",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799280",
+              "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
+              "lat": "17.716563"
+            },
+            {
               "long": "-64.799280",
               "phone": null,
-              "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
+              "lat": "17.716563",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
+              "phone": "(340) 692-4280",
+              "long": "-64.799280",
+              "lat": "17.716563"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.716445",
+              "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
+              "phone": null,
+              "long": "-64.799643"
+            },
+            {
+              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
+              "lat": "17.716563",
+              "phone": "(340) 692-4272",
+              "long": "-64.799280",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C",
+              "lat": "17.717391",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716563",
-              "long": "-64.799280",
+              "phone": null,
+              "long": "-64.797374",
+              "name": "Academic Affairs, Evans Center"
+            },
+            {
+              "long": "-64.797374",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.717391",
+              "phone": null,
+              "name": "Business Affairs, Evans Center"
+            },
+            {
+              "name": "Campus Operations, Evans Center",
+              "phone": null,
+              "lat": "17.717391",
+              "long": "-64.797374",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Classrooms, Evans Center",
+              "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "long": "-64.797374"
+            },
+            {
+              "long": "-64.797374",
+              "name": "Counseling & Placement, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.717391",
+              "phone": "(340) 692-4187"
+            },
+            {
+              "long": "-64.797374",
+              "name": "Financial Aid, Evans Center",
+              "phone": "(340) 692-4193",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.717391"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Library, Evans Center",
+              "phone": "(340) 692-4130",
+              "long": "-64.797374",
+              "lat": "17.717391"
+            },
+            {
+              "lat": "17.717391",
+              "long": "-64.797374",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Security, Evans Center",
+              "phone": "(340) 692-4155"
+            },
+            {
+              "phone": "(340) 692-4188",
+              "lat": "17.717391",
+              "long": "-64.797374",
+              "name": "Student Affairs, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "phone": null,
+              "name": "Student Government, Evans Center",
+              "long": "-64.797374",
+              "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House",
+              "long": "-64.799638",
+              "lat": "17.715638",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4003"
+            },
+            {
+              "name": "Health Services, Great House",
+              "phone": "(340) 692-4214",
+              "lat": "17.715638",
+              "long": "-64.799638",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "17.715638",
+              "long": "-64.799638",
+              "phone": "(340) 692-4024",
+              "name": "President's Office, Great House",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "17.715638",
+              "name": "Provost's Office, Great House",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4022",
+              "long": "-64.799638"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799561",
+              "lat": "17.715371",
+              "name": "Modular Building, Math Center/Writing Center",
+              "phone": null
+            },
+            {
+              "long": "-64.797771",
+              "lat": "17.717682",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "North West Wing, Classrooms & Computer Lab",
               "phone": null
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4280",
-              "lat": "17.716563",
-              "long": "-64.799280",
-              "name": "Human Resources, Delta M. Jackson Dorsch Complex"
-            },
-            {
-              "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
-              "long": "-64.799643",
-              "lat": "17.716445",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "lat": "17.716563",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
-              "long": "-64.799280",
-              "phone": "(340) 692-4272"
-            },
-            {
-              "name": "Academic Affairs, Evans Center",
-              "lat": "17.717391",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "long": "-64.797374"
-            },
-            {
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717391",
-              "long": "-64.797374",
-              "name": "Business Affairs, Evans Center"
-            },
-            {
-              "long": "-64.797374",
-              "lat": "17.717391",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Campus Operations, Evans Center"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374",
-              "name": "Classrooms, Evans Center",
-              "phone": null,
-              "lat": "17.717391"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Counseling & Placement, Evans Center",
-              "phone": "(340) 692-4187",
-              "long": "-64.797374",
-              "lat": "17.717391"
-            },
-            {
-              "lat": "17.717391",
-              "name": "Financial Aid, Evans Center",
-              "phone": "(340) 692-4193",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374"
-            },
-            {
-              "name": "Library, Evans Center",
-              "phone": "(340) 692-4130",
-              "lat": "17.717391",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374"
-            },
-            {
-              "long": "-64.797374",
-              "name": "Security, Evans Center",
-              "phone": "(340) 692-4155",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717391"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Student Affairs, Evans Center",
-              "phone": "(340) 692-4188",
-              "lat": "17.717391",
-              "long": "-64.797374"
-            },
-            {
-              "long": "-64.797374",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717391",
-              "phone": null,
-              "name": "Student Government, Evans Center"
-            },
-            {
-              "long": "-64.799638",
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House",
-              "phone": "(340) 692-4003",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.715638"
-            },
-            {
-              "phone": "(340) 692-4214",
-              "lat": "17.715638",
-              "long": "-64.799638",
-              "name": "Health Services, Great House",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "long": "-64.799638",
-              "phone": "(340) 692-4024",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "President's Office, Great House",
-              "lat": "17.715638"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799638",
-              "name": "Provost's Office, Great House",
-              "lat": "17.715638",
-              "phone": "(340) 692-4022"
-            },
-            {
-              "name": "Modular Building, Math Center/Writing Center",
-              "long": "-64.799561",
-              "phone": null,
-              "lat": "17.715371",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": null,
-              "long": "-64.797771",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.717682",
-              "name": "North West Wing, Classrooms & Computer Lab"
-            },
-            {
               "name": "North West Wing, Great Hall",
-              "lat": "17.717682",
-              "long": "-64.797771",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "lat": "17.717682",
-              "name": "North West Wing, Information Technology Services",
-              "phone": "(340) 692-4130",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797771"
             },
             {
-              "long": "-64.796902",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4010",
-              "name": "Nursing, School of Nursing",
-              "lat": "17.716742"
+              "name": "North West Wing, Information Technology Services",
+              "phone": "(340) 692-4130",
+              "lat": "17.717682",
+              "long": "-64.797771"
             },
             {
-              "lat": "17.715507",
-              "long": "-64.799784",
-              "phone": "(340) 692-4171",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Physical Plant"
+              "long": "-64.796902",
+              "lat": "17.716742",
+              "phone": "(340) 692-4010",
+              "name": "Nursing, School of Nursing"
+            },
+            {
+              "phone": "(340) 692-4171",
+              "name": "Physical Plant",
+              "long": "-64.799784",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.715507"
             },
             {
               "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension",
               "phone": "(340) 692-4230",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797331",
-              "lat": "17.718009",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "17.718009"
             },
             {
+              "long": "-64.797331",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4080",
               "lat": "17.718009",
-              "long": "-64.797331",
               "name": "Cooperative Extension Service, Research & Extension"
             },
             {
+              "lat": "17.718009",
+              "phone": "(340) 692-4023",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Institutional Advancement, Research & Extension",
-              "long": "-64.797331",
-              "lat": "17.718009",
-              "phone": "(340) 692-4023"
+              "long": "-64.797331"
             },
             {
-              "name": "President's Office, Research & Extension",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.718009",
               "long": "-64.797331",
+              "name": "President's Office, Research & Extension",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4024"
             },
             {
-              "phone": "(340) 692-4282",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.800617",
               "lat": "17.719256",
-              "name": "College of Science & Mathematics, Research and Technology Park"
+              "name": "College of Science & Mathematics, Research and Technology Park",
+              "long": "-64.800617",
+              "phone": "(340) 692-4282",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "17.719256",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.800617",
               "phone": "(340) 773-5000",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.719256",
               "name": "Research and Technology Park"
             },
             {
-              "name": "Soccer Fields",
-              "lat": "17.713916",
-              "phone": null,
               "long": "-64.798945",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
               "phone": null,
-              "name": "Cafeteria, Student Center",
-              "long": "-64.798345",
-              "lat": "17.716272",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "lat": "17.716231",
-              "long": "-64.798527",
-              "name": "Snack Bar, Student Center",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": "(340) 692-4228",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Soccer Fields",
+              "lat": "17.713916"
+            },
+            {
+              "phone": null,
+              "long": "-64.798345",
+              "name": "Cafeteria, Student Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.716272"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.798527",
+              "phone": null,
+              "lat": "17.716231",
+              "name": "Snack Bar, Student Center"
+            },
+            {
               "long": "-64.798527",
               "name": "Student Activities Center, Student Center",
-              "lat": "17.716231"
+              "phone": "(340) 692-4228",
+              "lat": "17.716231",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.798738",
               "lat": "17.714845",
+              "long": "-64.798738",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Tennis/Basketball Courts"
             },
             {
+              "long": "-64.799784",
+              "phone": "(340) 692-4182",
               "name": "University Bound",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4182",
-              "long": "-64.799784",
               "lat": "17.715507"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.720293",
               "long": "-64.797009",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "UVI Farm Store"
             }
           ],
@@ -1948,40 +1948,40 @@
           "quickdialnumbers": 
           [
             {
-              "number": "1 (877) 468-6884",
-              "name": "Toll-Free"
+              "name": "Toll-Free",
+              "number": "1 (877) 468-6884"
             },
             {
-              "number": "(340) 778-1620",
-              "name": "Albert A. Sheen Campus Main"
+              "name": "Albert A. Sheen Campus Main",
+              "number": "(340) 778-1620"
             },
             {
               "name": "Albert A. Sheen Campus Security",
               "number": "(340) 692-4155"
             },
             {
-              "name": "Albert A. Sheen Campus Hotline",
-              "number": "(340) 692-4168"
+              "number": "(340) 692-4168",
+              "name": "Albert A. Sheen Campus Hotline"
             },
             {
-              "number": "(340) 776-9200",
-              "name": "St. Thomas Campus Main"
+              "name": "St. Thomas Campus Main",
+              "number": "(340) 776-9200"
             },
             {
-              "name": "St. Thomas Campus Security",
-              "number": "(340) 693-1530"
+              "number": "(340) 693-1530",
+              "name": "St. Thomas Campus Security"
             },
             {
               "number": "(340) 693-1016",
               "name": "St. Thomas Campus Hotline"
             },
             {
-              "number": "911",
-              "name": "Virgin Islands Emergency Services"
+              "name": "Virgin Islands Emergency Services",
+              "number": "911"
             },
             {
-              "number": "(340) 693-1466",
-              "name": "ITS Help Desk"
+              "name": "ITS Help Desk",
+              "number": "(340) 693-1466"
             }
           ]
         }
