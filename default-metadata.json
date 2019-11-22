@@ -1,10 +1,10 @@
 {
-  "version": 693,
+  "version": 698,
   "tenantid": "uviproduction",
   "mobappid": 7240,
   "appName": "UVI PROD U8",
   "appDisplayName": "UVI PROD U8",
-  "homeScreenTemplate": "<script>\r\n  try {\r\n\r\n    //alert(JSON.stringify($.jStorage.get('userroles')));\r\n\r\n    /*var vroles = $.jStorage.get(\"userroles\");\r\n    if (!vroles) {\r\n      vroles = [];\r\n      yCampusApp.rootScope.userroles = {};\r\n      vroles.push(\"HPUSTUDENT\");\r\n      MyCampusApp.rootScope.userroles = vroles;\r\n      $.jStorage.set(\"userroles\", vroles);\r\n    }*/\r\n\r\n    MyCampusApp.rootScope.mobileAppName = \"UVI Mobile\";\r\n    MyCampusApp.rootScope.statusBarColor = \"#007298\";\r\n    StatusBar.backgroundColorByHexString(MyCampusApp.rootScope.statusBarColor);\r\n    StatusBar.overlaysWebView(false);\r\n    window.screen.orientation.lock('portrait');\r\n\r\n    function exitApp() {\r\n      navigator.app.exitApp();\r\n    }\r\n\r\n    try {\r\n\r\n\r\n      function successAuth(data) {\r\n        if (!data) {\r\n          $.unblockUI();\r\n          alert(\"line 31\");\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Some error occurred. Please try again', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Some error occurred. Please try again')\r\n          }\r\n          navigator.app.exitApp();\r\n          return;\r\n        }\r\n\r\n        MyCampusApp.rootScope.user['accessToken'] = data.access_token;\r\n        MyCampusApp.rootScope.user['refreshToken'] = data.refresh_token;\r\n        MyCampusApp.rootScope.user['providerData'] = data.access_token;\r\n        MyCampusApp.rootScope.erpticket = {};\r\n        MyCampusApp.rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n        MyCampusApp.rootScope.loggedIn = true;\r\n\r\n        /* User info for logging into ERP/LMS */\r\n        var subVal = $.jStorage.get(\"userSub\")\r\n        MyCampusApp.rootScope.username = \"\";\r\n        if (subVal) {\r\n          var userSplit = subVal.split('/');\r\n          MyCampusApp.rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n          console.log(\"user sub= \" + MyCampusApp.rootScope.username);\r\n        }\r\n        MyCampusApp.rootScope.password = $.jStorage.get(\"unifyedpassword\");\r\n\r\n        MyCampusApp.rootScope.isUserTenantAdmin = MyCampusApp.rootScope.user.admins.indexOf(MyCampusApp.rootScope.user['email']) !== -1;\r\n\r\n\r\n        /*if ($.jStorage.get('setSecurityQuestion') === true){\r\n            window.location.href = '#/app/SignIn279/SignIn279Page2';\r\n        }else {\r\n            window.location.href = '#/app/Settings2/Settings2Page9';\r\n        }*/\r\n        window.location.href = '#/app/Menu82/Menu82';\r\n      }\r\n\r\n      function failureAuth(err) {\r\n        $.unblockUI();\r\n        alert(\"line 76\");\r\n        MyCampusApp.rootScope.loggedIn = false;\r\n        if (window.device) {\r\n          navigator.notification.alert(\"Unable to login, please check your credentials\", exitApp, '', 'Ok');\r\n        } else {\r\n          alert(\"Unable to login, please check your credentials\");\r\n        }\r\n      }\r\n\r\n      var redirectUser = function() {\r\n          /* Check if the user is logged in */\r\n          if ($.jStorage.get(\"unifyedusername\") && $.jStorage.get(\"unifyedpassword\")) {\r\n            MyCampusApp.rootScope.user = $.jStorage.get('user');\r\n            MyCampusApp.rootScope.GatewayUrl = 'https://' + MyCampusApp.rootScope.user['domain'] + MyCampusApp.rootScope.user['gatewaypath'];\r\n\r\n            var settings = {\r\n              \"async\": true,\r\n              \"crossDomain\": true,\r\n              \"url\": MyCampusApp.rootScope.GatewayUrl + \"/unifydidentity/open/oauth2/token\",\r\n              \"method\": \"POST\",\r\n              \"headers\": {\r\n                \"Content-Type\": \"application/x-www-form-urlencoded\",\r\n                \"X-TENANT-ID\": \"uviproduction\",\r\n                \"X-TENANT-DOMAIN\": MyCampusApp.rootScope.user.idpTenantDomain,\r\n              },\r\n              \"data\": {\r\n                \"username\": $.jStorage.get(\"unifyedusername\"),\r\n                \"password\": $.jStorage.get(\"unifyedpassword\")\r\n              }\r\n            }\r\n\r\n            $.ajax(settings).done(successAuth).fail(failureAuth);\r\n\r\n          } else {\r\n\r\n            MyCampusApp.rootScope.loggedIn = false;\r\n            /* Check if app has only guest applets */\r\n            if ($.jStorage.get('tenantInfo').guestApp) {\r\n              MyCampusApp.rootScope.user = null;\r\n              window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to home page */\r\n            } else {\r\n              window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to signin page since it doesn't have guest applets */\r\n            }\r\n          }\r\n        }\r\n        //  alert(\"Stand alone : \" + MyCampusApp.rootScope.standaloneApp);\r\n        /* Check if the app is running as standalone app */\r\n      if (MyCampusApp.rootScope.standaloneApp) {\r\n        /* Get insititution details from tenant Id */\r\n        var settings = {\r\n          \"async\": true,\r\n          \"crossDomain\": true,\r\n          \"method\": \"GET\",\r\n          \"headers\": {\r\n            \"content-type\": \"application/json\",\r\n            \"x-tenant-id\": \"uviproduction\"\r\n          }\r\n        };\r\n\r\n        MyCampusApp.rootScope.environment = \"prod\";\r\n\r\n        switch (MyCampusApp.rootScope.environment) {\r\n          case 'dev':\r\n            {\r\n              settings['url'] = 'https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n          case 'stage':\r\n            {\r\n              settings['url'] = 'https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n          case 'prod':\r\n            {\r\n              settings['url'] = 'https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n        }\r\n\r\n        try {\r\n          /* AK - Avoiding the call to get school info and hardcoding here..*/\r\n          /* This is the response from https:unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=Unifyedpreprod */\r\n\r\n          var tenantinfoStage = {\r\n            \"id\": \"5c474a507b492e0001a837e6\",\r\n            \"name\": \"UVI Mobile\",\r\n            \"logoUrl\": \"https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/b6e97511-37de-4449-980d-99327ce670b6.png\",\r\n            \"tenantId\": \"uviproduction\",\r\n            \"appId\": \"8617\",\r\n            \"guestApp\": true,\r\n            \"erp\": {\r\n              \"name\": \"banner\",\r\n              \"sso\": true,\r\n              \"useSessionUser\": false\r\n            },\r\n            \"lms\": null\r\n          };\r\n          $.jStorage.set('tenantInfo', tenantinfoStage);\r\n          redirectUser();\r\n\r\n          /*$.blockUI();\r\n          $.ajax(settings).done(function(response) {\r\n            $.unblockUI();\r\n            $.jStorage.set('tenantInfo', response.content[0]);\r\n            redirectUser();\r\n          });*/\r\n        } catch (e) {\r\n          $.unblockUI();\r\n          alert(\"line 184\");\r\n          if (window.device) {\r\n            navigator.notification.alert('Something went wrong, please try after sometime.', exitApp, '', 'Ok');\r\n          } else {\r\n            alert('Something went wrong, please try after sometime.');\r\n          }\r\n        }\r\n      } else {\r\n        alert(\"Going to else\");\r\n        redirectUser();\r\n      }\r\n\r\n      var handleSwitch = function(btn) {\r\n        if (btn == 1) {\r\n          window.location.href = '#/amakerhome';\r\n        }\r\n      }\r\n      var switchApp = function() {\r\n        if (window.device) {\r\n          navigator.notification.confirm(\"Do you want to switch app?\", handleSwitch, 'Switch App', ['Yes', 'No']);\r\n        }\r\n      }\r\n\r\n      var onBackKeyDown = function(event) {\r\n\r\n        var loc = window.location;\r\n\r\n        if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && MyCampusApp.rootScope.standaloneApp) {\r\n          exitApp();\r\n        } else if (loc.hash == \"#/app/Menu82/Menu82\" && !MyCampusApp.rootScope.loggedIn && !MyCampusApp.rootScope.standaloneApp) {\r\n          switchApp();\r\n        } else if (loc.hash == \"#/app/WhatsUp/WhatsUp\") {\r\n          exitApp();\r\n        } else if (loc.hash == \"#/app/SignIn279/SignIn279\") {\r\n          window.location.href = \"#/app/Menu82/Menu82\";\r\n        } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && $.jStorage.get('tenantInfo').guestApp) {\r\n          window.location.href = \"#/app/Menu82/Menu82\";\r\n        } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && MyCampusApp.rootScope.standaloneApp) {\r\n          exitApp();\r\n        } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && !MyCampusApp.rootScope.standaloneApp) {\r\n          switchApp();\r\n        } else {\r\n          navigator.app.backHistory();\r\n        }\r\n      }\r\n      document.addEventListener(\"backbutton\", onBackKeyDown, true);\r\n\r\n      var Notification = PushNotification.init({\r\n        android: {\r\n          senderID: \"459115189650\"\r\n        },\r\n        browser: {\r\n          pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n        },\r\n        ios: {\r\n          alert: \"true\",\r\n          badge: \"true\",\r\n          sound: \"true\"\r\n        },\r\n        windows: {}\r\n      });\r\n\r\n      /*Notification.on('registration', function(data) {\r\n\r\n        var devicePushID = data.registrationId;\r\n      });\r\n\r\n      MyCampusApp.rootScope.inAppNotificationHandler(Notification);*/\r\n    } catch (e) {}\r\n\r\n    $('input:text').focusout(function() {\r\n      $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n      $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n\r\n    });\r\n\r\n    $('input:text').focusin(function() {\r\n\r\n      $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n      $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n    });\r\n  } catch (ex) {\r\n    //alert(ex);\r\n  }\r\n<\/script>",
+  "homeScreenTemplate": "<script>\r\n  try {\r\n\r\n    //alert(JSON.stringify($.jStorage.get('userroles')));\r\n\r\n    /*var vroles = $.jStorage.get(\"userroles\");\r\n    if (!vroles) {\r\n      vroles = [];\r\n      yCampusApp.rootScope.userroles = {};\r\n      vroles.push(\"HPUSTUDENT\");\r\n      MyCampusApp.rootScope.userroles = vroles;\r\n      $.jStorage.set(\"userroles\", vroles);\r\n    }*/\r\n\r\n    MyCampusApp.rootScope.mobileAppName = \"UVI Mobile\";\r\n    MyCampusApp.rootScope.statusBarColor = \"#007298\";\r\n    StatusBar.backgroundColorByHexString(MyCampusApp.rootScope.statusBarColor);\r\n    StatusBar.overlaysWebView(false);\r\n    window.screen.orientation.lock('portrait');\r\n\r\n    function exitApp() {\r\n      navigator.app.exitApp();\r\n    }\r\n\r\n    try {\r\n\r\n\r\n      function successAuth(data) {\r\n        if (!data) {\r\n          $.unblockUI();\r\n          //alert(\"line 31\");\r\n          if (window.device) {\r\n            navigator.notification.alert(\r\n              'Some error occurred. Please try again', // message\r\n              null, // callback\r\n              'Error', // title\r\n              'OK' // buttonName\r\n            );\r\n          } else {\r\n            alert('Some error occurred. Please try again')\r\n          }\r\n          navigator.app.exitApp();\r\n          return;\r\n        }\r\n\r\n        MyCampusApp.rootScope.user['accessToken'] = data.access_token;\r\n        MyCampusApp.rootScope.user['refreshToken'] = data.refresh_token;\r\n        MyCampusApp.rootScope.user['providerData'] = data.access_token;\r\n        MyCampusApp.rootScope.erpticket = {};\r\n        MyCampusApp.rootScope.erpticket[$.jStorage.get('tenantInfo').erp.name] = data.access_token;\r\n        MyCampusApp.rootScope.loggedIn = true;\r\n\r\n        /* User info for logging into ERP/LMS */\r\n        var subVal = $.jStorage.get(\"userSub\")\r\n        MyCampusApp.rootScope.username = \"\";\r\n        if (subVal) {\r\n          var userSplit = subVal.split('/');\r\n          MyCampusApp.rootScope.username = (userSplit.length == 1) ? userSplit[0].split('@')[0] : userSplit[1].split('@')[0];\r\n          console.log(\"user sub= \" + MyCampusApp.rootScope.username);\r\n        }\r\n        MyCampusApp.rootScope.password = $.jStorage.get(\"unifyedpassword\");\r\n\r\n        MyCampusApp.rootScope.isUserTenantAdmin = MyCampusApp.rootScope.user.admins.indexOf(MyCampusApp.rootScope.user['email']) !== -1;\r\n\r\n\r\n        /*if ($.jStorage.get('setSecurityQuestion') === true){\r\n            window.location.href = '#/app/SignIn279/SignIn279Page2';\r\n        }else {\r\n            window.location.href = '#/app/Settings2/Settings2Page9';\r\n        }*/\r\n        window.location.href = '#/app/Menu82/Menu82';\r\n      }\r\n\r\n      function failureAuth(err) {\r\n        $.unblockUI();\r\n        //alert(\"line 76\");\r\n        MyCampusApp.rootScope.loggedIn = false;\r\n        if (window.device) {\r\n          navigator.notification.alert(\"Unable to login, please check your credentials\", exitApp, '', 'Ok');\r\n        } else {\r\n          alert(\"Unable to login, please check your credentials\");\r\n        }\r\n      }\r\n\r\n      var redirectUser = function() {\r\n          /* Check if the user is logged in */\r\n          if ($.jStorage.get(\"unifyedusername\") && $.jStorage.get(\"unifyedpassword\")) {\r\n            MyCampusApp.rootScope.user = $.jStorage.get('user');\r\n            MyCampusApp.rootScope.GatewayUrl = 'https://' + MyCampusApp.rootScope.user['domain'] + MyCampusApp.rootScope.user['gatewaypath'];\r\n\r\n            var settings = {\r\n              \"async\": true,\r\n              \"crossDomain\": true,\r\n              \"url\": MyCampusApp.rootScope.GatewayUrl + \"/unifydidentity/open/oauth2/token\",\r\n              \"method\": \"POST\",\r\n              \"headers\": {\r\n                \"Content-Type\": \"application/x-www-form-urlencoded\",\r\n                \"X-TENANT-ID\": \"uviproduction\",\r\n                \"X-TENANT-DOMAIN\": MyCampusApp.rootScope.user.idpTenantDomain,\r\n              },\r\n              \"data\": {\r\n                \"username\": $.jStorage.get(\"unifyedusername\"),\r\n                \"password\": $.jStorage.get(\"unifyedpassword\")\r\n              }\r\n            }\r\n\r\n            $.ajax(settings).done(successAuth).fail(failureAuth);\r\n\r\n          } else {\r\n\r\n            MyCampusApp.rootScope.loggedIn = false;\r\n            /* Check if app has only guest applets */\r\n            if ($.jStorage.get('tenantInfo').guestApp) {\r\n              MyCampusApp.rootScope.user = null;\r\n              window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to home page */\r\n            } else {\r\n              window.location.href = '#/app/Menu82/Menu82'; /* Redirect user to signin page since it doesn't have guest applets */\r\n            }\r\n          }\r\n        }\r\n        //  alert(\"Stand alone : \" + MyCampusApp.rootScope.standaloneApp);\r\n        /* Check if the app is running as standalone app */\r\n      if (MyCampusApp.rootScope.standaloneApp) {\r\n        /* Get insititution details from tenant Id */\r\n        var settings = {\r\n          \"async\": true,\r\n          \"crossDomain\": true,\r\n          \"method\": \"GET\",\r\n          \"headers\": {\r\n            \"content-type\": \"application/json\",\r\n            \"x-tenant-id\": \"uviproduction\"\r\n          }\r\n        };\r\n\r\n        MyCampusApp.rootScope.environment = \"prod\";\r\n\r\n        switch (MyCampusApp.rootScope.environment) {\r\n          case 'dev':\r\n            {\r\n              settings['url'] = 'https://seark.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n          case 'stage':\r\n            {\r\n              settings['url'] = 'https://unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n          case 'prod':\r\n            {\r\n              settings['url'] = 'https://api.unifyed.com/unifyd-gateway/api/unifydplatform/open/school?school=' + MyCampusApp.config.tenant;\r\n              break;\r\n            }\r\n        }\r\n\r\n        try {\r\n          /* AK - Avoiding the call to get school info and hardcoding here..*/\r\n          /* This is the response from https:unifyed-staging.unifyed.com/unifyd-gateway-preprod/api/unifydplatform/open/school?school=Unifyedpreprod */\r\n\r\n          var tenantinfoStage = {\r\n            \"id\": \"5c474a507b492e0001a837e6\",\r\n            \"name\": \"UVI Mobile\",\r\n            \"logoUrl\": \"https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/b6e97511-37de-4449-980d-99327ce670b6.png\",\r\n            \"tenantId\": \"uviproduction\",\r\n            \"appId\": \"8617\",\r\n            \"guestApp\": true,\r\n            \"erp\": {\r\n              \"name\": \"banner\",\r\n              \"sso\": true,\r\n              \"useSessionUser\": false\r\n            },\r\n            \"lms\": null\r\n          };\r\n          $.jStorage.set('tenantInfo', tenantinfoStage);\r\n          redirectUser();\r\n\r\n          /*$.blockUI();\r\n          $.ajax(settings).done(function(response) {\r\n            $.unblockUI();\r\n            $.jStorage.set('tenantInfo', response.content[0]);\r\n            redirectUser();\r\n          });*/\r\n        } catch (e) {\r\n          $.unblockUI();\r\n          //alert(\"line 184\");\r\n          if (window.device) {\r\n            navigator.notification.alert('Something went wrong, please try after sometime.', exitApp, '', 'Ok');\r\n          } else {\r\n            alert('Something went wrong, please try after sometime.');\r\n          }\r\n        }\r\n      } else {\r\n        alert(\"Going to else\");\r\n        redirectUser();\r\n      }\r\n\r\n      var handleSwitch = function(btn) {\r\n        if (btn == 1) {\r\n          window.location.href = '#/amakerhome';\r\n        }\r\n      }\r\n      var switchApp = function() {\r\n        if (window.device) {\r\n          navigator.notification.confirm(\"Do you want to switch app?\", handleSwitch, 'Switch App', ['Yes', 'No']);\r\n        }\r\n      }\r\n\r\n      var backEventAttached = backEventAttached ? backEventAttached : false;\r\n\r\n      if (!backEventAttached) {\r\n        var onBackKeyDown = function(event) {\r\n\r\n          // alert(window.location.hash);\r\n          var loc = window.location;\r\n          if (loc.hash == \"#/app/Menu82/Menu82\") {\r\n            exitApp();\r\n          } else if (loc.hash == \"#/app/Settings2/Settings2\") {\r\n            window.location.href = '#/app/Menu82/Menu82';\r\n          } else if (loc.hash == \"#/app/SignIn279/SignIn279\") {\r\n            window.location.href = '#/app/Menu82/Menu82';\r\n          } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && MyCampusApp.rootScope.standaloneApp) {\r\n            exitApp();\r\n          } else if (loc.hash == \"#/app/SignIn279/SignIn279\" && !$.jStorage.get('tenantInfo').guestApp && !MyCampusApp.rootScope.standaloneApp) {\r\n            switchApp();\r\n          } else {\r\n            navigator.app.backHistory();\r\n          }\r\n\r\n        }\r\n      }\r\n\r\n      if (!backEventAttached) {\r\n        document.addEventListener(\"backbutton\", onBackKeyDown, true);\r\n        backEventAttached = true;\r\n      }\r\n\r\n\r\n      var Notification = PushNotification.init({\r\n        android: {\r\n          senderID: \"459115189650\"\r\n        },\r\n        browser: {\r\n          pushServiceURL: 'http://push.api.phonegap.com/v1/push'\r\n        },\r\n        ios: {\r\n          alert: \"true\",\r\n          badge: \"true\",\r\n          sound: \"true\"\r\n        },\r\n        windows: {}\r\n      });\r\n\r\n      /*Notification.on('registration', function(data) {\r\n\r\n        var devicePushID = data.registrationId;\r\n      });\r\n\r\n      MyCampusApp.rootScope.inAppNotificationHandler(Notification);*/\r\n    } catch (e) {}\r\n\r\n    $('input:text').focusout(function() {\r\n      $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n      $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n\r\n    });\r\n\r\n    $('input:text').focusin(function() {\r\n\r\n      $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n      $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n    });\r\n  } catch (ex) {\r\n    //alert(ex);\r\n  }\r\n<\/script>",
   "middlewareServerUrl": null,
   "feedbackEmail": "support@unifyed.com",
   "backgroundurl": "uviproduction/background.png",
@@ -12,11 +12,6 @@
   "customStyle": ".borderNone,\r\n.transparent {\r\n  border: 0px !important\r\n}\r\n\r\n.circle,\r\n.list-group-item,\r\n.sideBarMenuOptions,\r\ndiv,\r\ninput,\r\ninput:focus,\r\nlabel,\r\nspan {\r\n  outline: 0 !important\r\n}\r\n\r\n.fixedDropdown,\r\n.dropdownMenuSelect ul {\r\n  max-height: 250px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.list-group-item {\r\n  position: relative;\r\n  display: block;\r\n  padding: 12px 15px;\r\n  margin-bottom: -1px;\r\n  background-color: #fff;\r\n  border: 1px solid #c7c7c7;\r\n}\r\n\r\n#sidebar .contact-support a,\r\n#sidebar > ul > li > a,\r\n#sidebar > ul > li > ul > li > a {\r\n  white-space: nowrap;\r\n  text-overflow: ellipsis\r\n}\r\n\r\n.image,\r\n.imgFit {\r\n  object-fit: contain\r\n}\r\n\r\nbody {\r\n  position: absolute;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-size: 100% 100% !important\r\n}\r\n\r\n.app-body {\r\n  padding-bottom: 0 !important\r\n}\r\n\r\n.blockUI {\r\n  margin: auto !important;\r\n  left: 0 !important;\r\n  right: 0 !important;\r\n  width: auto !important\r\n}\r\n\r\n#sidebar ul.components {\r\n  cursor: pointer !important;\r\n}\r\n\r\n.jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content {\r\n  overflow: hidden !important\r\n}\r\n\r\n.greyBorder {\r\n  border: #c7c7c7 solid 1px;\r\n}\r\n\r\n\r\n/*************************************** Tabs Desktop Start *****************************************/\r\n\r\n.filterArea {\r\n  padding: 4px 15px;\r\n}\r\n\r\n.toolbar-menu {\r\n  text-align: center;\r\n  border-radius: 0px;\r\n  border-top-left-radius: 0px !important;\r\n  border-top-right-radius: 0px !important;\r\n  background: rgba(255, 255, 255, 0.6) !important;\r\n  background-color: rgba(255, 255, 255, 0.6) !important;\r\n  border: 0 !important;\r\n  margin: 0px;\r\n  padding: 0px 25% !important;\r\n  border-bottom: 1px solid #c7c7c7 !important;\r\n  border-top: 1px solid #c7c7c7 !important;\r\n}\r\n\r\n.toolbar-column span {\r\n  padding: 15px 0px;\r\n  font-size: 16px;\r\n  display: block;\r\n  font-weight: 100;\r\n  color: #767676;\r\n  margin-bottom: -1px;\r\n  border-bottom: 3px solid transparent;\r\n}\r\n\r\n.toolbar-column {\r\n  margin: 0px;\r\n  color: #c2c2c2;\r\n  text-align: center;\r\n  cursor: pointer;\r\n  display: inline-block;\r\n}\r\n@media (max-width: 480px) {\r\n.toolbar-column span {\r\n  font-size: 15px;\r\n}\r\n.toolbar-column {\r\n    padding: 0 5px;\r\n}\r\n}\r\n.toolbar-column:last-of-type {\r\n  border: 0;\r\n}\r\n\r\n.toolbar-column span:last-of-type {\r\n  border-right: 0;\r\n}\r\n\r\n.toolbar-column-active span {\r\n  color: #252729;\r\n  font-weight: bold;\r\n  border-bottom: 3px solid #252729;\r\n}\r\n\r\n\r\n/*************************************** Tabs Desktop End *****************************************/\r\n\r\n@media (min-width: 320px) and (max-width: 480px) {\r\n  .brandingImage {\r\n    display: none !important\r\n  }\r\n  .toolbar-menu {\r\n    padding: 0px 0 !important;\r\n  }\r\n  .toolbar-column span {\r\n    padding: 15px 12px;\r\n  }\r\n}\r\n\r\n.maxWidth400 {\r\n  max-width: 400px !important;\r\n  min-width: 260px !important\r\n}\r\n\r\n.maxWidth450 {\r\n  max-width: 450px !important;\r\n  min-width: 260px !important\r\n}\r\n\r\n@media (min-width: 320px) and (max-width: 568px) {\r\n  .brandingImage {\r\n    display: none !important\r\n  }\r\n  .toolbar-menu {\r\n    padding: 0px 0 !important;\r\n  }\r\n  .toolbar-column span {\r\n    padding: 15px 12px;\r\n  }\r\n}\r\n\r\n.navbar {\r\n  box-shadow: 0 0 10px #c89844\r\n}\r\n\r\na:active {\r\n  opacity: 1 !important\r\n}\r\n\r\nli,\r\np {\r\n  text-align: justify !important\r\n}\r\n\r\n.ng-scope {\r\n  margin-bottom: 0 !important\r\n}\r\n\r\n.btn {\r\n  padding: 8px 30px;\r\n  min-width: 30px\r\n}\r\n\r\n.disableColor {\r\n  color: #c2c2c2 !important\r\n}\r\n\r\n.btn-block {\r\n  background: #252729 !important;\r\n  background-color: #252729 !important;\r\n}\r\n\r\n.btn-block:active,\r\n.btn-block:hover {\r\n  color: #525252;\r\n  opacity: 1;\r\n  background: #252729 !important;\r\n  background-color: #252729 !important;\r\n}\r\n\r\n.linkColor {\r\n  color: #252729 !important\r\n}\r\n\r\n.whiteTextColor {\r\n  color: #fff\r\n}\r\n\r\n#fixedHeaderContent {\r\n  position: fixed;\r\n  top: 70px;\r\n  width: 100%;\r\n  z-index: 100\r\n}\r\n\r\n.circle,\r\n.postUserImg,\r\n.userImgBox {\r\n  width: 40px;\r\n  height: 40px\r\n}\r\n\r\n.footerGroupIcons {\r\n  display: block !important\r\n}\r\n\r\n.form-control,\r\ninput,\r\nselect,\r\ntextarea {\r\n  min-height: 39px;\r\n  border-radius: 4px\r\n}\r\n\r\n.circle {\r\n  border-radius: 50px;\r\n  padding-top: 14px;\r\n  font-weight: bolder\r\n}\r\n\r\n.no-side-padding {\r\n  padding-left: 0 !important;\r\n  padding-right: 0 !important\r\n}\r\n\r\n.red {\r\n  color: red\r\n}\r\n\r\n.cursorPointer {\r\n  cursor: pointer\r\n}\r\n\r\n.cursorDefault {\r\n  cursor: default;\r\n}\r\n\r\n.listItemTopPadding {\r\n  padding: 9px 0 0\r\n}\r\n\r\n.listItemTopBottomPadding {\r\n  padding: 9px 0\r\n}\r\n\r\n.listItemCustomPadding {\r\n  padding: 12px 18px\r\n}\r\n\r\n.btnTopBottomPadding {\r\n  padding: 10px 0\r\n}\r\n\r\n.colPadding {\r\n  padding: 0;\r\n  margin: 0\r\n}\r\n\r\n.listitemborderSolid {\r\n  border: none;\r\n  border-bottom: 1px solid #ecedee !important;\r\n  margin-bottom: 0 !important\r\n}\r\n\r\n.listitemborderTopSolid {\r\n  border: none;\r\n  border-top: 1px solid #ecedee !important\r\n}\r\n\r\n.alignright {\r\n  text-align: right\r\n}\r\n\r\n.aligncenter {\r\n  text-align: center\r\n}\r\n\r\n.alignleft {\r\n  text-align: left\r\n}\r\n\r\n#dismiss,\r\n.jconfirm-box-container,\r\n.jconfirm-buttons,\r\n.textcenter {\r\n  text-align: center\r\n}\r\n\r\n.whitetext {\r\n  color: #fff !important\r\n}\r\n\r\n.fontb3b3b3 {\r\n  color: #b3b3b3 !important;\r\n  font-weight: 400;\r\n  word-wrap: break-word\r\n}\r\n\r\n.userImgBox {\r\n  overflow: hidden;\r\n  float: left;\r\n  border-radius: 50%;\r\n  position: relative\r\n}\r\n\r\n.postUserImg {\r\n  min-width: 40px;\r\n  min-height: 40px\r\n}\r\n\r\n.well {\r\n  padding: 8px;\r\n  background-color: transparent;\r\n  border: none\r\n}\r\n\r\n#tagsList {\r\n  display: none\r\n}\r\n\r\n#fixedFooterContent {\r\n  position: fixed;\r\n  bottom: 19px;\r\n  width: 100%;\r\n  z-index: 100\r\n}\r\n\r\n.tagBtn {\r\n  background-color: #c7d2e1;\r\n  color: #515264;\r\n  border-radius: 2em;\r\n  margin: 0 5px 5px 0;\r\n  padding: 4px 12px\r\n}\r\n\r\n.tagBtnPadding {\r\n  padding: 4px 8px 4px 12px\r\n}\r\n\r\n.fonticon {\r\n  width: 20px\r\n}\r\n\r\n.backgroundNone {\r\n  background:transparent;\r\n  background-color:transparent;\r\n}\r\n\r\n.tagListBox {\r\n  max-height: 180px;\r\n  overflow: scroll;\r\n  position: absolute;\r\n  top: 0;\r\n  z-index: 10;\r\n  width: 100%;\r\n  box-shadow: 0 4px 20px rgba(29, 42, 60, .28)\r\n}\r\n\r\n.tagheader {\r\n  background-color: #c2cdda;\r\n  border-bottom: 1px solid #c2cdda;\r\n  padding: 2px 10px\r\n}\r\n\r\n.tagInput {\r\n  background:none;\r\n  background-color:none;\r\n  outline: 0;\r\n  color: #9a9fbd;\r\n  border: none;\r\n  width: 91%\r\n}\r\n\r\n.listItemPadding {\r\n  padding: 9px\r\n}\r\n\r\n.whatsUpTitleInput {\r\n  background-color: transparent;\r\n  width: 100%;\r\n  padding: 0;\r\n  outline: 0;\r\n  resize: none\r\n}\r\n\r\n.customPadding {\r\n  padding: 5px 10px\r\n}\r\n\r\n.tagActive:active {\r\n  background: #1a7de3;\r\n  background-color: #1a7de3;\r\n  color: #fff\r\n}\r\n\r\n.lineheight22 {\r\n  line-height: 22px\r\n}\r\n\r\n.lineheight30 {\r\n  line-height: 30px\r\n}\r\n\r\n.lineheight20 {\r\n  line-height: 20px\r\n}\r\n\r\n.lineheight16 {\r\n  line-height: 16px\r\n}\r\n.positionAbsolute {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0\r\n}\r\n\r\n.borderRadiusCircle {\r\n  border-radius: 50%\r\n}\r\n\r\n.well {\r\n  padding-bottom: 100px\r\n}\r\n\r\n.listItemTop15Padding {\r\n  padding: 15px 0 0 !important\r\n}\r\n\r\n.userPreferances {\r\n  text-transform: uppercase;\r\n  padding: 8px 10px;\r\n  margin: 0 10px 5px 0 !important;\r\n  display: inline-block;\r\n  border-radius: 3px;\r\n  cursor: pointer\r\n}\r\n\r\n.userPreferances::last-of-type {\r\n  margin-right: 0 !important\r\n}\r\n\r\n.greytextborder {\r\n  color: #252729 !important;\r\n  font-weight: 400;\r\n  word-wrap: break-word;\r\n  border: 1px solid #252729\r\n}\r\n\r\n.userPreferances.greytextborder .tag-select {\r\n  background-image: url(images/add.png);\r\n  width: 9px;\r\n  height: 9px;\r\n  display: inline-block;\r\n  background-size: 100%;\r\n}\r\n\r\n.tag-selected {\r\n  background-image: url(images/whiteCross.png);\r\n  width: 9px;\r\n  height: 9px;\r\n  display: inline-block;\r\n  background-size: 100%;\r\n}\r\n\r\n.userPreferances.greytextborder:hover {\r\n  color: #b60072 !important;\r\n  border: 1px solid #b60072;\r\n}\r\n\r\n.userPreferances.greytextborder:hover .tag-select {\r\n  background-image: url(images/plus-yellow.png);\r\n  width: 9px;\r\n  height: 9px;\r\n  display: inline-block;\r\n  background-size: 100%;\r\n}\r\n\r\n.selectedPre {\r\n  color: #fff !important;\r\n  border: 1px solid #b60072;\r\n  background: #b60072;\r\n  background-color: #b60072;\r\n}\r\n\r\ninput:-webkit-autofill {\r\n  -webkit-box-shadow: 0 0 0 1000px #eeeef0 inset !important\r\n}\r\n\r\n\r\n.displayInlineBlock {\r\n  display: inline-block\r\n}\r\n\r\n.displayTable {\r\n  display: table\r\n}\r\n\r\n.displayTableCell {\r\n  display: table-cell\r\n}\r\n.lightBorder {\r\n  border-bottom: 1px solid #eaebec;\r\n}\r\n\r\n.verticalAlignMiddle {\r\n  vertical-align: middle\r\n}\r\n\r\n.elipsesTwoLines {\r\n  line-height: 18px;\r\n  display: -webkit-box;\r\n  -webkit-line-clamp: 2;\r\n  -webkit-box-orient: vertical\r\n}\r\n\r\n.switch {\r\n  position: relative;\r\n  display: inline-block;\r\n  width: 40px;\r\n  height: 25px;\r\n  cursor: pointer;\r\n  background-color: #fff;\r\n  border-radius: 999px\r\n}\r\n\r\n.slider,\r\n.slider:before {\r\n  position: absolute;\r\n  background-color: #c2c2c2;\r\n  bottom: 0\r\n}\r\n\r\n.brandingImage,\r\n.switch input {\r\n  display: none\r\n}\r\n\r\n.slider {\r\n  cursor: pointer;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  -webkit-transition: .2s;\r\n  transition: .2s\r\n}\r\n\r\n.slider:before {\r\n  content: \"\";\r\n  height: 23px;\r\n  width: 23px;\r\n  left: 1px;\r\n  background: #fff;\r\n  background-color: #fff;\r\n  -webkit-transition: .2s;\r\n  transition: .2s;\r\n  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12)\r\n}\r\n\r\ninput:checked + .slider {\r\n  background-color: #36B37E;\r\n}\r\n\r\ninput:focus + .slider {\r\n  box-shadow: 0 0 1px #36B37E;\r\n}\r\n\r\ninput:checked + .slider:before {\r\n  -webkit-transform: translateX(14px);\r\n  -ms-transform: translateX(14px);\r\n  transform: translateX(14px)\r\n}\r\n\r\n.slider.round {\r\n  border-radius: 14px\r\n}\r\n\r\n.slider.round:before,\r\n.userImgWhatsUp {\r\n  border-radius: 50%\r\n}\r\n\r\n.widthAuto {\r\n  width: auto\r\n}\r\n\r\n@media (min-width: 1224px) {\r\n  .listItemTopPadding {\r\n    padding: 9px 0 0;\r\n    margin-top: 1px\r\n  }\r\n  .well {\r\n    padding-top: 0;\r\n    padding-bottom: 0\r\n  }\r\n}\r\n\r\n.userImgWhatsUp {\r\n  width: 60px;\r\n  height: 60px;\r\n  overflow: hidden;\r\n  float: left;\r\n  position: relative\r\n}\r\n\r\n.borderRadius6 {\r\n  border-radius: 6px\r\n}\r\n\r\n.boxradius {\r\n  border-radius: 4px !important\r\n}\r\n\r\n.borderRadius4,\r\n.borderRadius4px {\r\n  border-radius: 4px\r\n}\r\n\r\n.replybtnText {\r\n  color: #949494\r\n}\r\n\r\n.hamburgerSearchBox {\r\n  background-size: 20px;\r\n  background-repeat: no-repeat;\r\n  background-position: 100% 50%;\r\n}\r\n\r\n.hideFooter {\r\n  display: none !important\r\n}\r\n\r\n\r\n#sidebar ul li a:hover,\r\n#sidebar ul li.active > a,\r\n#sidebar ul p,\r\na[aria-expanded=true] {\r\n  color: #fff;\r\n  background: none;\r\n  background-color: none;\r\n}\r\n\r\n#sidebar ul li a {\r\n  color: rgba(250, 250, 250, .4);\r\n  background: none;\r\n  background-color: none;\r\n  transition: ease-in-out .15s\r\n}\r\n\r\n#sidebar ul li a img {\r\n  filter: invert(100%);\r\n  -webkit-filter: invert(100%);\r\n  opacity: .4;\r\n  margin-top: -4px\r\n}\r\n\r\n#sidebar ul li a:hover,\r\n#sidebar ul li a:hover img {\r\n  opacity: 1\r\n}\r\n\r\n#sidebar .separator {\r\n  border-bottom: 2px solid rgba(100, 100, 100, .2)\r\n}\r\n\r\n.navbar {\r\n  background: #fff;\r\n  background-color: #fff;\r\n}\r\n.navbar-menu-item .dockicons {\r\n  margin-top: 0px;\r\n}\r\n\r\n#dismiss {\r\n  width: 30px;\r\n  height: 30px;\r\n  line-height: 30px;\r\n  background: #525252;\r\n  background-color: #525252;\r\n  position: absolute;\r\n  top: 4px;\r\n  right: 10px;\r\n  cursor: pointer;\r\n  -webkit-transition: all .3s;\r\n  -o-transition: all .3s;\r\n  transition: all .3s;\r\n  z-index: 1;\r\n  border-radius: 50%\r\n}\r\n\r\n#dismiss i {\r\n  top: 2px\r\n}\r\n\r\n#dismiss:hover {\r\n  background: #c2c2c2;\r\n  background-color: #c2c2c2;\r\n  color: #525252\r\n}\r\n\r\n\r\n/*sidebar changes*/\r\n\r\n#sidebar > ul > li > ul {\r\n  padding-bottom: 0px;\r\n  background: rgba(0, 0, 0, 0.13);\r\n  background-color: rgba(0, 0, 0, 0.13);\r\n}\r\n\r\n#sidebar .applets-heading {\r\n  margin: 30px 0 10px;\r\n  padding: 0 24px;\r\n  float: left;\r\n  width: 100%;\r\n}\r\n\r\n#sidebar .applets-heading #appletsmenu {\r\n  letter-spacing: .2em;\r\n  font-weight: 700\r\n}\r\n\r\n#sidebar .contact-support {\r\n  position: fixed;\r\n  bottom: 0;\r\n  width: 240px;\r\n  max-width: 240px;\r\n  background: #252729;\r\n  background-color: #252729;\r\n  z-index: 3;\r\n  padding-bottom: 5px\r\n}\r\n\r\n#sidebar .contact-support a {\r\n  color: rgba(250, 250, 250, .4);\r\n  border-top: 2px solid rgba(255, 255, 255, .2);\r\n  margin: 10px 24px 0;\r\n  padding: 10px 0 15px;\r\n  overflow: hidden;\r\n  text-align: center;\r\n  display: block;\r\n}\r\n\r\n#sidebar .contact-support a img {\r\n  filter: invert(100%);\r\n  -webkit-filter: invert(100%);\r\n  opacity: .4\r\n}\r\n\r\n#sidebar .contact-support a:hover {\r\n  cursor: pointer;\r\n  color: rgba(250, 250, 250, 1)\r\n}\r\n\r\n#sidebar .contact-support a:hover img {\r\n  opacity: 1\r\n}\r\n\r\n#sidebar > ul > li > a {\r\n  padding: 10px 0;\r\n  display: block;\r\n  overflow: hidden;\r\n  text-transform: uppercase;\r\n  font-size: .8em;\r\n  letter-spacing: 1.3px;\r\n}\r\n\r\n#sidebar > ul > li > ul {\r\n  padding-bottom: 0px\r\n}\r\n\r\n#sidebar > ul > li > ul > li {\r\n  padding: 0;\r\n  margin: 0\r\n}\r\n\r\n#sidebar > ul > li > ul > li > a:hover {\r\n  opacity: 1;\r\n}\r\n\r\n.group-menu {\r\n  text-transform: uppercase;\r\n  font-size: .8em;\r\n  letter-spacing: 1.3px\r\n}\r\n\r\n.sidebar-menu-icon {\r\n  width: 20px;\r\n  height: 20px;\r\n  margin-right: 12px\r\n}\r\n\r\na[data-toggle=collapse] {\r\n  position: relative\r\n}\r\n\r\n.liked,\r\n.liked:before {\r\n  color: #b60072;\r\n  content: \"Liked\";\r\n  cursor: pointer;\r\n}\r\n\r\n.menu-item {\r\n  text-decoration: none !important\r\n}\r\n\r\nul ul a {\r\n  padding-left: 30px !important\r\n}\r\n\r\n.transparent {\r\n  background: transparent;\r\n}\r\n\r\n#content {\r\n  min-height: 100vh;\r\n  transition: all .3s\r\n}\r\n\r\n\r\n.title {\r\n  font-size: 12px;\r\n  letter-spacing: 1px\r\n}\r\n\r\n.navbar-header > ul {\r\n  list-style-type: none;\r\n  margin: 0px 0\r\n}\r\n\r\n@media (min-width: 768px) {\r\n  #dismiss,\r\n  #sidebarCollapse {\r\n    display: none\r\n  }\r\n  .navbar {\r\n    box-shadow: 0 0 !important;\r\n    position: fixed;\r\n    width: 100%;\r\n    z-index: 2\r\n  }\r\n}\r\n\r\n.liked {\r\n  font-weight: 700;\r\n}\r\n\r\n.notliked,\r\n.notliked:before {\r\n  content: \"Like\";\r\n  cursor: pointer;\r\n}\r\n\r\n.img-xs {\r\n  width: 30px;\r\n  max-width: 30px;\r\n  height: 30px;\r\n  max-height: 30px\r\n}\r\n\r\n.img-xs img {\r\n  display: table-cell;\r\n  vertical-align: middle;\r\n  width: auto;\r\n  min-width: 30px;\r\n  height: auto;\r\n  min-height: 30px;\r\n  max-height: 30px\r\n}\r\n\r\n.createPostWebContainer .img-xs,\r\n.createPostWebContainer .img-xs img {\r\n  width: auto;\r\n  max-width: 40px;\r\n  height: 40px;\r\n  max-height: 40px\r\n}\r\n\r\n.createPostWebContainer .img-xs img {\r\n  margin: auto\r\n}\r\n\r\n.createPostWebContainer .nameContainer {\r\n  background: #ff5630;\r\n  background-color: #ff5630;\r\n  width: 40px;\r\n  height: 40px\r\n}\r\n\r\n.nameContainer {\r\n  width: 30px;\r\n  height: 30px\r\n}\r\n\r\n.jconfirm .jconfirm-box {\r\n  padding: 32px !important\r\n}\r\n\r\n.jconfirm-icon-c {\r\n  display: block !important;\r\n  margin-bottom: 30px\r\n}\r\n\r\n.jconfirm-buttons {\r\n  float: none !important;\r\n  margin-top: 16px;\r\n  padding: 0 !important\r\n}\r\n\r\n.checkGif,\r\n.deleteIcon {\r\n  background-size: 100% 100%;\r\n  background-repeat: no-repeat;\r\n  display: block !important;\r\n  margin: auto\r\n}\r\n\r\n.jconfirm-content-pane {\r\n  font-family: proximaSemiBold !important;\r\n  font-size: 16px\r\n}\r\n\r\n.jconfirm .jconfirm-box div.jconfirm-title-c {\r\n  padding-bottom: 10px !important\r\n}\r\n\r\n.popBtns {\r\n  padding: 8px 24px !important;\r\n  color: #fff;\r\n  font-weight: 400 !important\r\n}\r\n\r\n.deleteIcon {\r\n  background-image: url(images/delete.png);\r\n  width: 70px;\r\n  height: 70px;\r\n  opacity: .7;\r\n  background-size: 100%;\r\n}\r\n\r\n.checkGif {\r\n  background-image: url(images/tick_final.gif);\r\n  width: 90px;\r\n  height: 90px;\r\n  background-size: 100%;\r\n}\r\n\r\n@media (min-width: 320px) and (max-width: 480px) {\r\n  .popBtns {\r\n    padding: 5px 6px !important;\r\n    color: #fff;\r\n    font-weight: 400 !important;\r\n    font-size: 12px !important\r\n  }\r\n  .toolbar-menu {\r\n    padding: 0px 0 !important;\r\n  }\r\n  .toolbar-column span {\r\n    padding: 15px 12px;\r\n  }\r\n}\r\n\r\n.greyHeaderText,\r\n.greytext,\r\n.lightgreytext {\r\n  font-weight: 400;\r\n  word-wrap: break-word\r\n}\r\n\r\n@media (min-width: 769px) and (max-width: 991px) {\r\n  .lg_webAppletContentPadding {\r\n    padding: 30px 10% !important\r\n  }\r\n  .sm_webAppletContentPadding {\r\n    padding: 30px 5% !important\r\n  }\r\n  .lg_single_webAppletContentPadding {\r\n    padding: 0 28% !important\r\n  }\r\n  .brandingImage {\r\n    padding-bottom: 24px;\r\n    text-align: center;\r\n    display: block\r\n  }\r\n  .padding12px9px {\r\n    padding: 12px 0\r\n  }\r\n  .app-title.padding20px15px {\r\n    margin: 0;\r\n    padding: 20px 15px;\r\n  }\r\n}\r\n\r\n@media (min-width: 992px) and (max-width: 1199px) {\r\n  .lg_webAppletContentPadding {\r\n    padding: 30px 18% !important\r\n  }\r\n  .sm_webAppletContentPadding {\r\n    padding: 30px 4% !important\r\n  }\r\n  .brandingImage {\r\n    padding-bottom: 24px;\r\n    text-align: center;\r\n    display: block\r\n  }\r\n  .lg_single_webAppletContentPadding {\r\n    padding: 0 33% !important\r\n  }\r\n  .padding12px9px {\r\n    padding: 12px 0\r\n  }\r\n  .app-title.padding20px15px {\r\n    margin: 0;\r\n    padding: 20px 30px;\r\n  }\r\n}\r\n\r\n@media (min-width: 1200px) {\r\n  .lg_webAppletContentPadding {\r\n    padding: 30px 27% !important\r\n  }\r\n  .sm_webAppletContentPadding {\r\n    padding: 30px 3% !important\r\n  }\r\n  .lg_single_webAppletContentPadding {\r\n    padding: 0 35% !important\r\n  }\r\n  .brandingImage {\r\n    padding-bottom: 24px;\r\n    text-align: center;\r\n    display: block\r\n  }\r\n  .padding12px9px {\r\n    padding: 12px 0\r\n  }\r\n  .app-title.padding20px15px {\r\n    margin: 0;\r\n    padding: 20px 30px;\r\n  }\r\n}\r\n\r\n.greytext {\r\n  color: #252729 !important\r\n}\r\n\r\n.lightgreytext {\r\n  color: #949494 !important\r\n}\r\n\r\n.greyHeaderText {\r\n  color: #767676 !important\r\n}\r\n\r\n.img-sm {\r\n  max-height: 60px;\r\n  width: auto;\r\n  min-width: 60px;\r\n  height: 60px\r\n}\r\n\r\n.img-md {\r\n  width: 90px;\r\n  height: 90px;\r\n  min-width: 90px\r\n}\r\n\r\n.img-lg {\r\n  width: 110px;\r\n  height: 110px;\r\n  min-width: 110px\r\n}\r\n\r\n.rounded-0 {\r\n  border-radius: 0 !important\r\n}\r\n\r\n.imgFit {\r\n  max-width: 100%;\r\n  max-height: 100%\r\n}\r\n\r\n.btn.focus,\r\n.btn:focus,\r\n.btn:hover {\r\n  text-decoration: none\r\n}\r\n\r\nimg.filledIcon24 {\r\n  height: 24px;\r\n  opacity: .6\r\n}\r\n\r\nimg.filledIcon24:active,\r\nimg.filledIcon24:focus,\r\nimg.filledIcon24:hover {\r\n  opacity: .8;\r\n  cursor: pointer\r\n}\r\n\r\nimg.filledIcon18 {\r\n  height: 18px;\r\n  opacity: .6\r\n}\r\n\r\nimg.filledIcon18:active,\r\nimg.filledIcon18:focus,\r\nimg.filledIcon18:hover {\r\n  opacity: .8;\r\n  cursor: pointer\r\n}\r\n\r\nimg.filledIcon10 {\r\n  height: 10px;\r\n  opacity: .5\r\n}\r\n\r\nimg.filledIcon10:active,\r\nimg.filledIcon10:focus,\r\nimg.filledIcon10:hover {\r\n  opacity: .8;\r\n  cursor: pointer\r\n}\r\n\r\nimg.filledIcon16 {\r\n  width: 16px;\r\n  opacity: .5\r\n}\r\n\r\nimg.filledIcon16:active,\r\nimg.filledIcon16:focus,\r\nimg.filledIcon16:hover {\r\n  opacity: .8;\r\n  cursor: pointer\r\n}\r\n\r\n.iconWidth12px {\r\n  height: auto;\r\n  width: auto;\r\n  max-width: 12px;\r\n  max-height: 12px\r\n}\r\n\r\n.iconWidth20px {\r\n  height: auto;\r\n  width: auto;\r\n  max-width: 20px;\r\n  max-height: 20px\r\n}\r\n\r\n.iconWidth30px {\r\n  height: auto;\r\n  width: auto;\r\n  max-width: 30px;\r\n  max-height: 30px\r\n}\r\n\r\n.lineHeight28 {\r\n  line-height: 28px\r\n}\r\n\r\n.errorIcon {\r\n  filter: grayscale(100%);\r\n  opacity: .6\r\n}\r\n\r\n.publishContainer {\r\n  position: fixed;\r\n  bottom: 55px;\r\n  width: 100%;\r\n  z-index: 2\r\n}\r\n\r\n.publishBackground {\r\n  background: #ecedee;\r\n  background-color: #ecedee;\r\n}\r\n\r\n.whiteBackground {\r\n  background: #fff;\r\n  background-color: #fff;\r\n}\r\n\r\n.mediaUnselected {\r\n  color: #fff;\r\n  background-color: #c2c2c2;\r\n}\r\n\r\n.yellowText {\r\n  color: #b60072;\r\n  cursor: pointer;\r\n}\r\n\r\n.themeAccentColor,\r\n.themeText {\r\n  color: #b60072 !important;\r\n  cursor: pointer;\r\n}\r\n\r\n.themeAccentColorPublish {\r\n  color: #fff;\r\n  background: #b60072;\r\n  background-color: #b60072;\r\n}\r\n.themeColorSvgPath , .themeColorSvgPath path{\r\n  fill:#b60072 !important;\r\n  \r\n}\r\n\r\n#publishBoxContainer input,\r\n#publishBoxContainer input:focus,\r\n#publishBoxContainer input:hover {\r\n  border: none !important;\r\n  border: 0 !important;\r\n  outline: 0 !important;\r\n  width: 100%\r\n}\r\n\r\n.imageContainer {\r\n  background: #c2c2c2;\r\n  background-color: #c2c2c2;\r\n  height: 100px;\r\n  width: 100px\r\n}\r\n\r\n.crossImage,\r\n.users-like-info-box {\r\n  position: absolute;\r\n  background: #fff;\r\n  background-color: #fff;\r\n}\r\n\r\n.image {\r\n  height: 100%;\r\n  width: 100%\r\n}\r\n\r\n.crossImage {\r\n  top: -10px;\r\n  right: -10px;\r\n  font-size: 24px;\r\n  border-radius: 50%;\r\n  border: 1px solid #fff;\r\n  color: #000;\r\n  width: 23px;\r\n  height: 24px\r\n}\r\n\r\n.youtubeIcon {\r\n  color: #d8362a;\r\n  position: absolute;\r\n  top: 50%;\r\n  font-size: 28px;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  -ms-transform: translate(-50%, -50%);\r\n  -webkit-transform: translate(-50%, -50%);\r\n  -moz-transform: translate(-50%, -50%)\r\n}\r\n\r\n.doneBtn {\r\n  color: #c2c2c2\r\n}\r\n\r\n.users-like-info-box {\r\n  top: 7px;\r\n  left: 6px;\r\n  width: 400px;\r\n  border: 1px solid #efefef;\r\n  z-index: 200;\r\n  padding: 3px 0;\r\n  display: none\r\n}\r\n\r\n.users-like-info-box .like-counter {\r\n  padding: 4px 21px 0;\r\n  display: inline-block\r\n}\r\n\r\n.users-like-info {\r\n  overflow-x: hidden;\r\n  overflow-y: auto;\r\n  max-height: 150px;\r\n  padding: 0 21px;\r\n  min-height: 25px;\r\n  margin-top: 10px\r\n}\r\n\r\n.like-comment-counts-area {\r\n  padding-top: 16px;\r\n  padding-bottom: 0\r\n}\r\n\r\n.like-comment-counts {\r\n  margin: 0 13px\r\n}\r\n\r\n.like-comment-counts span {\r\n  display: inline-block;\r\n  margin-bottom: 12px !important\r\n}\r\n\r\n.addCommentInput {\r\n  border: none;\r\n  outline: 0;\r\n  overflow: hidden;\r\n  color: #000;\r\n  padding: 3px 0;\r\n  width: 99%;\r\n  font-size: 13px;\r\n  resize: none\r\n}\r\n\r\n.remainingCommentCounter {\r\n  background: #f4f4f4;\r\n  background-color: #f4f4f4;\r\n  padding: 12px 28px;\r\n  border-bottom: 1px solid #fff !important\r\n}\r\n\r\n.remainingCommentCounter span {\r\n  cursor: pointer\r\n}\r\n\r\n.filterCategory {\r\n  background: rgba(255, 255, 255, .4);\r\n  background-color: rgba(255, 255, 255, .4);\r\n  border-radius: 0;\r\n  padding: 10px 16px\r\n}\r\n\r\n.filterCategory:hover,\r\n.open .filterCategory:focus {\r\n  background: rgba(255, 255, 255, 1);\r\n  background-color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.commentText {\r\n  border-bottom: 1px solid #e2e3e4;\r\n  padding-bottom: 15px\r\n}\r\n\r\n.disable {\r\n  pointer-events: none;\r\n  opacity: 0.4;\r\n}\r\n\r\n.boxShadowNone {\r\n  box-shadow: none !important;\r\n}\r\n\r\n\r\n\r\n/* Radio button CSS */\r\n\r\n.radioContainer {\r\n  position: relative;\r\n}\r\n\r\n.radioContainer .radioItem {\r\n  color: #767676;\r\n  display: block;\r\n  position: relative;\r\n  padding: 12px 0;\r\n}\r\n\r\n.radioContainer .radioItem input[type=radio] {\r\n  position: absolute;\r\n  visibility: hidden;\r\n}\r\n\r\n.radioContainer .radioItem label {\r\n  display: block;\r\n  position: relative;\r\n  font-weight: 300;\r\n  font-size: 15px;\r\n  z-index: 9;\r\n  padding: 0 12px 0 24px;\r\n  cursor: pointer;\r\n  margin: 2px 0 0 0;\r\n  -webkit-transition: all 0.25s linear;\r\n}\r\n\r\n.radioContainer .radioItem:hover label {\r\n  color: #000;\r\n}\r\n\r\n.radioContainer .radioItem .check {\r\n  display: block;\r\n  position: absolute;\r\n  border: 1px solid #767676;\r\n  border-radius: 100%;\r\n  height: 18px;\r\n  width: 18px;\r\n  top: 15px;\r\n  left: 0;\r\n  z-index: 5;\r\n  transition: border .25s linear;\r\n  -webkit-transition: border .25s linear;\r\n}\r\n\r\n.radioContainer .radioItem:hover .check {\r\n  border: 1px solid #000;\r\n}\r\n\r\n.radioContainer .radioItem .check::before {\r\n  display: block;\r\n  position: absolute;\r\n  content: '';\r\n  border-radius: 100%;\r\n  height: 12px;\r\n  width: 12px;\r\n  top: 2px;\r\n  left: 2px;\r\n  margin: auto;\r\n  transition: background 0.25s linear;\r\n  -webkit-transition: background 0.25s linear;\r\n}\r\n\r\n.radioContainer input[type=radio]:checked ~ .check {\r\n  border: 1px solid #000;\r\n}\r\n\r\n.radioContainer input[type=radio]:checked ~ .check::before {\r\n  background: #000;\r\n  background-color: #000;\r\n}\r\n\r\n.radioContainer input[type=radio]:checked ~ label {\r\n  color: #000;\r\n}\r\n\r\n\r\n/***** Checkbox CSS *****/\r\n\r\n.control {\r\n  display: block;\r\n  position: relative;\r\n  padding-left: 30px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n}\r\n\r\n.control input {\r\n  position: absolute;\r\n  z-index: -1;\r\n  opacity: 0;\r\n}\r\n\r\n.control__indicator {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  height: 18px;\r\n  width: 18px;\r\n  border-radius: 2px;\r\n  border: #767676 solid 1px !important;\r\n}\r\n\r\n.control:hover input ~ .control__indicator,\r\n.control input:focus ~ .control__indicator {\r\n  border: #252729 solid 1px;\r\n}\r\n\r\n.control input:checked ~ .control__indicator {\r\n  background: #252729;\r\n  background-color: #252729;\r\n  border: 0;\r\n}\r\n\r\n.control:hover input:not([disabled]):checked ~ .control__indicator,\r\n.control input:checked:focus ~ .control__indicator {\r\n  background: #252729;\r\n  background-color: #252729;\r\n  border: 0;\r\n}\r\n\r\n.control__indicator:after {\r\n  content: '';\r\n  position: absolute;\r\n  display: none;\r\n}\r\n\r\n.control input:checked ~ .control__indicator:after {\r\n  display: block;\r\n}\r\n\r\n.control--checkbox .control__indicator:after {\r\n  left: 6px;\r\n  top: 2px;\r\n  width: 6px;\r\n  height: 10px;\r\n  border: solid #fff;\r\n  border-width: 0 2px 2px 0;\r\n  transform: rotate(45deg);\r\n}\r\n\r\n.control--checkbox input:disabled ~ .control__indicator:after {\r\n  border-color: #7b7b7b;\r\n}\r\n\r\n.fullWidth {\r\n  width: 100% !important;\r\n}\r\n\r\n\r\n/*********************************/\r\n\r\n.dropdown > button > span {\r\n  float: left;\r\n}\r\n\r\n.dropdown > button > span.fa-angle-down {\r\n  margin-left: 5px;\r\n  font-size: 19px;\r\n}\r\n\r\n.dropdown.open > button {\r\n  background: rgba(0, 0, 0, 0.08) !important;\r\n  background-color: rgba(0, 0, 0, 0.08) !important;\r\n  color: black !important;\r\n}\r\n\r\n.dropdown.open > button > span.fa.fa-angle-down {\r\n  -webkit-transform: rotate(180deg);\r\n  -moz-transform: rotate(180deg);\r\n  -o-transform: rotate(180deg);\r\n  -ms-transform: rotate(180deg);\r\n  transform: rotate(180deg);\r\n}\r\n\r\n.dropdown > button {\r\n  color: #747576 !important;\r\n  width: 100%;\r\n}\r\n\r\n.dropdown.open ul {\r\n  min-width: 200px !important;\r\n  width: 100%;\r\n}\r\n\r\n.list-group-item div.dropdown {\r\n  border: 1px solid #c7c7c7;\r\n  border-radius: 4px;\r\n}\r\n\r\n.dropdownMenuSelect > .btn {\r\n  padding: 8px 10px;\r\n}\r\n\r\n.btn {\r\n  padding: 8px 15px !important;\r\n}\r\n\r\n\r\n/*************************************** Dropdown ends ******************/\r\n\r\n\r\n/********************* No data mesage *********************/\r\n\r\n.height100pc {\r\n  height: 100%;\r\n}\r\n\r\n.nodata {\r\n  padding: 10%;\r\n  background-color: inherit !important;\r\n}\r\n\r\n.nodata img {\r\n  opacity: 0.2;\r\n  width: 17%;\r\n}\r\n\r\n.nodata .message {\r\n  line-height: 3;\r\n  font-size: 15px;\r\n  font-family: proxima;\r\n  color: #525252;\r\n}\r\n\r\n\r\n/***************** No data message ends *************************/\r\n\r\n\r\n/**************************Level*****************************/\r\n\r\n.labelType {\r\n  font-size: 12px;\r\n  color: #767676;\r\n  display: block;\r\n  padding: 0 0 6px 0;\r\n  margin: 0;\r\n  font-weight: normal;\r\n}\r\n\r\n\r\n\r\n/**********************Level End *************************/\r\n\r\n\r\n/***************13/3/2018/cod*************/\r\n\r\n.appletScrollerArea {\r\n  width: 100%;\r\n}\r\n\r\n.applicationpage {\r\n  display: block;\r\n}\r\n\r\n.wrapper #content {\r\n  width: auto !important;\r\n}\r\n\r\n@media (min-width: 768px) {\r\n  #pageContent {\r\n    width: 100% !important;\r\n  }\r\n}\r\n\r\n#sidebar ul.components.overflowYScroll {\r\n  overflow-y: hidden !important;\r\n}\r\n\r\n\r\n/******************/\r\n\r\n\r\n/*********************set focus for all input***********/\r\n\r\n.form-control:focus {\r\n  box-shadow: 0 0 0 transparent;\r\n  border: 1px solid #b7b7b7;\r\n}\r\n\r\n.eventCalendar-wrap .arrow {\r\n  z-index: 1 !important;\r\n}\r\n\r\n.eventsCalendar-monthWrap.currentMonth {\r\n  z-index: 0;\r\n}\r\n\r\n\r\n/*********************set focus for all input***********/\r\n\r\n.dropdown.user-profile .dropdown-menu > li > a,\r\n.dropdown-menu>li>a {\r\n  cursor: pointer;\r\n}\r\n\r\n\r\n/******************overlay position change******************/\r\n\r\n.overlay {\r\n  position: fixed;\r\n}\r\n\r\n\r\n/******************stop overflow in safari******************/\r\n\r\nbody,\r\nhtml {\r\n  overflow-x: hidden;\r\n}\r\n\r\nbody.block-ui {\r\n  position: fixed;\r\n}\r\n\r\n\r\n/******************changes only for cms******************/\r\n\r\n#fountainG {\r\n  display: none !important;\r\n}\r\n\r\n.appletpagestitle .fa-question {\r\n  display: none;\r\n}\r\n\r\na[aria-expanded='false']::before,\r\na[aria-expanded='true']::before {\r\n  font: normal normal normal 14px/1 FontAwesome;\r\n  font-size: inherit;\r\n  text-rendering: auto;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  content: \"\\f105\";\r\n  display: block;\r\n  position: absolute;\r\n  right: 0px;\r\n  padding-top: 3px;\r\n  font-size: 1.1em;\r\n}\r\n\r\na[aria-expanded='true']::before {\r\n  content: \"\\f107\";\r\n}\r\n\r\n.modal-body .nav-tabs[role=\"tablist\"] li a[aria-expanded=\"false\"]:before,\r\n.modal-body .nav-tabs[role=\"tablist\"] li a[aria-expanded=\"true\"]:before {\r\n  content: initial !important;\r\n}\r\n\r\n.modal-body .nav-tabs li a {\r\n  color: #a5a5a5;\r\n  margin-right: 0;\r\n  margin-left: 0;\r\n  cursor: pointer;\r\n  border-radius: 0;\r\n}\r\n\r\n.searchbox-container #searchBox::placeholder {\r\n  color: #ffffff;\r\n  opacity: .5;\r\n}\r\n\r\n.searchicon {\r\n  margin-top: -10px;\r\n}\r\n\r\n.app.content-wrapper-margin {\r\n  background: #ffffff !important;\r\n  background-color: #ffffff !important;\r\n}\r\n\r\n#sidebar .contact-support.lightgreytext {\r\n  color: #fff;\r\n}\r\n\r\n.searchicon {\r\n  opacity: 0.9;\r\n  filter: invert(100%);\r\n}\r\n\r\n.blockUI.blockOverlay {\r\n  z-index: 9999 !important;\r\n}\r\n\r\n/*common class for scsu*/\r\n\r\n\r\n/*border*/\r\n\r\n.borderTop0px {\r\n  border-top: 0px;\r\n}\r\n\r\n.borderBottom0px {\r\n  border-bottom: 0px;\r\n}\r\n\r\n.borderLeft0px {\r\n  border-left: 0px;\r\n}\r\n\r\n.borderRight0px {\r\n  border-right: 0px;\r\n}\r\n\r\n.borderLeft0pxRight0px {\r\n  border-left: 0px;\r\n  border-right: 0px;\r\n}\r\n\r\n.borderNone {\r\n  border: 0 !important\r\n}\r\n\r\n.borderGrey1px,\r\n.border1px {\r\n  border: 1px solid #c7c7c7 !important;\r\n}\r\n\r\n.borderLeft {\r\n  border-left: 1px solid #c7c7c7\r\n}\r\n\r\n.borderTop1px {\r\n  border-top: 1px solid #c7c7c7 !important;\r\n}\r\n\r\n.borderBottom1px {\r\n  border-bottom: 1px solid #c7c7c7 !important;\r\n}\r\n\r\n.list-group-item.listitemborderSolid {\r\n  border: none;\r\n  border-bottom: 1px solid #c7c7c7 !important;\r\n  margin-bottom: 0 !important;\r\n}\r\n\r\n.grey-background {\r\n  border: 1px solid #c7c7c7;\r\n}\r\n\r\n.highlightedBackgroundColor {\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n}\r\n\r\n.themeAccentColorPublish {\r\n  color: #ffffff;\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n}\r\n\r\n.btn.secondaryColorBackground,\r\n.btn.secondaryColorBackground:focus,\r\n.btn.secondaryColorBackground:hover {\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n  border: 1px solid #b60072 !important;\r\n  color: #ffffff !important;\r\n}\r\n\r\n.btn-primary ,\r\n.btn-primary:active,\r\n.btn-primary:focus,\r\n.btn-primary:hover {\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n  border: 1px solid #b60072 !important;\r\n  color: #ffffff !important;\r\n}\r\n\r\n.btn-primary.btnLightBlue ,\r\n.btn-primary.btnLightBlue:active ,\r\n.btn-primary.btnLightBlue:focus,\r\n.btn-primary.btnLightBlue:hover {\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n  border: 1px solid #b60072 !important;\r\n  color: #ffffff !important;\r\n}\r\n\r\n.btn-primary-bordered,\r\n.btn-primary-bordered:hover,\r\n.btn-primary-bordered:focus {\r\n  border: 1px solid #b60072 !important;\r\n  color: #b60072;\r\n  background: #fff !important;\r\n  background-color: #fff !important;\r\n}\r\n.btn-primary.btn-cancel,\r\n.btn-primary.btn-cancel:focus,\r\n.btn-primary.btn-cancel:hover,\r\n.btn-primary.btn-cancel:active {\r\n  background: none !important;\r\n  background-color: none !important;\r\n  border: 1px solid #b60072 !important;\r\n  color: #b60072 !important;\r\n}\r\n.btn-cancel,\r\n.btn-cancel:focus,\r\n.btn-cancel:hover,\r\n.btn-cancel:active {\r\n  background: none !important;\r\n  background-color: none !important;\r\n  border: 1px solid #767676 !important;\r\n  color: #767676 !important;\r\n}\r\n\r\n\r\n.btn.disabled,\r\n.btn.disabled:hover,\r\n.btn[disabled]:hover,\r\nfieldset[disabled] .btn {\r\n  cursor: not-allowed;\r\n  filter: alpha(opacity=65);\r\n  -webkit-box-shadow: none;\r\n  box-shadow: none;\r\n  background: #c2c2c2 !important;\r\n  background-color: #c2c2c2 !important;\r\n  color: #FFFFFF;\r\n}\r\n\r\n\r\n.connect-applet-main .mediaUnselected {\r\n    color: #fff;\r\n    background-color: #C2C2C2;\r\n}\r\n\r\n.userPreferances.greytextborder:hover .tag-select svg path{\r\n    fill:#b60072 !important;\r\n}\r\n\r\n\r\n.eventsCalendar-daysList.eventsCalendar-daysList li.dayWithEvents a {\r\n  background: #b60072 !important;\r\n  background-color: #b60072 !important;\r\n  color: #ffffff !important;\r\n}\r\n\r\n.liked.colorLightBlue {\r\n  color: #b60072;\r\n  content: \"Liked\";\r\n  cursor: pointer;\r\n}\r\n.liked.colorLightBlue:before {\r\n  color: #b60072;\r\n  content: \"Liked\";\r\n  cursor: pointer;\r\n}\r\n\r\n.colorLink {\r\n  color: #b60072;\r\n}\r\n\r\n.padding10px15px {\r\n  padding: 10px 15px;\r\n}\r\n\r\n@media (min-width: 1200px) {\r\n  .marginBottom10px {\r\n    margin-bottom: 10px !important;\r\n  }\r\n  .marginBottom15px {\r\n    margin-bottom: 15px !important;\r\n  }\r\n  .marginTop15px {\r\n    margin-top: 15px;\r\n  }\r\n  .boxShadow {\r\n    box-shadow: none;\r\n    border-radius: none;\r\n  }\r\n}\r\n\r\n@media (min-width: 768px) {\r\n  .btnSave {\r\n    color: #ffffff !important;\r\n    background-color: #b60072 !important;\r\n    border-color: #b60072 !important;\r\n    padding: 10px 5px;\r\n    border-radius: 6px;\r\n  }\r\n  .highlightedBackgroundColor {\r\n    background: #b60072 !important;\r\n    background-color: #b60072 !important;\r\n  }\r\n  .btnSave.btnLightBlue {\r\n    color: #ffffff !important;\r\n    background-color: #b60072 !important;\r\n    border-color: #b60072 !important;\r\n    padding: 10px 5px;\r\n    border-radius: 6px;\r\n  }\r\n  .highlightedBackgroundColor.colorLightBlue {\r\n    background: #b60072 !important;\r\n    background-color: #b60072 !important;\r\n  }\r\n}\r\n\r\n/************/\r\n\r\n/*padding class*/\r\n\r\n.TopPadding {\r\n  padding-top: 0 !important\r\n}\r\n\r\n.BottomPadding0 {\r\n  padding-bottom: 0 !important\r\n}\r\n\r\n.leftPadding5px {\r\n  padding-left: 5px\r\n}\r\n\r\n.topPadding5px {\r\n  padding-top: 5px\r\n}\r\n\r\n.topPadding10px {\r\n  padding-top: 10px\r\n}\r\n.rightPadding0px {\r\n  padding-right: 0 !important\r\n}\r\n\r\n.leftPadding0px {\r\n  padding-left: 0 !important\r\n}\r\n\r\n.padding20px5px {\r\n  padding: 20px 5px\r\n}\r\n\r\n.padding20px {\r\n  padding: 20px\r\n}\r\n\r\n.padding10and15px {\r\n  padding: 10px 15px\r\n}\r\n.paddingTB5 {\r\n  padding-top:5px !important;\r\n  padding-bottom:5px !important;\r\n}\r\n.paddingTB10 {\r\n  padding-top:10px !important;\r\n  padding-bottom:10px !important;\r\n}\r\n.padding15px0px{\r\n padding: 15px 0px;\r\n}\r\n\r\n\r\n\r\n/*margin class*/\r\n\r\n.marginAuto {\r\n  margin: auto\r\n}\r\n.marginTop10 ,.marginTop10px {\r\n  margin-top:10px;\r\n}\r\n.marginTop15 ,.marginTop15px {\r\n  margin-top:15px;\r\n}\r\n .marginBottom10px , .marginBottom10 {\r\n    margin-bottom: 10px !important;\r\n  }\r\n   .marginBottom15px ,.marginBottom15  {\r\n    margin-bottom: 15px !important;\r\n  }\r\n/*margin class end*/\r\n\r\n.channeldisabled {\r\n  background: #c2c2c2 !important;\r\n  background-color: #c2c2c2 !important;\r\n  color: #767676;\r\n  border: 1px solid #c2c2c2 !important;\r\n}\r\n\r\n.channeldisabled:hover;\r\n.channeldisabled:focus {\r\n  background: #b60072 !important;\r\n  border: 1px solid #b60072 !important;\r\n  color: #ffffff !important;\r\n}\r\n\r\n\r\n/*changes for top search*/\r\n\r\n#content .navbar {\r\n  padding: 0px 0px !important;\r\n  border-left: 0px solid #c7c7c7;\r\n}\r\n\r\n.borderBottom1pxsolid {\r\n  border-bottom: 1px solid #c7c7c7;\r\n}\r\n\r\n.mainsearch {\r\n  margin: 18px 0 !important;\r\n  width: 60%;\r\n  vertical-align: middle;\r\n  border-radius: 4px;\r\n  position: relative;\r\n  display: none;\r\n}\r\n\r\n.mainsearch img,\r\n.mainsearch img:hover,\r\n.mainsearch img:focus {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0px;\r\n  width: 18px;\r\n  height: 18px;\r\n  bottom: 0;\r\n  margin: auto;\r\n  filter: invert(50%);\r\n}\r\n\r\n.mainsearch input {\r\n  background: transparent;\r\n  outline: 0;\r\n  width: 100%;\r\n  border: 0;\r\n  padding-left: 25px;\r\n  transition: all.6s ease;\r\n}\r\n\r\n.mainsearch input:focus,\r\n.mainsearch input:notvalid {\r\n  min-width: 300px;\r\n}\r\n\r\n.boxBorderColor {\r\n  border: 1px solid #c7c7c7 !important;\r\n}\r\n\r\n.studiomode .mainsearch {\r\n  width: 57%;\r\n}\r\n\r\n@media screen (max-width:767) {\r\n  .mainsearch {\r\n    width: 70%;\r\n  }\r\n  .navbar-header > ul li:nth-last-child(1) {\r\n    padding: 0px 0 !important;\r\n    border-left: 0px solid #eaebec !important;\r\n  }\r\n}\r\n\r\n.searchbox-container {\r\n  background: rgba(0, 0, 0, 0.30196078431372547);\r\n  background-color: rgba(0, 0, 0, 0.30196078431372547);\r\n}\r\n\r\n.searchbox-container #searchBox {\r\n  color: #ffffff;\r\n  text-transform: capitalize;\r\n}\r\n\r\n.eventsCalendar-daysList li.current a {\r\n  background: #000 !important;\r\n  background-color: #000 !important;\r\n  color: #ffffff !important;\r\n  box-shadow: none;\r\n  text-shadow: none;\r\n}\r\n\r\n.dropdown-menu>li>a {\r\n  display: block;\r\n  padding: 4px 20px;\r\n  clear: both;\r\n  font-weight: 400;\r\n  line-height: 1.42857143;\r\n  color: #333;\r\n  white-space: nowrap;\r\n}\r\n\r\n\r\n/* set page height created by cms*/\r\n\r\n#pageContent.appletScrollerArea {\r\n  height: calc(100vh - 65px)!important;\r\n}\r\n#pageContent {\r\n  margin-top: 65px;\r\n  padding: 15px;\r\n}\r\n.dropdownMenuSelect .dropdown-toggle {\r\n  background: transparent;\r\n}\r\n\r\n\r\n/*theme color*/\r\n.bootstrap-datetimepicker-widget table td span {\r\n  display: inline-block;\r\n  width: 40px;\r\n  height: 54px;\r\n  line-height: 54px;\r\n  margin: 2px 1.5px;\r\n  cursor: pointer;\r\n  border-radius: 4px;\r\n}\r\n.themebackground {\r\n  background: #b60072;\r\n   background-color: #b60072;\r\n}\r\n.themebackground{\r\n  color:#ffffff;\r\n}\r\n.lightBgColor {\r\n  background: #e7e7e7;\r\n  background-color: #e7e7e7;\r\n} \r\n\r\n/*drop applet*/\r\n.cmscell.col-lg-4 .list-group-item div.dropdown {\r\n  margin: 0 10%;\r\n}\r\n\r\n.cmscell.col-lg-8 .list-group-item div.dropdown {\r\n  margin: 0 20%;\r\n}\r\n\r\n.cmscell.col-lg-6 .list-group-item div.dropdown {\r\n  margin: 0 15%;\r\n}\r\n\r\n.list-group-item div.dropdown {\r\n  margin: 0 10%;\r\n}\r\n\r\n.cmscell .toolbar-menu {\r\n  padding: 0px 3% !important;\r\n}\r\n\r\n.cmscell .toolbar-column span {\r\n  padding: 15px 0;\r\n}\r\n\r\n.studiomode .cmscell .toolbar-column span {\r\n  padding: 15px 0px !important;\r\n  font-size: 13px;\r\n}\r\n\r\n#pageContent .app-title.padding20px15px {\r\n  padding: 20px 15px;\r\n}\r\n#pageContent .lg_webAppletContentPadding, \r\n#pageContent .sm_webAppletContentPadding{\r\n  padding: 0px 15px 15px 15px !important;\r\n}\r\n\r\n\r\n/*studio mode font size*/\r\n\r\n.studiomode .cmscell .fontSize26 {\r\n  font-size: 24px\r\n}\r\n.studiomode .cmscell .fontSize24 {\r\n  font-size: 22px;\r\n}\r\n.studiomode .cmscell .font18 {\r\n  font-size: 16px;\r\n}\r\n.studiomode .cmscell .font20,\r\n.studiomode .cmscell .fontSize20 {\r\n  font-size: 18px;\r\n}\r\n.studiomode .cmscell .font16,\r\n.studiomode .cmscell .fontSize16 {\r\n  font-size: 14px;\r\n}\r\n.studiomode .cmscell .fontSize15 {\r\n  font-size: 13px\r\n}\r\n.studiomode .cmscell .font14 {\r\n  font-size: 12px;\r\n}\r\n.studiomode .cmscell .font12 {\r\n  font-size: 10px;\r\n}\r\n\r\n/*event Calender*/\r\n.event_main .cld-number.eventday{\r\n      border: 1px solid #0084d0;\r\n      color: #0084d0;\r\n  }\r\n  .event_main .cld-number.eventday:hover{\r\n      background: #0084d0;\r\n       background-color: #0084d0;\r\n      color:#ffffff;\r\n  }\r\n\r\n.applet-content {\r\n  overflow:initial !important;\r\n}\r\n.searchbox-container {\r\n    margin-top: 0px;\r\n    margin-bottom: 0px;\r\n    border-bottom: 0px solid rgba(250,250,250,0.2);\r\n    display: table;\r\n    width: 100%;\r\n    transition: easy-in-out 0.15s;\r\n    background: #0000004d;\r\n    background-color: #0000004d;\r\n    padding:0px 15px;\r\n    position: relative;\r\n    border-radius: 40px;\r\n    background-clip: padding-box;\r\n}\r\n\r\n@supports (-webkit-overflow-scrolling: touch) {\r\n  /* CSS specific to iOS devices */\r\n  @media only screen and (min-device-width : 375px) and (max-device-width : 667px) { \r\n    #sidebar .contact-support {\r\n      margin-bottom: 80px;\r\n    }\r\n}\r\n  \r\n}\r\n\r\n\r\n\r\n/*media css*/\r\n@media (max-width: 768px) {\r\n  #sidebar {\r\n      z-index: 9999;\r\n  }\r\n#sidebar {\r\n    margin-left: -240px\r\n  }\r\n  .brandingImage {\r\n    padding-bottom: 24px;\r\n    text-align: center;\r\n    display: block\r\n  }\r\n  .navbar {\r\n    box-shadow: 0 0 !important;\r\n    position: fixed;\r\n    width: 100%;\r\n    z-index: 2\r\n  }\r\n  .navbar-header #sidebarCollapse {\r\n    display: table-cell;\r\n    vertical-align: middle;\r\n    padding-left: 0;\r\n    max-width: 40px\r\n  }\r\n  .navbar-header #sidebarCollapse .hamburger-menu-icon img {\r\n    width: auto;\r\n    max-width: 24px;\r\n    height: auto;\r\n    max-height: 24px;\r\n    opacity: .7\r\n  }\r\n  #dismiss {\r\n    display: block\r\n  }\r\n  .lg_single_webAppletContentPadding,\r\n  .lg_webAppletContentPadding,\r\n  .sm_webAppletContentPadding {\r\n    padding: 0 15px!important\r\n  }\r\n\r\n/*fix for mobile app*/\r\n.app-content .lg_single_webAppletContentPadding, .app-content .lg_webAppletContentPadding, .app-content .sm_webAppletContentPadding{\r\n  padding:10px !important;\r\n}\r\n\r\n\r\n  .padding12px9px {\r\n    padding: 12px 9px\r\n  }\r\n  .userPreferances.greytextborder:hover {\r\n    color: #252729 !important;\r\n    border: 1px solid #252729\r\n  }\r\n  .nameContainer {\r\n    width: 40px;\r\n    height: 40px\r\n  }\r\n  #pageContent {\r\n    margin-top: 66px;\r\n    padding: 0px;\r\n  }\r\n  #sidebar .contact-support {\r\n    padding-bottom: 80px\r\n  }\r\n  .marginBottom10px {\r\n    margin-bottom: 10px !important;\r\n  }\r\n  .marginBottom15px {\r\n    margin-bottom: 15px !important;\r\n  }\r\n  .marginTop15px {\r\n    margin-top: 15px;\r\n  }\r\n  .toolbar-menu {\r\n    padding: 0px 10% !important;\r\n  }\r\n\r\n}\r\n@media (max-width: 640px) {\r\n  #centercontent #appContent {\r\n    padding: 12px!important;\r\n    padding-top: 0 !important;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px) {\r\n.list-group-item div.dropdown{\r\n  margin: 0 2%;\r\n}\r\n.cmscell.col-lg-4 .list-group-item div.dropdown {\r\n  margin: 0 2%;\r\n}\r\n\r\n.cmscell.col-lg-8 .list-group-item div.dropdown {\r\n  margin: 0 2%;\r\n}\r\n .toolbar-menu {\r\n    padding: 0px 0% !important;\r\n  }\r\n  .toolbar-menu span{\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n  }\r\n}\r\n\r\n@media (max-width: 320px) {\r\n    .mainsearch {\r\n    width: 50%;\r\n  }\r\n}\r\n\r\n\r\n.cmswidgetcontainer[data-title=\"Article\"] {\r\n    padding: 15px !important;\r\n}\r\n\r\n/*device issue fix */\r\n\r\n@media only screen and (max-device-width: 768px){\r\n .headerFooterBg{background:#0054a4; font-size:18px;}\r\n}\r\n\r\n\r\n/*fix for app */\r\n  @media only screen and (max-width:980px) and (min-width:1px) {\r\n    .app-content html {\r\n        background-color: #fff;\r\n    }\r\n    .app-content .group-heading-padding {\r\n      padding: 10px 15px !important;\r\n    }\r\n    .app-content .nameContainer.img-sm {\r\n      max-height: 50px;\r\n      width: 50px;\r\n      min-width: 50px;\r\n      height: 50px;\r\n    }\r\n    .app-content{\r\n        background: #ffffff !important;\r\n    }\r\n    .app-content .modal{\r\n     top:50px;\r\n    }\r\n    .app-content .modal-dialog{\r\n      top: 0%;\r\n      width: 90%;\r\n    }\r\n    .app-content .message_main .publish .modal-content .carousel-inner {\r\n        min-height: 230px;\r\n    }\r\n    .app-content .modal-body div {\r\n      padding: 0px;\r\n      text-align: left;\r\n      margin: auto;\r\n      font-size: 13px;\r\n    }\r\n  }.navbar-app, .sidebar, #mainSidebar { background : #064179 !important; } .navbar-brand, .navbar-absolute-top .btn-navbar { color : #ffffff !important; } .navbar-absolute-bottom .navbar-inverse { background : #064179 !important; } .navbar-absolute-bottom .navbar-inverse { color : #ffffff !important; } .app { background : #efefef !important; } .campuseai-Info { color : #0055a4 !important; } #mainSidebar .list-group-item { background :  !important; } #mainSidebar .list-group-item { color :  !important; } #mainSidebar .appgroup { background :  !important; } #mainSidebar .appgroup { color :  !important; } .btn-primary { background : #b60073 !important; } .btn-primary { color : #ffffff !important; } .btn-primary { border-color : #b60073 !important; } ",
   "authFunction": "function authFunction(uname, password, $http, $rootScope, success, error) {\r\n  /* callAPI, refreshToken and callOpenAPI are moved to services in framework */\r\n\r\n  var url = $rootScope.GatewayUrl + \"/unifydidentity/open/oauth2/token\";\r\n\r\n  /*var option = {\r\n    headers: {\r\n      'Content-Type': 'application/x-www-form-urlencoded',\r\n      'X-TENANT-ID': $rootScope.user.tenant\r\n    },\r\n    url: url,\r\n    method: 'POST',\r\n    form: {\r\n      username: uname,\r\n      password: password\r\n    },\r\n    json: true\r\n  };\r\n\r\n  var req = {\r\n    url: 'https://kryptosda.kryptosmobile.com/kryptosds/utils/proxy',\r\n    data: option,\r\n    method: 'POST'\r\n  };\r\n  console.log(JSON.stringify(req));\r\n  $http(req).then(function successCallback(res) {\r\n    console.log('success');\r\n    console.log(JSON.stringify(res));\r\n    success(res.data);\r\n  }, function errorCallback(err) {\r\n    console.log('error');\r\n    console.log(JSON.stringify(err));\r\n    error(err)\r\n  });*/\r\n\r\n\r\n  var d2lAppContext;\r\n\r\n  function fnGetClearpass(config, callBack) {\r\n    if ($rootScope.password) {\r\n      return callBack(null, config);\r\n    }\r\n    return callBack({\r\n      \"err\": \"User password empty\"\r\n    })\r\n  }\r\n\r\n  function validateConfigObject(config) {\r\n    if (!config.middlewareServerUrl) {\r\n      console.error(\"Middleware Server URL not mentioned for applet !\");\r\n      return false;\r\n    }\r\n    if (!config.product) {\r\n      console.error(\"Product name not mentioned for applet !\");\r\n      return false;\r\n    }\r\n    if (!config.endpoint) {\r\n      console.error(\"API endpoint not mentioned !\");\r\n      return true;\r\n    }\r\n    return true;\r\n  }\r\n\r\n  function d2lAuthRequired(config, callBack) {\r\n    if ($rootScope.vuid || $rootScope.vukey) {\r\n      return callBack(null, config);\r\n    }\r\n    var d2lusername = $rootScope.username;\r\n    var d2luserPass = $rootScope.password;\r\n\r\n    // Handle authentication\r\n    var url = '/unifydd2ladapter/open/authenticate';\r\n    var data = {\r\n      \"host\": config.host,\r\n      \"appId\": config.appId,\r\n      \"appKey\": config.appKey,\r\n      \"username\": d2lusername,\r\n      \"password\": d2luserPass,\r\n      \"tenant\": config.tenant || $rootScope.tenant,\r\n      \"licenseKey\": config.licenseKey\r\n    }\r\n    $rootScope.callAPI(url, 'POST', data, function(res) {\r\n      if (res && res.data) {\r\n        $rootScope.vuid = res.data.userId;\r\n        $rootScope.vukey = res.data.userKey;\r\n      } else {\r\n        $.unblockUI();\r\n        throw \"D2L Authentication failed !\";\r\n      }\r\n      return callBack(null, config);\r\n    });\r\n  }\r\n\r\n  $rootScope.ValenceGetAPI = function(config, endpoint, callBack) {\r\n    config.endpoint = endpoint;\r\n    config.demoMode = (config.middlewareServerUrl == \"https://kryptosda.kryptosmobile.com/kryptosds\") ? true : false;\r\n    if (!validateConfigObject(config)) {\r\n      return callback();\r\n    }\r\n    $.blockUI();\r\n    async.waterfall([\r\n      fnGetClearpass.bind(null, config),\r\n      d2lAuthRequired\r\n    ], function(err, config) {\r\n      if (err) {\r\n        $.unblockUI();\r\n        return callBack(err);\r\n      }\r\n      if (!d2lAppContext) {\r\n        d2lAppContext = new D2L.ApplicationContext('localhost', config.appId, config.appKey);\r\n      }\r\n      var userId = $rootScope.vuid;\r\n      var userKey = $rootScope.vukey;\r\n      var userContext = d2lAppContext.createUserContextWithValues(config.host, config.port, userId, userKey);\r\n      var url = userContext.createUrlForAuthentication(config.endpoint, \"GET\");\r\n      if (url && url.lastIndexOf(\"https\", 0) == -1) {\r\n        url = \"https://\" + url;\r\n      }\r\n      $http({\r\n        method: \"GET\",\r\n        url: url,\r\n        data: {}\r\n      }).then(function successCallback(res) {\r\n        $.unblockUI();\r\n        console.log(\"RESULTS:\");\r\n        console.log(res.data);\r\n        callBack(res.data, res.status, res.headers, res.config);\r\n      }, function errorCallback(err) {\r\n        $.unblockUI();\r\n        return callBack(err.data, err.status, err.headers, err.config);\r\n      });\r\n    })\r\n  }\r\n\r\n  $rootScope.ValencePostAPI = function(config, endpoint, data, callBack) {\r\n    config.endpoint = endpoint;\r\n    config.demoMode = (config.middlewareServerUrl == \"https://kryptosda.kryptosmobile.com/kryptosds\") ? true : false;\r\n    if (!validateConfigObject(config)) {\r\n      return callback();\r\n    }\r\n    $.blockUI();\r\n    async.waterfall([\r\n      fnGetClearpass.bind(null, config),\r\n      d2lAuthRequired\r\n    ], function(err, config) {\r\n      if (err) {\r\n        $.unblockUI();\r\n        return callBack(err);\r\n      }\r\n      if (!d2lAppContext) {\r\n        d2lAppContext = new D2L.ApplicationContext('localhost', config.appId, config.appKey);\r\n      }\r\n      var userId = $rootScope.vuid;\r\n      var userKey = $rootScope.vukey;\r\n      var userContext = d2lAppContext.createUserContextWithValues(config.host, config.port, userId, userKey);\r\n      var url = userContext.createUrlForAuthentication(config.endpoint, \"POST\");\r\n      if (url && url.lastIndexOf(\"https\", 0) == -1) {\r\n        url = \"https://\" + url;\r\n      }\r\n      $http({\r\n        method: \"POST\",\r\n        url: url,\r\n        data: data\r\n      }).then(function successCallback(res) {\r\n        $.unblockUI();\r\n        console.log(\"RESULTS:\");\r\n        console.log(res.data);\r\n        callBack(res.data, res.status, res.headers, res.config);\r\n      }, function errorCallback(err) {\r\n        $.unblockUI();\r\n        return callBack(err.data, err.status, err.headers, err.config);\r\n      });\r\n    });\r\n  }\r\n\r\n  $rootScope.ValencePutAPI = function(config, endpoint, data, callBack) {\r\n    config.endpoint = endpoint;\r\n    config.demoMode = (config.middlewareServerUrl == \"https://kryptosda.kryptosmobile.com/kryptosds\") ? true : false;\r\n    if (!validateConfigObject(config)) {\r\n      return callback();\r\n    }\r\n    $.blockUI();\r\n    async.waterfall([\r\n      fnGetClearpass.bind(null, config),\r\n      d2lAuthRequired\r\n    ], function(err, config) {\r\n      if (err) {\r\n        $.unblockUI();\r\n        return callBack(err);\r\n      }\r\n      if (!d2lAppContext) {\r\n        d2lAppContext = new D2L.ApplicationContext('localhost', config.appId, config.appKey);\r\n      }\r\n      var userId = $rootScope.vuid;\r\n      var userKey = $rootScope.vukey;\r\n      var userContext = d2lAppContext.createUserContextWithValues(config.host, config.port, userId, userKey);\r\n      var url = userContext.createUrlForAuthentication(config.endpoint, \"PUT\");\r\n      if (url && url.lastIndexOf(\"https\", 0) == -1) {\r\n        url = \"https://\" + url;\r\n      }\r\n      $http({\r\n        method: \"PUT\",\r\n        url: url,\r\n        data: data\r\n      }).then(function successCallback(res) {\r\n        $.unblockUI();\r\n        console.log(\"RESULTS:\");\r\n        console.log(res.data);\r\n        callBack(res.data, res.status, res.headers, res.config);\r\n      }, function errorCallback(err) {\r\n        $.unblockUI();\r\n        return callBack(err.data, err.status, err.headers, err.config);\r\n      });\r\n    });\r\n\r\n  }\r\n\r\n  $rootScope.ValenceDeleteAPI = function(config, endpoint, data, callBack) {\r\n    config.endpoint = endpoint;\r\n    config.demoMode = (config.middlewareServerUrl == \"https://kryptosda.kryptosmobile.com/kryptosds\") ? true : false;\r\n    if (!validateConfigObject(config)) {\r\n      return callback();\r\n    }\r\n    $.blockUI();\r\n    async.waterfall([\r\n      fnGetClearpass.bind(null, config),\r\n      d2lAuthRequired\r\n    ], function(err, config) {\r\n      if (err) {\r\n        $.unblockUI();\r\n        return callBack(err);\r\n      }\r\n      if (!d2lAppContext) {\r\n        d2lAppContext = new D2L.ApplicationContext('localhost', config.appId, config.appKey);\r\n      }\r\n      var userId = $rootScope.vuid;\r\n      var userKey = $rootScope.vukey;\r\n      var userContext = d2lAppContext.createUserContextWithValues(config.host, config.port, userId, userKey);\r\n      var url = userContext.createUrlForAuthentication(config.endpoint, \"DELETE\");\r\n      if (url && url.lastIndexOf(\"https\", 0) == -1) {\r\n        url = \"https://\" + url;\r\n      }\r\n      $http({\r\n        method: \"DELETE\",\r\n        url: url,\r\n        data: {}\r\n      }).then(function successCallback(res) {\r\n        $.unblockUI();\r\n        console.log(\"RESULTS:\");\r\n        console.log(res.data);\r\n        callBack(res.data, res.status, res.headers, res.config);\r\n      }, function errorCallback(err) {\r\n        $.unblockUI();\r\n        return callBack(err.data, err.status, err.headers, err.config);\r\n      });\r\n    });\r\n  }\r\n\r\n\r\n  $.ajax({\r\n    type: 'POST',\r\n    url: url,\r\n    headers: {\r\n      'Content-Type': 'application/x-www-form-urlencoded',\r\n      'X-TENANT-ID': $rootScope.user.tenant\r\n    },\r\n    data: {\r\n      username: uname,\r\n      password: password\r\n    },\r\n    dataType: 'json',\r\n    encode: true\r\n  }).done(function(res) {\r\n    //alert(JSON.stringify($rootScope.user.role));\r\n    //alert(JSON.stringify($.jStorage.get('userroles')));\r\n    success(res);\r\n  }).fail(function(err) {\r\n    $.unblockUI();\r\n    if (window.device) {\r\n      navigator.notification.alert(\"Unable to login, please check your credentials\", null, '', 'Ok');\r\n    } else {\r\n      alert(\"Unable to login, please check your credentials\");\r\n    }\r\n  });\r\n\r\n}",
   "forgotPasswordUrl": null,
-  "portalGatewayUrl": null,
-  "siteid": null,
-  "loginaslanding": false,
-  "sidebarHtml": "<style>\r\n  .backButtonArrow {\r\n    display: none;\r\n  }\r\n  \r\n  #fixedHeaderContent {\r\n    display: none;\r\n  }\r\n  \r\n  .app-body {\r\n    background-color: #eaebec;\r\n    background: #eaebec;\r\n  }\r\n  \r\n  a.list-group-item:hover,\r\n  a.list-group-item:active {\r\n    background-color: #fff;\r\n    background: #fff;\r\n  }\r\n  \r\n  .navbar-absolute-top {\r\n    border: none !important;\r\n  }\r\n  \r\n  .has-navbar-top .app-body {\r\n    padding-top: 50px;\r\n  }\r\n  \r\n  #fixedHeaderContent {\r\n    display: block;\r\n    top: 50px;\r\n  }\r\n  \r\n  .hideFooter {\r\n    display: none !important\r\n  }\r\n<\/style>\r\n\r\n<div class=\"proximaFont\">\r\n  <div class=\"list-group-item proximaFont borderNone listItemCustomPadding ng-scope\" style=\"background-color: #252729 !important;padding:0px 18px 8px 18px;\">\r\n    <div class=\"hamburgerSearchBox\">\r\n      <input class=\"form-control needsclick\" ng-model=\"$root.appletSearch\" placeholder=\"Search Applets\" style=\"background: transparent;border: none;color: #fff;padding: 6px 6px;\" type=\"text\" />\r\n    <\/div>\r\n  <\/div>\r\n\r\n  <a class=\"list-group-item listItemCustomPadding listitemborderSolid\" style=\"padding:8px 18px;\">\r\n    <div class=\"pull-left\"><img class=\"avatar borderRadius6\" style=\"width:36px;\" id=\"logo-{{app.name}}\" ng-src=\"{{$root.user.userImg}}\"><\/div>\r\n    <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>{{$root.user.userName}}<\/div>\r\n    <div class=\"clearfix\"><\/div>\r\n  <\/a>\r\n\r\n  <a class=\"list-group-item listItemCustomPadding listitemborderSolid\" style=\"padding:8px 18px;\">\r\n    <div class=\"pull-left\"><img class=\"avatar borderRadius6\" style=\"width:36px;\" id=\"logo-{{app.name}}\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAA7VBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbGxsEBAQmJiYhISEYGBgRERHW1tYjIyMfHx8JCQnBwcHe3t60tLTKysrY2Njb29uurq6fn5/Pz8/MzMy2traxsbGnp6eMjIyIiIgMDAzi4uK3t7eSkpIoKCjk5OTS0tLHx8e6urqXl5dxcXEuLi4rKysPDw/o6Ojg4ODExMS8vLx9fX12dnZZWVlHR0cxMTH////z8/OkpKSQkJBLS0v4+Pju7u7r6+vm5uaqqqqhoaFvb29qampRUVFAQEA1NTUqKiq+vr5hYWE5OTkicL9eAAAACnRSTlMA+v3lcVsVuHq35mxGrwAAAsFJREFUSMeVlmdv20AMhp06TdpHkrWn994jXrGdPZvR9v//nOpcAwWqUxDxg2GIfMR7TzzycsJOjk/zX/hCqsXO/OnxSe5gX/N8yvJf/8Z/g6OjxOsTSY6O4Nv+/XE8nzERFuc4ycvj5UT+JHcs4j9PHOe+ZwNOc3n5dqqqfHvzOUm4U9AKihL/OBIkl3hkaP/+a0bC/T+gFoBJqeqOilfnQEH9GDAUtLoZBv7oIhwNKmPQjY8AHbpeubEDmt75c3Bx3wAlHdCh024CqtKjcWm6tfriJ+hpgAGVyzcs68yhwI9wC9hmEDvkgKrj3wZMhczWG0UXR9mBuUJRpYDF2Kz7zPQzWwHKXTToobS7FGSAwTR6HvZfQI3h6+C2JACmsXwNQwJYPIVBudZe3TDpRGZp3V/zLlQwqKMlAadFdFuDzdIbRO4auH7YYonnizYtJwHE2zJviBXgmvuqeKcWQW/H+cL7QSEBaDwNUXRmPPpMLYfWGZWh8HT81RWaJEO1ioKqUF+iHz6jWa51Ru1NsZPIIALdIorQWBoellwgMIu11f3r1RJFTQfGFdQzoMdTJFy+W3JjQLokXY2B6wpYtm5x0z9nZmGY/UdsiehSACoWz94vYos1j9DU2LG+6EpFT8IdtqFTuzcH1eYLY28vvEUvmki21YGwAQa1xfa1uxqElfYaa5+yYcbuBCDWdFff4C9eEbbx+70YB5uytDSE82FeDs0t77omNC5/MtPt36nFR4FG+BL57PaSZ/tNiq0lyjvtALnDbbRBOVRvfdCbNMfeKO0AibzlYOkzNRwQ2PxhaF6kH9F9TOfu8kYkU2yNx8rva89PbQIHojH3mm8Ia85LrtcF/cNGFnuv4kZWLRb9y7tycYZufLJVup3xL1mrzNyMP2r3tqzdZx8opxlHVuahmHnsZh3sma8O2S8nma8/fwB5wIQwuiXyywAAAABJRU5ErkJggg==\"><\/div>\r\n    <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>Football Club<\/div>\r\n    <div class=\"clearfix\"><\/div>\r\n  <\/a>\r\n\r\n  <div class=\"list-group-item listItemCustomPadding lightgreytext backgroundNone fontSize14 replybtnText\" style=\"padding-top:6px;padding-bottom: 6px;\">APPLETS<\/div>\r\n  <div ng-repeat=\"ag in appgroups\">\r\n    <div class=\"list-group-item appgroup\" ng-hide=\"ag.appFeatureType=='Public'\">\r\n      {{ag.appFeatureType}}\r\n    <\/div>\r\n    <a aria-label=\"{{app.displayname}}\" class=\"list-group-item listItemCustomPadding listitemborderSolid\" href=\"#/app/{{app.name}}/{{app.name}}\" ng-repeat=\"app in ag.apps | filter: byAppName(appletSearch)\" ng-show=\"app.showInHome == true\" style=\"padding:8px 18px;\">\r\n\r\n      <div ng-if=\"app.displayname == 'Notifications'\">\r\n        <div class=\"pull-left\"><img class=\"avatar\" style=\"width:36px;\" id=\"logo-{{app.name}}\" src=\"{{app.logo}}\" alt=\"\"><\/div>\r\n        <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>{{app.displayname}}<\/div>\r\n        <div class=\"pull-right fontSize14 proximaSemiBoldFont\">\r\n          <div aria-hidden=\"true\" style=\"margin-top: 4px;background-color: red;background: red;width:25px;height:25px;text-align:center;line-height: 25px;border-radius: 50%;color:#fff;\">2<\/div>\r\n        <\/div>\r\n        <div class=\"clearfix\"><\/div>\r\n      <\/div>\r\n\r\n\r\n      <div ng-if=\"app.displayname != 'Notifications'\">\r\n        <div class=\"pull-left\"><img class=\"avatar\" style=\"width:36px;\" id=\"logo-{{app.name}}\" src=\"{{app.logo}}\" alt=\"\"><\/div>\r\n        <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>{{app.displayname}}<\/div>\r\n        <div class=\"pull-right fontSize14 proximaSemiBoldFont\" ng-if=\"app.displayname == 'Social Networking' || app.displayname == 'Registration' || app.displayname == 'Academics' || app.displayname == 'QuickLaunch' || app.displayname == 'Courses' || app.displayname == 'Finance' || app.displayname == 'Resources'\"><i class=\"fa fa-chevron-right fontSize14\" aria-hidden=\"true\" style=\"margin-top: 13px;\"><\/i><\/div>\r\n        <div class=\"clearfix\"><\/div>\r\n      <\/div>\r\n\r\n\r\n    <\/a>\r\n  <\/div>\r\n\r\n  <div style=\"margin-top:20px;\">\r\n    <a class=\"list-group-item list-group-item listItemCustomPadding listitemborderSolid\" href=\"#/app/ContactSupport/ContactSupport\" style=\"padding:8px 18px;\">\r\n      <div class=\"pull-left\"><img class=\"avatar\" style=\"width:36px;\" id=\"logo-{{app.name}}\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAA7VBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeHh4DAwPv7+8bGxsVFRUYGBgiIiIREREgICD+/v4MDAzs7OwGBgbz8/OcnJwlJSUICAj7+/vx8fG9vb2jo6NwcHBcXFwsLCwkJCTd3d2ysrKBgYF3d3f4+Pjg4OC5ubmYmJhOTk41NTXp6enl5eXW1tbGxsaqqqqSkpKHh4diYmI6OjoODg719fXa2trR0dHOzs6tra2WlpZ8fHxpaWlSUlI+Pj4pKSnBwcGmpqaenp6IiIiEhIRtbW1XV1fKyspFRUUxMTGRkZGLAAn0AAAAC3RSTlMA+v3lcVsVuOR6t0hRJ2QAAAKbSURBVEjHlZbZVuJAFEURbIfeqUplhBBGmQUURG0BUXAe+/8/p2PrA4RC4TxlrZydulXnrtxKfGhne3cvSZKVil7u7W7vJL70K8VaSv369O/D1laSH5Tc2oL9/9+P/KylyBatsZPS+/VEaiex/eFfn9hO/NYAGWXYtqEyGmA3kVo6TsdWAHARPcSPdy8Rt+MCR+Wzx/INYBNHEvFqqnDal0GhEMhRFmw/ZogBvkmz1xp3XgSzq8vh8ROO8x2Qsyjlx2/Q7GSb4J54dfyLbwCXe68U+QpBWspm95y/XhtTrARCnrwsZ8PjhxfTnVGSMx69DuEqQHEhTyLLHZ+qNI+q1IMbzBVAlYms0ChBxVDKdAALjou4ekBBr00FLOsrOCNDyL10sbSAQTkoYyp7viVMXgpnGFqgQildwWRByqdX510DCAMmNfDFYpLQL4KZiwNCcV6U+doAMVeRcCiNWsFdGT8XA0yyrcNivR905wu2qMhavV3LT1BiAbB5yg+Ac3mwCNykG0Aniq86D+RyHL5iHdGIA3/SVxzZtI/BmQNMZvKMW4vrZeAUw+a58Iw7B7hMZRPL1QOhw4FsUF1YoVv4ZoUq5cJ0YYWMz+El/qo9GBRje8Cm4U2Aqf6UHrwr7OUceif18XAhB8WtrLVPDvMDlNAk3fdaD/Gks7XR6O45SlrXSwxkiItgDgHQ9RJgVhx6fewcAuHemgBgWI4V6tsbqpTzHd5NkVPAFyHEyp+AwKbuXYOvaJa6KGKKA+BfUPTaXSi1Cukp5o8ADmRlUBvn7z+SNMWPAI5D5rT4mh+sC5AJAbLDIH2uL2l5GqqwalDOvmk3ndQMFCCjAEtjJ5XY1c84I1SgG1kbD8WNx+6mg33jq8Pml5ONrz//AO4tii7RqB6mAAAAAElFTkSuQmCC\"\r\n        alt=\"\"><\/div>\r\n      <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>Contact Support<\/div>\r\n      <div class=\"clearfix\"><\/div>\r\n    <\/a>\r\n    <a class=\"list-group-item listItemCustomPadding listitemborderSolid\" href=\"#/app/Settings2/Settings2\" style=\"padding:8px 18px;\">\r\n      <div class=\"pull-left\"><img class=\"avatar\" style=\"width:36px;\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAA4VBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfHx8nJycjIyPz8/OioqLk5OQcHBzw8PDJyckYGBgVFRX4+Ph9fX0DAwP29vbs7Ozq6urW1ta3t7f6+vrc3NzZ2dmmpqaJiYk2NjYrKysGBgbm5ubR0dG1tbWVlZWNjY2GhoYyMjIvLy8QEBALCwvo6OjOzs7////g4ODGxsbDw8O8vLyxsbGcnJyQkJB4eHhwcHBUVFQNDQ2/v7+srKyRkZGBgYF0dHRpaWlkZGRPT086OjphYWFaWlpJSUmM1n1cAAAAC3RSTlMA+v3lcVsVuOR6t0hRJ2QAAAMXSURBVEjHldbXdhoxEIBhCE6c5Je0vRd6B1MNxsa9JXn/B8racS6MRU6YCzgs82m1c1YalV7iy9Hx1098Ym8Uf349PvpSeovPFf4rKp//5H+DcnlneM1NymX49jo+lPmvKMPnYv4Vfb5eVL6UjnT5+8VR6bsO2LIIoQPHpYqmnJO3L015v5Y05ZnyYBaxpcNHUtqdi0Bx7zhpmhgjFGJ3Zu+BeDEKM8WXLPvYAhD7geTBPYfQsgDqyQju3AvUPiC5N7rGqhbXB3iCYRZb10Y3biL1QHBfPWUTnP4E3/M9eFoHZ/QXTYQO2DwYp0AL2mOAk5PXH+RxiK0BEncGaooYv2S/fkgiMaFWR2iA4NzYMEXB48pKkq67BRldFZdNLcBmFbRQkAe1RrNpZtUVKHB6+GiAUtROETAP7p4brnvza2vUQZJ3hS8/gimE8U/GxfjPt/Fs7lqBSVGFNi1jAJ1dMOHetOq0eQzubhcmwGDReKyGjJknjZCr96CoqZNaA8asas+xSUcIn2H1stejzciaGSHiHZCYDuCD1WjM6CiwBcv8Np1iA7M+chekEzyPk6R5OkcAKK6zC+cSewLWmQZIhM84abruX7B+BZ7na0ECeNA1byx8GzxFbT1MxKu2dqck2BrL+pAT3OxXMEAopQirP9wMSVhfxqOdh+aKUT/NCrCtbs3FECjy86egSQvXyc/pRO8BHRjFT4VYGTSqy+t1rZqT9FAIZwNEH99WG2uNhLrxeJln2frHU2J5tLlJW7Qj7QK6Dlovwq32bi8uhm7Q85DgzPHQvt53xhlRpCDspY6TZE2Q0RTTGCD0C6gL4grZhunlpQDVZur5+xfQRdxnAjAuCMgWgE8jGGoBguYi59zJW2DbngBx45g0FhtsdABFM64Zva4xHzHxCF0nnRu1YIOK9m5kYWYiBqkFPnVn02KQDRGdf26VfjHrGcAyBw+wI/YCbCWQhMbMsrrxOW1EceFd6Lb7DmH/7Kw/gkiz3esaytUbjD6kUykd61qWkEWoSNeyDm6KB7fdQxv7wUeHww8nBx9/fgOZ25KGBfyztQAAAABJRU5ErkJggg==\"\r\n        alt=\"\" /><\/div>\r\n      <div style=\"margin-left:9px;display:inline-block !important;margin-top:9px !important;\" class='pull-left fontSize14 proximaSemiBoldFont'>Settings<\/div>\r\n      <div class=\"clearfix\"><\/div>\r\n    <\/a>\r\n  <\/div>\r\n  <div style=\"margin-top:20px;\">\r\n    <div class=\"list-group-item list-group-item listItemCustomPadding listitemborderSolid fontSize16 red textcenter fontBold\" ng-click=\"logOut()\" style=\"padding:15px 0;\">Log Out<\/div>\r\n  <\/div>\r\n  <br>\r\n<\/div>",
-  "sidebarScript": "function sidebarprocessor( $scope,  $compile, $http, $rootScope, $sce, $window, $location) {\r\n\r\n\r\n}",
   "reportissueEmail": "support@unifyed.com",
   "iconWidth": 70,
   "apps": 
@@ -373,228 +368,228 @@
           "mapMarkers": 
           [
             {
-              "lat": "18.341002",
-              "name": "Access and Enrollment Services, ACC",
-              "long": "-64.975076",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1160"
+              "lat": "18.341002",
+              "phone": "(340) 693-1160",
+              "long": "-64.975076",
+              "name": "Access and Enrollment Services, ACC"
             },
             {
-              "lat": "18.341002",
               "long": "-64.975076",
               "phone": "(340) 693-1430",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
               "name": "Accounting, ACC"
             },
             {
               "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1400",
+              "lat": "18.341002",
               "name": "Administration & Finance, Room No. 315",
-              "lat": "18.341002"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1400"
             },
             {
+              "lat": "18.341002",
+              "long": "-64.975076",
               "name": "Admissions, ACC",
               "phone": "(340) 693-1160",
-              "lat": "18.341002",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1437",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Cashier Services, ACC",
               "lat": "18.341002",
+              "long": "-64.975076",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1437"
+            },
+            {
+              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
+              "phone": "(340) 693-1003",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
               "long": "-64.975076"
             },
             {
-              "lat": "18.341002",
-              "phone": "(340) 693-1003",
-              "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340"
-            },
-            {
-              "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
               "name": "Financial Aid, ACC",
-              "phone": "(340) 693-1090"
+              "long": "-64.975076",
+              "phone": "(340) 693-1090",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002"
             },
             {
-              "name": "Human Resources, ACC",
-              "phone": "(340) 693-1410",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "lat": "18.341002"
+              "phone": "(340) 693-1410",
+              "name": "Human Resources, ACC",
+              "lat": "18.341002",
+              "long": "-64.975076"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1000",
+              "lat": "18.341002",
               "name": "President's Office, ACC",
-              "long": "-64.975076",
-              "lat": "18.341002"
-            },
-            {
-              "phone": "(340) 693-1200",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "name": "Provost's Office, ACC",
-              "lat": "18.341002"
-            },
-            {
-              "name": "Public Relations, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "phone": "(340) 693-1057",
-              "lat": "18.341002"
-            },
-            {
-              "name": "Purchasing, ACC",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.975076",
-              "phone": "(340) 693-1480",
-              "lat": "18.341002"
-            },
-            {
-              "name": "Registrar, ACC",
-              "long": "-64.975076",
-              "lat": "18.341002",
-              "phone": "(340) 693-1151",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": "(340) 693-1062",
-              "lat": "18.341002",
-              "long": "-64.975076",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Research & Public Service"
-            },
-            {
-              "long": "-64.975076",
-              "lat": "18.341002",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Title III & Sponsored Programs",
-              "phone": "(340) 693-1054; (340) 693-1202"
-            },
-            {
-              "lat": "18.341002",
-              "phone": "(340) 693-1392",
-              "name": "Water Resources Research Institute (WRRI)",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076"
             },
             {
-              "name": "Athletic Fields",
-              "lat": "18.339663",
+              "lat": "18.341002",
+              "long": "-64.975076",
+              "name": "Provost's Office, ACC",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1200"
+            },
+            {
+              "name": "Public Relations, ACC",
+              "phone": "(340) 693-1057",
+              "long": "-64.975076",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "phone": "(340) 693-1480",
+              "long": "-64.975076",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Purchasing, ACC"
+            },
+            {
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Registrar, ACC",
+              "long": "-64.975076",
+              "phone": "(340) 693-1151"
+            },
+            {
+              "phone": "(340) 693-1062",
+              "name": "Research & Public Service",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
+              "long": "-64.975076"
+            },
+            {
+              "name": "Title III & Sponsored Programs",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975076",
+              "phone": "(340) 693-1054; (340) 693-1202",
+              "lat": "18.341002"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341002",
+              "phone": "(340) 693-1392",
+              "long": "-64.975076",
+              "name": "Water Resources Research Institute (WRRI)"
+            },
+            {
               "phone": null,
+              "lat": "18.339663",
+              "name": "Athletic Fields",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.97061"
             },
             {
-              "name": "Ball Fields",
-              "lat": "18.33984",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972253",
-              "phone": null
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.33984",
+              "phone": null,
+              "name": "Ball Fields"
             },
             {
+              "phone": null,
+              "name": "Basketball Courts",
               "long": "-64.971144",
               "lat": "18.344103",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Basketball Courts"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
               "name": "Beach Showers & Restrooms",
               "long": "-64.976263",
-              "lat": "18.342838"
+              "phone": null,
+              "lat": "18.342838",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1561",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342573",
               "name": "Bookstore",
+              "lat": "18.342573",
+              "phone": "(340) 693-1561",
               "long": "-64.972328"
             },
             {
-              "lat": "18.343094",
-              "name": "Brewers Bay Beach",
               "long": "-64.976613",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
+              "name": "Brewers Bay Beach",
+              "lat": "18.343094"
             },
             {
               "name": "Business, Chase Auditorium",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.34385",
-              "phone": null,
               "long": "-64.973079"
             },
             {
-              "phone": "(340) 693-1300",
-              "name": "Business, School of Business",
+              "lat": "18.34385",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.973079",
-              "lat": "18.34385"
+              "name": "Business, School of Business",
+              "phone": "(340) 693-1300",
+              "long": "-64.973079"
             },
             {
               "name": "Campus East Housing",
               "lat": "18.343789",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "long": "-64.968683",
-              "phone": null
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "long": "-64.969183",
-              "name": "Caribbean Green Technology Center",
               "phone": "(340) 693-1628",
+              "name": "Caribbean Green Technology Center",
               "lat": "18.343158",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "CELL-Community Engagement and Lifelong Learning Center",
-              "phone": "(340) 693-1100",
               "lat": "18.343339",
-              "long": "-64.968472"
-            },
-            {
-              "phone": null,
-              "lat": "18.339413",
-              "name": "Center for Advising & Tutorial Services",
-              "long": "-64.974293",
+              "phone": "(340) 693-1100",
+              "long": "-64.968472",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "name": "Center for Advising & Tutorial Services",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.974293",
               "lat": "18.339413",
-              "phone": "(340) 693-1583",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for Student Success (CBA)"
+              "phone": null
             },
             {
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Center for Student Success (CBA)",
               "long": "-64.974293",
+              "phone": "(340) 693-1583"
+            },
+            {
+              "name": "Little Theatre, CAB",
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "lat": "18.339413",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Little Theatre, CAB"
+              "long": "-64.974293"
             },
             {
-              "name": "University Bound (CBA)",
+              "long": "-64.974293",
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1130",
+              "name": "University Bound (CBA)"
+            },
+            {
+              "name": "Classroom Administration Building",
+              "phone": null,
               "long": "-64.974293",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.339413"
-            },
-            {
-              "long": "-64.974293",
-              "lat": "18.339413",
-              "phone": null,
-              "name": "Classroom Administration Building",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
@@ -604,18 +599,18 @@
               "phone": null
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Cooperative Extension Service",
-              "phone": "(340) 693-1080",
               "lat": "18.342438",
-              "long": "-64.971589"
+              "phone": "(340) 693-1080",
+              "long": "-64.971589",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "name": "Dining Pavilion - Cafeteria, Food Services",
               "lat": "18.3431",
-              "long": "-64.972157",
-              "phone": "(340) 693-1139",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Dining Pavilion - Cafeteria, Food Services"
+              "long": "-64.972157",
+              "phone": "(340) 693-1139"
             },
             {
               "lat": "18.342967",
@@ -625,305 +620,305 @@
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
-              "phone": "(340) 693-1422",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.343436",
-              "long": "-64.968499",
+              "phone": "(340) 693-1422",
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
+              "long": "-64.968499"
+            },
+            {
+              "name": "FAA Tower",
+              "long": "-64.974733",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.339273"
+            },
+            {
+              "lat": "18.340998",
+              "name": "Faculty & Staff Housing",
+              "long": "-64.97588",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.339273",
-              "phone": null,
+              "name": "GeoCAS Institute",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "FAA Tower",
-              "long": "-64.974733"
-            },
-            {
-              "long": "-64.97588",
-              "name": "Faculty & Staff Housing",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "lat": "18.340998"
-            },
-            {
-              "long": "-64.969183",
-              "lat": "18.343158",
               "phone": "(340) 693-1647",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "GeoCAS Institute"
+              "lat": "18.343158",
+              "long": "-64.969183"
             },
             {
               "lat": "18.342041",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.973043",
               "phone": "(340) 693-1124",
+              "long": "-64.973043",
               "name": "Health Services Center, Health Services"
             },
             {
               "lat": "18.341193",
-              "name": "Herman E. Moore Golf Course",
+              "phone": null,
               "long": "-64.969852",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
+              "name": "Herman E. Moore Golf Course"
             },
             {
+              "lat": "18.339658",
+              "long": "-64.973863",
               "phone": null,
               "name": "Humanities",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.339658",
-              "long": "-64.973863"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Info Kiosk",
               "lat": "18.339975",
-              "long": "-64.971164",
-              "name": "Info Kiosk"
+              "long": "-64.971164"
             },
             {
-              "lat": "18.340828",
+              "name": "Institutional Advancement",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975806",
               "phone": "(340) 693-1040",
-              "name": "Institutional Advancement"
+              "lat": "18.340828"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "MMSC- Center for Marine & Environmental Studies (CMES)",
+              "phone": "(340) 693-1380",
               "long": "-64.976642",
               "lat": "18.340045",
-              "phone": "(340) 693-1380"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "MMSC- Center for Marine & Environmental Studies (CMES)"
             },
             {
-              "name": "Medical Building, School of Medicine",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1000",
-              "lat": "18.342594",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.968913"
+              "long": "-64.968913",
+              "name": "Medical Building, School of Medicine",
+              "lat": "18.342594"
             },
             {
-              "long": "-64.972544",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
+              "long": "-64.972544",
               "lat": "18.341857",
-              "name": "Music Center"
+              "name": "Music Center",
+              "phone": null
             },
             {
               "name": "Nisky Shopping Center- (SBDC)",
-              "long": "-64.953474",
               "phone": "(340) 776-3206",
               "lat": "18.336559",
+              "long": "-64.953474",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "18.343563",
               "name": "Nursing, School of Nursing",
-              "long": "-64.973097",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1290"
+              "phone": "(340) 693-1290",
+              "lat": "18.343563",
+              "long": "-64.973097"
             },
             {
               "long": "-64.971515",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
               "lat": "18.341548",
-              "name": "Penha House, ATM Cash Machine"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Penha House, ATM Cash Machine",
+              "phone": null
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341572",
+              "name": "Penha House, Security",
               "long": "-64.971549",
               "phone": "(340) 693-1530",
-              "name": "Penha House, Security"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341572"
             },
             {
               "name": "Penha House, WUVI Radio Station",
+              "lat": "18.341548",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.971515",
-              "phone": "(340) 643-1670",
-              "lat": "18.341548"
+              "phone": "(340) 643-1670"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.967624",
               "lat": "18.341348",
               "phone": "(340) 693-1510",
-              "name": "Physical Plant"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Physical Plant",
+              "long": "-64.967624"
             },
             {
-              "phone": "(340) 693-1178",
-              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
               "lat": "18.342906",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.973027",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
+              "phone": "(340) 693-1178"
             },
             {
+              "name": "Ralph M. Paiewonsky Library, IT Services",
               "phone": "(340) 693-1466",
               "long": "-64.972841",
               "lat": "18.344026",
-              "name": "Ralph M. Paiewonsky Library, IT Services",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "name": "Ralph M. Paiewonsky Library, I R&P",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.972841",
-              "phone": "(340) 693-1010",
               "lat": "18.344026",
-              "name": "Ralph M. Paiewonsky Library, I R&P"
+              "phone": "(340) 693-1010",
+              "long": "-64.972841"
             },
             {
-              "lat": "18.344026",
               "long": "-64.972841",
+              "name": "Ralph M. Paiewonsky Library, Library",
               "phone": "(340) 693-1367",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Ralph M. Paiewonsky Library, Library"
+              "lat": "18.344026"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "name": "Recreation Center",
               "lat": "18.343847",
-              "phone": null,
-              "long": "-64.971202",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.971202"
             },
             {
               "long": "-64.973724",
               "lat": "18.345035",
-              "name": "Reichhold Center for the Arts",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1550"
+              "phone": "(340) 693-1550",
+              "name": "Reichhold Center for the Arts"
             },
             {
               "name": "Research and Public Service",
               "lat": "18.343399",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.968547",
-              "phone": "(340) 693-1062"
+              "phone": "(340) 693-1062",
+              "long": "-64.968547"
             },
             {
-              "long": "-64.971744",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343563",
+              "long": "-64.971744",
               "phone": null,
-              "name": "Residence Hall - East Hall"
+              "name": "Residence Hall - East Hall",
+              "lat": "18.343563"
             },
             {
+              "name": "Residence Hall - Middle Hall",
+              "phone": null,
               "lat": "18.343524",
               "long": "-64.972378",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "name": "Residence Hall - Middle Hall"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "phone": null,
               "name": "Residence Hall - North Hall",
-              "long": "-64.972236",
-              "lat": "18.344219",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "long": "-64.972189",
-              "lat": "18.342837",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Residence Hall - South Hall"
+              "lat": "18.344219",
+              "long": "-64.972236"
             },
             {
-              "long": "-64.973581",
-              "name": "Residence Hall - West Hall",
-              "lat": "18.343243",
+              "name": "Residence Hall - South Hall",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.972189",
+              "lat": "18.342837"
             },
             {
+              "phone": null,
+              "name": "Residence Hall - West Hall",
+              "long": "-64.973581",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343243"
+            },
+            {
+              "lat": "18.342",
               "phone": "(340) 693-1136",
               "long": "-64.972145",
-              "lat": "18.342",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Roupp House, Counseling & Career Services"
-            },
-            {
-              "lat": "18.342",
-              "long": "-64.972145",
-              "name": "Roupp House, Housing Services",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1110"
-            },
-            {
-              "name": "Science & Math, College of Science & Mathematics",
-              "phone": "(340) 693-1230",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343553",
-              "long": "-64.972871"
-            },
-            {
-              "lat": "18.3426381",
-              "phone": "(340) 693-1260",
-              "long": "-64.9735158",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Social Sciences, College of Liberal Arts and Social Sciences"
-            },
-            {
-              "lat": "18.342642",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "long": "-64.973531",
-              "name": "Social Sciences, Social Sciences"
-            },
-            {
-              "phone": null,
-              "lat": "18.340004",
-              "name": "Sports & Fitness Center",
-              "long": "-64.972962",
+              "name": "Roupp House, Counseling & Career Services",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "St. Thomas Campus Dorms",
-              "phone": null,
+              "name": "Roupp House, Housing Services",
+              "long": "-64.972145",
+              "phone": "(340) 693-1110",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.342"
+            },
+            {
+              "phone": "(340) 693-1230",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.972871",
+              "name": "Science & Math, College of Science & Mathematics",
+              "lat": "18.343553"
+            },
+            {
+              "long": "-64.9735158",
+              "phone": "(340) 693-1260",
+              "name": "Social Sciences, College of Liberal Arts and Social Sciences",
+              "lat": "18.3426381",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "phone": null,
+              "name": "Social Sciences, Social Sciences",
+              "long": "-64.973531",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.342642"
+            },
+            {
+              "lat": "18.340004",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Sports & Fitness Center",
+              "long": "-64.972962",
+              "phone": null
+            },
+            {
               "long": "-64.971879",
-              "lat": "18.343517"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343517",
+              "name": "St. Thomas Campus Dorms",
+              "phone": null
             },
             {
               "name": "Student Activities Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.343853",
+              "phone": "(340) 693-1640",
               "long": "-64.972072",
-              "phone": "(340) 693-1640"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Student Laundry",
-              "lat": "18.341981",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.972995"
+              "phone": null,
+              "name": "Student Laundry",
+              "long": "-64.972995",
+              "lat": "18.341981"
             },
             {
               "long": "-64.972807",
-              "phone": "(340) 693-1320",
+              "lat": "18.343854",
               "name": "Teachers Education, School of Education",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343854"
+              "phone": "(340) 693-1320",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 693-1322",
+              "name": "Teachers Education, VIUCEDD",
               "lat": "18.343854",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Teachers Education, VIUCEDD",
-              "long": "-64.972807"
+              "long": "-64.972807",
+              "phone": "(340) 693-1322"
             },
             {
+              "long": "-64.97018",
               "lat": "18.343802",
               "phone": null,
-              "name": "Tennis Courts",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.97018"
+              "name": "Tennis Courts"
             },
             {
-              "lat": "18.339411",
-              "name": "Wellness Center",
               "long": "-64.973453",
               "phone": "(340) 693-1075",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.339411",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Wellness Center"
             }
           ],
           "mapcenter": "18.343563,-64.971744",
@@ -1408,305 +1403,305 @@
           "mapMarkers": 
           [
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.71991",
-              "long": "-64.796226",
+              "phone": "(340) 692-4041",
               "name": "Agricultural Experiment Station, Field Labs",
-              "phone": "(340) 692-4041"
+              "long": "-64.796226",
+              "lat": "17.71991",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": null,
-              "lat": "17.718069",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.718069",
+              "phone": null,
               "name": "Campus Information Center, Map, Phone",
               "long": "-64.799381"
             },
             {
-              "long": "-64.796441",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.714822",
+              "phone": null,
               "name": "Animal Science",
-              "phone": null
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.796441",
+              "lat": "17.714822"
             },
             {
               "img": null,
               "lat": "17.716113",
-              "long": "-64.798715",
               "phone": "(340) 692-4162",
+              "long": "-64.798715",
               "name": "Bookstore"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4046",
-              "lat": "17.715507",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Center for Marine & Environmental Studies (CMES)",
               "long": "-64.799784",
-              "name": "Center for Marine & Environmental Studies (CMES)"
+              "lat": "17.715507"
             },
             {
+              "lat": "17.716563",
+              "long": "-64.799280",
+              "phone": null,
               "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
-              "phone": null,
-              "lat": "17.716563",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799280"
-            },
-            {
-              "long": "-64.799280",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716563",
-              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C"
-            },
-            {
-              "phone": "(340) 692-4280",
-              "long": "-64.799280",
-              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
-              "lat": "17.716563",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
-              "lat": "17.716445",
+              "long": "-64.799280",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799643",
+              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C",
+              "lat": "17.716563",
               "phone": null
             },
             {
-              "phone": "(340) 692-4272",
-              "lat": "17.716563",
-              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799280"
+              "lat": "17.716563",
+              "long": "-64.799280",
+              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
+              "phone": "(340) 692-4280"
+            },
+            {
+              "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
+              "phone": null,
+              "long": "-64.799643",
+              "lat": "17.716445",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374",
+              "phone": "(340) 692-4272",
+              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
+              "long": "-64.799280",
+              "lat": "17.716563"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
-              "name": "Academic Affairs, Evans Center",
-              "lat": "17.717391"
+              "long": "-64.797374",
+              "lat": "17.717391",
+              "name": "Academic Affairs, Evans Center"
             },
             {
               "long": "-64.797374",
               "name": "Business Affairs, Evans Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717391",
-              "phone": null
+              "phone": null,
+              "lat": "17.717391"
             },
             {
-              "long": "-64.797374",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717391",
+              "long": "-64.797374",
               "name": "Campus Operations, Evans Center",
-              "phone": null
+              "phone": null,
+              "lat": "17.717391"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Classrooms, Evans Center",
-              "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797374",
+              "lat": "17.717391",
               "phone": null
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374",
               "name": "Counseling & Placement, Evans Center",
               "phone": "(340) 692-4187",
-              "lat": "17.717391"
-            },
-            {
-              "long": "-64.797374",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Financial Aid, Evans Center",
-              "phone": "(340) 692-4193",
-              "lat": "17.717391"
+              "lat": "17.717391",
+              "long": "-64.797374"
             },
             {
+              "phone": "(340) 692-4193",
               "lat": "17.717391",
               "long": "-64.797374",
-              "name": "Library, Evans Center",
-              "phone": "(340) 692-4130",
+              "name": "Financial Aid, Evans Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "Library, Evans Center",
+              "lat": "17.717391",
+              "long": "-64.797374",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4130"
             },
             {
               "name": "Security, Evans Center",
               "long": "-64.797374",
-              "phone": "(340) 692-4155",
+              "lat": "17.717391",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4155"
+            },
+            {
+              "name": "Student Affairs, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4188",
+              "long": "-64.797374",
               "lat": "17.717391"
             },
             {
+              "phone": null,
               "long": "-64.797374",
-              "phone": "(340) 692-4188",
-              "lat": "17.717391",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Student Affairs, Evans Center"
+              "lat": "17.717391",
+              "name": "Student Government, Evans Center"
             },
             {
-              "name": "Student Government, Evans Center",
-              "long": "-64.797374",
-              "lat": "17.717391",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.715638",
-              "long": "-64.799638",
               "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House",
-              "phone": "(340) 692-4003"
+              "lat": "17.715638",
+              "phone": "(340) 692-4003",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799638"
             },
             {
+              "phone": "(340) 692-4214",
+              "long": "-64.799638",
               "name": "Health Services, Great House",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.715638"
+            },
+            {
               "long": "-64.799638",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4214",
+              "phone": "(340) 692-4024",
+              "name": "President's Office, Great House",
               "lat": "17.715638"
             },
             {
               "lat": "17.715638",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "President's Office, Great House",
-              "phone": "(340) 692-4024",
-              "long": "-64.799638"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Provost's Office, Great House",
-              "lat": "17.715638",
+              "long": "-64.799638",
               "phone": "(340) 692-4022",
-              "long": "-64.799638"
+              "name": "Provost's Office, Great House",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "long": "-64.799561",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.715371",
               "phone": null,
               "name": "Modular Building, Math Center/Writing Center",
-              "lat": "17.715371"
+              "long": "-64.799561"
             },
             {
               "name": "North West Wing, Classrooms & Computer Lab",
-              "lat": "17.717682",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
+              "long": "-64.797771",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.717682"
+            },
+            {
+              "name": "North West Wing, Great Hall",
+              "lat": "17.717682",
+              "long": "-64.797771",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "17.717682",
+              "phone": "(340) 692-4130",
+              "name": "North West Wing, Information Technology Services",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797771"
             },
             {
-              "lat": "17.717682",
-              "long": "-64.797771",
-              "name": "North West Wing, Great Hall",
-              "phone": null,
+              "long": "-64.796902",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Nursing, School of Nursing",
+              "phone": "(340) 692-4010",
+              "lat": "17.716742"
+            },
+            {
+              "phone": "(340) 692-4171",
+              "long": "-64.799784",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Physical Plant",
+              "lat": "17.715507"
+            },
+            {
+              "phone": "(340) 692-4230",
+              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension",
+              "lat": "17.718009",
+              "long": "-64.797331",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": "(340) 692-4130",
-              "long": "-64.797771",
-              "lat": "17.717682",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "North West Wing, Information Technology Services"
-            },
-            {
-              "lat": "17.716742",
-              "name": "Nursing, School of Nursing",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4010",
-              "long": "-64.796902"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799784",
-              "lat": "17.715507",
-              "name": "Physical Plant",
-              "phone": "(340) 692-4171"
-            },
-            {
-              "long": "-64.797331",
-              "phone": "(340) 692-4230",
               "lat": "17.718009",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797331",
-              "lat": "17.718009",
               "name": "Cooperative Extension Service, Research & Extension",
+              "long": "-64.797331",
               "phone": "(340) 692-4080"
             },
             {
+              "phone": "(340) 692-4023",
+              "long": "-64.797331",
               "name": "Institutional Advancement, Research & Extension",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.718009",
-              "long": "-64.797331",
-              "phone": "(340) 692-4023"
+              "lat": "17.718009"
             },
             {
-              "name": "President's Office, Research & Extension",
               "lat": "17.718009",
-              "phone": "(340) 692-4024",
               "long": "-64.797331",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4024",
+              "name": "President's Office, Research & Extension"
+            },
+            {
               "name": "College of Science & Mathematics, Research and Technology Park",
-              "phone": "(340) 692-4282",
+              "long": "-64.800617",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.719256",
+              "phone": "(340) 692-4282"
+            },
+            {
+              "lat": "17.719256",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 773-5000",
+              "name": "Research and Technology Park",
               "long": "-64.800617"
             },
             {
-              "lat": "17.719256",
-              "long": "-64.800617",
-              "name": "Research and Technology Park",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 773-5000"
+              "lat": "17.713916",
+              "phone": null,
+              "name": "Soccer Fields",
+              "long": "-64.798945",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "lat": "17.716272",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.798945",
-              "lat": "17.713916",
-              "name": "Soccer Fields",
+              "name": "Cafeteria, Student Center",
+              "long": "-64.798345",
               "phone": null
             },
             {
-              "name": "Cafeteria, Student Center",
-              "lat": "17.716272",
-              "long": "-64.798345",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": null,
+              "name": "Snack Bar, Student Center",
               "long": "-64.798527",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716231",
-              "name": "Snack Bar, Student Center"
+              "lat": "17.716231"
             },
             {
-              "phone": "(340) 692-4228",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716231",
+              "phone": "(340) 692-4228",
               "name": "Student Activities Center, Student Center",
-              "long": "-64.798527"
+              "long": "-64.798527",
+              "lat": "17.716231"
             },
             {
-              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.798738",
               "lat": "17.714845",
-              "name": "Tennis/Basketball Courts",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": null,
+              "name": "Tennis/Basketball Courts"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4182",
-              "lat": "17.715507",
               "long": "-64.799784",
+              "lat": "17.715507",
               "name": "University Bound"
             },
             {
-              "name": "UVI Farm Store",
-              "long": "-64.797009",
               "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.720293"
+              "long": "-64.797009",
+              "lat": "17.720293",
+              "name": "UVI Farm Store",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             }
           ],
           "mapcenter": "17.718009, -64.797331",
@@ -1953,36 +1948,36 @@
           "quickdialnumbers": 
           [
             {
-              "number": "1 (877) 468-6884",
-              "name": "Toll-Free"
+              "name": "Toll-Free",
+              "number": "1 (877) 468-6884"
             },
             {
-              "name": "Albert A. Sheen Campus Main",
-              "number": "(340) 778-1620"
+              "number": "(340) 778-1620",
+              "name": "Albert A. Sheen Campus Main"
             },
             {
               "number": "(340) 692-4155",
               "name": "Albert A. Sheen Campus Security"
             },
             {
-              "name": "Albert A. Sheen Campus Hotline",
-              "number": "(340) 692-4168"
+              "number": "(340) 692-4168",
+              "name": "Albert A. Sheen Campus Hotline"
             },
             {
               "name": "St. Thomas Campus Main",
               "number": "(340) 776-9200"
             },
             {
-              "name": "St. Thomas Campus Security",
-              "number": "(340) 693-1530"
+              "number": "(340) 693-1530",
+              "name": "St. Thomas Campus Security"
             },
             {
               "number": "(340) 693-1016",
               "name": "St. Thomas Campus Hotline"
             },
             {
-              "number": "911",
-              "name": "Virgin Islands Emergency Services"
+              "name": "Virgin Islands Emergency Services",
+              "number": "911"
             },
             {
               "name": "ITS Help Desk",
