@@ -1000,8 +1000,8 @@ sound: "true"
              console.log("error");
            },
            {
-             id: "UVI",
-             description: "Catawba Push Channel",
+             id: "uviproduction",
+             description: "UVI Push Channel",
              importance: 1,
              vibration: true,
              sound: "default",
