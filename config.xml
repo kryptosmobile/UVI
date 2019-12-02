@@ -114,13 +114,9 @@
     <gap:plugin name="cordova-plugin-datepicker" source="npm" />
     <gap:plugin name="cordova-plugin-screen-orientation" source="npm" />
 
-    <gap:plugin name="phonegap-plugin-push" source="npm" spec="1.8.2">
-        <param name="SENDER_ID" value="459115189650" />
+   <gap:plugin name="phonegap-plugin-push" source="npm" spec="2.1.2">
+        <param name="SENDER_ID" value="584590944731" />
     </gap:plugin>
-
-  <!--  <gap:plugin name="phonegap-plugin-push" source="npm" spec="2.1.2">
-        <param name="SENDER_ID" value="584246405361" />
-    </gap:plugin>-->
 
     <gap:plugin name="cordova-plugin-actionsheet" source="npm" />
     <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" spec="5.4.1" />
@@ -168,5 +164,11 @@
     <string>App would like to access the current location to show the direction to different campus locations</string>
 </edit-config>
 
+
+<platform name="android">
+
+        <resource-file src="google-services.json" target="/google-services.json" />
+
+    </platform>
 
 </widget>
