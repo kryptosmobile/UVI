@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "584590944731",
+    "firebase_url": "https://catawba-college-96575.firebaseio.com",
+    "project_id": "catawba-college-96575",
+    "storage_bucket": "catawba-college-96575.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584590944731:android:e8ecefdbb9c5f032",
+        "android_client_info": {
+          "package_name": "com.kryptosmobile.catawba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584590944731-mb0a4tj0jc3vi3mcp4h1m0houu52cfot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADdM9phKILcbDGbl8kApE0Rrouc0yAMfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584590944731-mb0a4tj0jc3vi3mcp4h1m0houu52cfot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584590944731:android:0eb625ce2e5a869ef4dffe",
+        "android_client_info": {
+          "package_name": "com.unifyed.uviproduction"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584590944731-mb0a4tj0jc3vi3mcp4h1m0houu52cfot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADdM9phKILcbDGbl8kApE0Rrouc0yAMfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584590944731-mb0a4tj0jc3vi3mcp4h1m0houu52cfot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
