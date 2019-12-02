@@ -968,7 +968,7 @@ var MyCampusApp = {
 
     activatePushNotification : function(tenantId,$http) {
 	    try {
-            var gcmSenderID = "584246405361"; // Comment this line once we have added upgraded our platform to send push.
+            var gcmSenderID = "584590944731"; // Comment this line once we have added upgraded our platform to send push.
             if ($.jStorage.get("deviceID") == null || $.jStorage.get("deviceID") == undefined) {
                 MyCampusApp.rootScope.push = PushNotification.init({
                                                                    android: {
