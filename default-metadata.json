@@ -1,5 +1,5 @@
 {
-  "version": 698,
+  "version": 701,
   "tenantid": "uviproduction",
   "mobappid": 7240,
   "appName": "UVI PROD U8",
@@ -241,8 +241,8 @@
         {
           "pageid": "EDUDirectory",
           "pageTemplate": "<div><\/div>",
-          "pageprocessor": "function pageprocessorEDUDirectory(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n\r\n  $scope.resultfound = true;\r\n  $scope.alphabetsArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];\r\n  var searchParams = pagedef.filterparams;\r\n\r\n  var filterParams = [];\r\n  for (var i = 0; i < searchParams.length; i++) {\r\n    filterParams.push(searchParams[i].fparam);\r\n  }\r\n\r\n  var data1 = $compile($(pagedef.datatemplate))($scope);\r\n  $(\"#appContent\").append(data1);\r\n\r\n  $rootScope.firstName = pagedef.firstName;\r\n  $rootScope.lastName = pagedef.lastName;\r\n  $rootScope.email = pagedef.email;\r\n  $rootScope.phone = pagedef.phone;\r\n  $rootScope.title = pagedef.title;\r\n  $rootScope.sort = pagedef.sortbyFirstName ? pagedef.sortbyFirstName : \"off\";\r\n  $rootScope.departmentDropDown = pagedef.departmentDropDown ? pagedef.departmentDropDown : \"off\";\r\n  $scope.page1Params = pagedef.page1Params;\r\n  $rootScope.page2Params = pagedef.page2Params;\r\n   //  console.log(\"0.............\",pagedef);\r\n  // console.log(\"1.............\",$rootScope.sort);\r\n  if($rootScope.sort == \"on\"){\r\n   // console.log(\"2.............\",$rootScope.sort);\r\n     $scope.sortHtmlDataFirstName = true;\r\n     $scope.sortHtmlDataLastName = false;\r\n  }else{\r\n  //   console.log(\"3.............\",$rootScope.sort);\r\n     $scope.sortHtmlDataLastName = true;\r\n     $scope.sortHtmlDataFirstName = false;\r\n  }\r\n\r\n    if($rootScope.departmentDropDown == \"on\"){\r\n      $scope.selDepartment = pagedef.selectDepartment ?  pagedef.selectDepartment : \"All\";\r\n      $scope.departmentDropDownHtml = true;\r\n  }else{\r\n     $scope.departmentDropDownHtml = false;\r\n  }\r\n  \r\n   $scope.deptSelect = function(index) {\r\n        \r\n        $scope.selDepartment = $scope.depts[index].DEPT_NAME;\r\n        $scope.filterresult();\r\n     }\r\n  //$rootScope.fetched  = false;\r\n    $scope.filterresult = function() {\r\n         $.blockUI();\r\n        var searchTxt = $(\"#Directorytxt\").val();\r\n        $rootScope.Directoryval = searchTxt;\r\n        var results = [];\r\n        var patt = new RegExp(searchTxt, \"i\");\r\n        $.each($rootScope.DirectoryList[pagedef['item_id']], function(index, val) {\r\n            var found = false;\r\n            if ($scope.departmentDropDownHtml && $scope.selDepartment != \"All\") {\r\n              ///  console.log(\"-------------1--\",$scope.selDepartment);\r\n              //  console.log(\"------2----\",val.department);\r\n                if ($scope.selDepartment == val.department) {\r\n                    for (var i = 0; i < filterParams.length; i++) {\r\n                        var key = \"\" + filterParams[i];\r\n                        if (val[key] != undefined && val[key].match(patt)) {\r\n                            results.push(val);\r\n                            break;\r\n                        }\r\n                    }\r\n                }\r\n            } else {\r\n\r\n                for (var i = 0; i < filterParams.length; i++) {\r\n                    var key = \"\" + filterParams[i];\r\n                    if (val[key] != undefined && val[key].match(patt)) {\r\n                        results.push(val);\r\n                        break;\r\n                    }\r\n\r\n\r\n                }\r\n            }\r\n        });\r\n\r\n\r\n\r\n\r\n\r\n        results.sort(function(a, b) {\r\n            if ($rootScope.sort == \"on\") {\r\n                if (a[$rootScope.firstName] < b[$rootScope.firstName])\r\n                    return -1;\r\n                if (a[$rootScope.firstName] > b[$rootScope.firstName])\r\n                    return 1;\r\n                return 0;\r\n            } else {\r\n                if (a[$rootScope.lastName] < b[$rootScope.lastName])\r\n                    return -1;\r\n                if (a[$rootScope.lastName] > b[$rootScope.lastName])\r\n                    return 1;\r\n                return 0;\r\n            }\r\n        });\r\n\r\n        $rootScope.DirectoryResult = results;\r\n        //console.log(\"test\",results);\r\n        if (results.length > 0) {\r\n            $scope.resultfound = true;\r\n            $.unblockUI();\r\n        } else {\r\n            $scope.resultfound = false;\r\n            $.unblockUI();\r\n        }\r\n\r\n\r\n\r\n\r\n        $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n\r\n        setTimeout(function() {\r\n            $(\".nano\").nanoScroller();\r\n        }, 1000);\r\n    };\r\n  $scope.search = function() {\r\n    $.blockUI();\r\n    if (!$rootScope.fetched ) {\r\n      var url = pagedef.directoryxmlurl;\r\n      if (window.device) {} else {\r\n        url = \"/websimulator/xml?url=\" + pagedef.directoryxmlurl;\r\n      }\r\n      var xhr = $.ajax({\r\n        url: url,\r\n        dataType: \"xml\",\r\n        async: true,\r\n        data: {},\r\n        success: function(resp) {\r\n          try {\r\n            var results = $.xml2json(resp);\r\n           // console.log(results);\r\n            $rootScope.fetched = true;\r\n            $rootScope.DirectoryList = results;\r\n            /*Department dropdown-start*/\r\n            if($scope.departmentDropDownHtml){\r\n                var tempdept = \"\";\r\n                var depts = [];\r\n                $.each(results[pagedef['item_id']], function(i, v) {\r\n                  if (tempdept.indexOf(v.department) == -1 && v.department != undefined) {\r\n                    depts.push({\r\n                      \"DEPT_CODE\": v.department,\r\n                      \"DEPT_NAME\": v.department\r\n                    });\r\n                    tempdept += v.department;\r\n                  }\r\n                });\r\n                depts.sort(function(a, b) {\r\n                  if (a.DEPT_CODE < b.DEPT_CODE) {\r\n                    return -1;\r\n                  } else if (a.DEPT_CODE > b.DEPT_CODE) {\r\n                    return 1;\r\n                  }\r\n\r\n                });\r\n                 depts.unshift({\r\n                      \"DEPT_CODE\": 0,\r\n                      \"DEPT_NAME\": 'All'\r\n                    });\r\n\r\n                // console.log(\"--------------3----\",depts);\r\n                $scope.depts = depts;\r\n                $rootScope.depts = depts;\r\n            }\r\n\r\n            /*Department dropdown-end*/\r\n            $scope.filterresult();\r\n            $scope.$apply();\r\n            $.unblockUI();\r\n          } catch (E) {\r\n            //alert(\"Exception : \" + E);\r\n          }\r\n        },\r\n        error: function(e) {\r\n          // alert(\"Error : \" + e);\r\n          $.unblockUI();\r\n          apprise(\"Error occured. Please try again later.\", {\r\n            \"verify\": false,\r\n            \"textYes\": \"Ok\"\r\n          }, function(r) {\r\n            $window.history.back();\r\n          });\r\n        }\r\n      });\r\n    } else {\r\n      $scope.filterresult();\r\n    }\r\n  }\r\n  \r\n  setTimeout(function(){\r\n     $scope.search();\r\n   },1000);\r\n\r\n\r\n  $scope.checkInitials = function(index) {\r\n   \r\n   if($rootScope.sort == \"on\"){\r\n    if (index == 0) {\r\n      return  $rootScope.DirectoryResult[index][$rootScope.firstName].substring(0, 1).toUpperCase();\r\n    } else if ($rootScope.DirectoryResult[index - 1][$rootScope.firstName].substring(0, 1) == $rootScope.DirectoryResult[index][$rootScope.firstName].substring(0, 1)) {\r\n      return;\r\n    } else {\r\n      return $rootScope.DirectoryResult[index][$rootScope.firstName].substring(0, 1).toUpperCase();\r\n    }\r\n  }else{\r\n    if (index == 0) {\r\n      return  $rootScope.DirectoryResult[index][$rootScope.lastName].substring(0, 1).toUpperCase();\r\n    } else if ($rootScope.DirectoryResult[index - 1][$rootScope.lastName].substring(0, 1) == $rootScope.DirectoryResult[index][$rootScope.lastName].substring(0, 1)) {\r\n      return;\r\n    } else {\r\n      return $rootScope.DirectoryResult[index][$rootScope.lastName].substring(0, 1).toUpperCase();\r\n    }\r\n  }\r\n  }\r\n\r\n  $scope.showOnlyContacts = function(id) {\r\n    var contactsBoxTop = $('.nano-content').scrollTop();\r\n    var currentContactTop = $(\"#ContactBox\" + id).position().top;\r\n\r\n    //$('#ContactsList').animate({ scrollTop: contactsBoxTop + currentContactTop }, 'slow');\r\n\r\n    $('.nano-content').animate({\r\n      scrollTop: contactsBoxTop + currentContactTop\r\n    }, 'slow');\r\n\r\n    //$(\".nano\").nanoScroller({ scrollTo: $(\"#ContactBox\"+id) });\r\n  }\r\n\r\n  $scope.showInfo = function(user) {\r\n    $rootScope.directoryUserInfo = user;\r\n    $location.path(\"/app/EDUDirectory/EDUDirectoryPage2\");\r\n  }\r\n  $('input:text').focusout(function() {\r\n\r\n    /*  document.getElementsByClassName('footerGroupIcons')[0].style.display = \"block !important\";\r\n     alert(document.getElementsByClassName('footerGroupIcons')[0].style.display);*/\r\n\r\n    $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n    $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n\r\n  });\r\n\r\n  $('input:text').focusin(function() {\r\n    // document.getElementsByClassName('footerGroupIcons')[0].style.display = \"none !important\";\r\n    // alert(document.getElementsByClassName('footerGroupIcons')[0].style.display);\r\n    //$(\".footerGroupIcons\").css('display', 'none !important');\r\n\r\n    $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n    $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n  });\r\n\r\n}",
-          "datatemplate": "<style>\r\n  .app-body {\r\n    background: #fff !important;\r\n  }\r\n  \r\n  .regularFontColor {\r\n    color: #252729 !important;\r\n  }\r\n  \r\n  .fontWeight600 {\r\n    font-weight: 600;\r\n  }\r\n  \r\n  .lineHeight18 {\r\n    line-height: 18px;\r\n  }\r\n  \r\n  .styleInitials {\r\n    width: 50px;\r\n    height: 50px;\r\n    text-align: center;\r\n    line-height: 50px;\r\n    font-size: 18px;\r\n    border-radius: 50%;\r\n    color: #fff;\r\n  }\r\n  \r\n  .initialsWidth {\r\n    font-size: 18px;\r\n  }\r\n  \r\n  #ContactsList {\r\n    height: calc(100vh - 192px);\r\n    overflow-y: hidden;\r\n  }\r\n  \r\n  .alert-info {\r\n    color: #c2c2c2;\r\n    background-color: transparent;\r\n    border-color: transparent;\r\n  }\r\n  \r\n  @media (min-width: 769px) {\r\n    .initialsWidth {\r\n      width: 6%;\r\n      font-size: 20px;\r\n    }\r\n    .userInitials {\r\n      width: 13%;\r\n    }\r\n    .userInfo {\r\n      width: 80%;\r\n      font-size: 20px;\r\n    }\r\n    .boxPadding {\r\n      padding: 6px 15px;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 768px) {\r\n    .lg_webAppletContentPadding {\r\n      padding: 10px !important;\r\n    }\r\n    .initialsWidth {\r\n      width: 4%;\r\n    }\r\n    .userInitials {\r\n      width: 11%;\r\n    }\r\n    .userInfo {\r\n      width: 84%;\r\n      font-size: 18px;\r\n    }\r\n    .styleInitials {\r\n      width: 48px;\r\n      height: 48px;\r\n      text-align: center;\r\n      line-height: 48px;\r\n      font-size: 26px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n    .boxPadding {\r\n      padding: 9px 10px;\r\n    }\r\n    #ContactsList {\r\n      height: calc(100vh - 158px);\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 414px) {\r\n    .initialsWidth {\r\n      width: 6%;\r\n    }\r\n    .userInitials {\r\n      width: 17%;\r\n    }\r\n    .userInfo {\r\n      width: 80%;\r\n      font-size: 18px;\r\n    }\r\n    .boxPadding {\r\n      padding: 6px 5px;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 375px) {\r\n    .initialsWidth {\r\n      width: 8%;\r\n    }\r\n    .userInitials {\r\n      width: 16%;\r\n    }\r\n    .styleInitials {\r\n      width: 40px;\r\n      height: 40px;\r\n      text-align: center;\r\n      line-height: 40px;\r\n      font-size: 20px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 320px) {\r\n    .initialsWidth {\r\n      width: 8%;\r\n    }\r\n    .userInitials {\r\n      width: 18%;\r\n    }\r\n    .styleInitials {\r\n      width: 36px;\r\n      height: 36px;\r\n      text-align: center;\r\n      line-height: 36px;\r\n      font-size: 18px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n    .userInfo {\r\n      font-size: 14px;\r\n    }\r\n    .userInfo .fontSize14 {\r\n      font-size: 12px;\r\n    }\r\n  }\r\n  \r\n  .alphabetContainer {\r\n    transform: translateY(-50%);\r\n    top: 50%;\r\n  }\r\n  \r\n  .alphabet {\r\n    font-size: 12px;\r\n    text-align: center;\r\n    line-height: 15px;\r\n  }\r\n  .alphabet:hover {\r\n    color: #252729;\r\n  font-weight:bold;\r\n  }\r\n  \r\n  .nano {}\r\n  \r\n  .nano .nano-content {\r\n    padding: 0px;\r\n  }\r\n  \r\n  .nano .nano-pane {\r\n    background: #fff;\r\n    display: block !important\r\n  }\r\n  \r\n  .nano .nano-slider {\r\n    background: #767676;\r\n  }\r\n<\/style>\r\n  <div class=\"text-center list-group-item greyBorder backgroundWhite borderBottom rounded-0 borderRight0px borderLeft0px\" ng-show=\"departmentDropDownHtml\">\r\n        <div class=\"dropdown dropdownMenuSelect\">\r\n            <button class=\"btn  dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">\r\n        <span>{{selDepartment}}<\/span>\r\n        <span class=\"fa fa-angle-down pull-right\"><\/span><\/button>\r\n            <ul class=\"dropdown-menu\" ng-show=\"depts.length != 0\">\r\n            <li ng-repeat=\"department in depts\" ng-click=\"deptSelect($index)\"><a>{{department.DEPT_NAME}}<\/a><\/li>\r\n            <\/ul>\r\n        <\/div>\r\n    <\/div>\r\n<div class=\"proximaFont backgroundNone\" ng-class=\"{lg_webAppletContentPadding : !window.device}\" style=\"position: relative;\">\r\n\r\n  <div class=\"whiteBackground\" style=\"padding: 5px;\">\r\n    <form style=\"background: rgb(239, 239, 239) none repeat scroll 0% 0%; border-radius: 3px; box-shadow: none; border: medium none;\" ng-submit=\"filterresult();\" class=\"form-horizontal ng-pristine ng-valid\">\r\n      <div style=\"box-shadow: none; border: 0px none;\" class=\"input-group\">\r\n        <input style=\"background: rgb(239, 239, 239) none repeat scroll 0% 0%; box-shadow: none; border: 0px none;\" id=\"Directorytxt\" ng-model=\"Directoryval\" class=\"form-control ng-pristine ng-valid\" type=\"text\" placeholder=\"Search by first, last name, or by department\"\r\n        /><span class=\"input-group-btn\"><button type=\"submit\" ng-click=\"filterresult();\" style=\"padding:0px 11px;background: transparent;outline: none;\" class=\"btn borderNone\" id=\"srchbtn\" type=\"button\" style=\"\"><img style=\"width: 22px; opacity: 0.5;\" src=\"images/search.png\"><\/button>\r\n                <\/span>\r\n      <\/div>\r\n    <\/form>\r\n  <\/div>\r\n\r\n  <div class=\"whiteBackground positionRelative\" style=\"overflow: hidden;\">\r\n    <div class=\"\" id=\"ContactsList\">\r\n      <div class=\"nano\">\r\n        <div class=\"nano-content\" ng-cloak>\r\n          <div class=\"displayTable boxPadding\" ng-repeat=\"user in DirectoryResult track by $index\" style=\"width:100%;\" ng-attr-id=\"{{'ContactBox'+checkInitials($index)}}\">\r\n            <div class=\"displayTableCell verticalAlignMiddle initialsWidth\" ng-bind=\"checkInitials($index)\"><\/div>\r\n            <div class=\"displayTableCell verticalAlignMiddle userInitials fontSize18 fontBold\">\r\n              <div class=\"styleInitials cursorPointer\" ng-show=\"sortHtmlDataFirstName\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(user[$root.firstName],user[$root.lastName])}\">{{user[$root.firstName].substring(0,1)}}{{user[$root.lastName].substring(0,1)}}<\/div>\r\n              <div class=\"styleInitials cursorPointer\" ng-show=\"sortHtmlDataLastName\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(user[$root.lastName], user[$root.firstName])}\">{{user[$root.lastName].substring(0,1)}}{{user[$root.firstName].substring(0,1)}}<\/div>\r\n            <\/div>\r\n            <div class=\"displayTableCell verticalAlignMiddle userInfo cursorPointer\" ng-click=\"showInfo(user);\" style=\"padding-right:8px;\">\r\n              <div class=\"media-heading colorDark font16\" ng-show=\"sortHtmlDataFirstName\" style=\"margin-bottom: 0px;\">\r\n                <span>{{user[$root.firstName]}} <\/span><span>{{user[$root.lastName]}} <\/span>\r\n              <\/div>\r\n              <div class=\"media-heading colorDark font16\" ng-show=\"sortHtmlDataLastName\" style=\"margin-bottom: 0px;\"><span>{{user[$root.lastName]}} <\/span><span>{{user[$root.firstName]}} <\/span>\r\n              <\/div>\r\n              <div ng-if=\"page1Params\">\r\n                <div class=\"fontSize14 lightgreytext\" ng-repeat=\"param in page1Params track by $index\">{{user[param.nodeName]}}<\/div>\r\n              <\/div>\r\n            <\/div>\r\n            <div class=\"clearfix\"><\/div>\r\n          <\/div>\r\n          <div class=\"alert alert-info aligncenter\" style=\"margin:20% 30%; \" ng-hide=\"resultfound \"><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfhCxEQDTuWOld1AAADnElEQVRo3u3ZW4hVZRjG8Z/moO7GQzilaREjYzoVhGJpVlCBleWkgV12UTdddIJBwiAC6Va8CEwDhbqTwIrMzmgHUelCI6YxnWIoDzGQsp0ZZzRz3i7a4ji5915fsxYk9Cz2zf6e93v+a7G+w1prjHSNt9g9lphlmmk44YRj9thtn7P/or8klazWI6ocPVYrpXU4Jsm9wAdmoVenLl0O68IcN5tjjltMxlFtvivm7B91WvjVc1XOsuQFR4U+DxYRP1NZ2Omamq4m3wgnzcgf4F1hv4a6vvG+F7blHT9PGLIok3eR88K8fAHWCF9ndn8lrMlmHZuxyzvwSWaATysVOQJMxZHMAEcqFTkCTMGZzAD9lYocAcbhqswAFypyBEhTwvz6P8AVAtCgKQlgLJoyTNuZ1S70J0yu8/QL7fkB7BQ2JFVsEHbmB9AtLEuqWCZ0ZzFmuwfGIJIAQsZbsZhRkKArBGAQE5P6vRqn8wP4Fo8nATyBL0Z7dS5qqSHhlYzuFjuEcF9+ALwm/Jbxer0lnPFknvE06hXuzuCcakBYkW88vCmsz+B7XtidfzwLhZMm13GNc0h4oAgA9guv1vG0C7uKiecZoWxmDccMp4R7iwIY54Cwo4Zjm/BZUfEw3znhqSqtLwp/WlgkAJuFTVXatgqvp3aYuhj9Xqf9eNEAueuKA2im6lbrGDUHaQ66UVmYX6X1IeGnxH1DkpboFn6suteb6JSwV3MR4XO9J4RO19dwLdAj/GFzvhAzbHJOCO+4to63xV6RJ0SjtfqF8KU7M9Y8nBdEg2crr2U7LE+szQHiMYeFcNTTie9GLgdxQ1rpBBuFUPbyKIfVBYhyyh5xvD1CeMO0UYVfhDgghI1ZC7YIvVbmEv63Gqx1PusD+3JhqIBd7UvCebfXN35eY8UfnT4U3q5nmi0M5f2iuaK7hLP1prIVQkch8dAlLL30r5HL8Wx0FQZwGC21Aa5DT2EAxxg5JY0ESPuIlaoh/3jj/J/bkg1iemFp0ysJNdQqhC0m5B4+wRYhtNYzrhNCn61WpX4FraKSVbbqE8K6kY2Xu+lWWl9Zwwft0uGggw7qTYydrFWrVre5v7Kidmv3fhYAuFWbNouH3SPHdfrZKf369Q370WjSsF+jKVq0DtugD9lnu+1+uFxQ7WHX5BHLzNWc9RPUJSrrdsjHPqr1QJd13E/VXDluMklJyUQlJSUMGDBg0IABfX7RXTnKWTr+CyrFKnbqTSJCAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTExLTE3VDE2OjEzOjU5KzAxOjAwpe2fHQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0xMS0xN1QxNjoxMzo1OSswMTowMNSwJ6EAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC'\r\n            style=\"opacity: 0.3; width: 40px;\" />\r\n            <div class=\"marginTop5\">No matches found<\/div>\r\n          <\/div>\r\n        <\/div>\r\n      <\/div>\r\n    <\/div>\r\n    <div class=\"positionAbsolute alphabetContainer\" style=\"right:10px;width:24px;\">\r\n      <div class=\"cursorPointer alphabet colorGrey\" ng-repeat=\"a in alphabetsArray\" ng-click=\"showOnlyContacts(a)\">{{a}}<\/div>\r\n    <\/div>\r\n  <\/div>\r\n<\/div>",
+          "pageprocessor": "function pageprocessorEDUDirectory(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n\r\n    $scope.resultfound = true;\r\n    $scope.alphabetsArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];\r\n    var searchParams = pagedef.filterparams;\r\n    $rootScope.Directoryval = '';\r\n    var searchTxt = '';\r\n    var filterParams = [];\r\n  \r\n    for (var i = 0; i < searchParams.length; i++) {\r\n      filterParams.push(searchParams[i].fparam);\r\n    }\r\n  \r\n    var data1 = $compile($(pagedef.datatemplate))($scope);\r\n    $(\"#appContent\").append(data1);\r\n  \r\n    $rootScope.firstName = pagedef.firstName;\r\n    $rootScope.lastName = pagedef.lastName;\r\n    $rootScope.email = pagedef.email;\r\n    $rootScope.phone = pagedef.phone;\r\n    $rootScope.title = pagedef.title;\r\n    console.log('pagedef'+pagedef);\r\n    console.log(pagedef.sortbyFirstName)\r\n    $rootScope.sort = pagedef.sortbyFirstName ? pagedef.sortbyFirstName : \"off\";\r\n    console.log(pagedef.departmentDropDown)\r\n    $rootScope.departmentDropDown = pagedef.departmentDropDown ? pagedef.departmentDropDown : \"off\";\r\n    $scope.page1Params = pagedef.page1Params;\r\n    $rootScope.page2Params = pagedef.page2Params;\r\n    //  console.log(\"0.............\",pagedef);\r\n    // console.log(\"1.............\",$rootScope.sort);\r\n    if ($rootScope.sort == \"on\" || $rootScope.sort == true) {\r\n      // console.log(\"2.............\",$rootScope.sort);\r\n      $scope.sortHtmlDataFirstName = true;\r\n      $scope.sortHtmlDataLastName = false;\r\n    } else {\r\n      //   console.log(\"3.............\",$rootScope.sort);\r\n      $scope.sortHtmlDataLastName = true;\r\n      $scope.sortHtmlDataFirstName = false;\r\n    }\r\n  \r\n    if ($rootScope.departmentDropDown == \"on\" ||$rootScope.departmentDropDown == true) {\r\n      $scope.selDepartment = pagedef.selectDepartment ? pagedef.selectDepartment : \"All\";\r\n      $scope.departmentDropDownHtml = true;\r\n    } else {\r\n      $scope.departmentDropDownHtml = false;\r\n    }\r\n  \r\n    $scope.deptSelect = function(index) {\r\n      $scope.selDepartment = $scope.depts[index].DEPT_NAME;\r\n      $scope.filterresult();\r\n    }\r\n    $scope.filterresult = function() {\r\n      $.blockUI();\r\n      searchTxt = $(\"#Directorytxt\").val();\r\n      $rootScope.Directoryval = searchTxt;\r\n      results = [];\r\n      var patt = new RegExp(searchTxt, \"i\");\r\n      $.each($rootScope.DirectoryList[pagedef['item_id']], function(index, val) {\r\n        var found = false;\r\n        if ($scope.departmentDropDownHtml && $scope.selDepartment != \"All\") {\r\n          ///  console.log(\"-------------1--\",$scope.selDepartment);\r\n          //  console.log(\"------2----\",val.department);\r\n          if ($scope.selDepartment == val.department) {\r\n            for (var i = 0; i < filterParams.length; i++) {\r\n              var key = \"\" + filterParams[i];\r\n              if (val[key] != undefined && val[key].match(patt)) {\r\n                results.push(val);\r\n                break;\r\n              }\r\n            }\r\n          }\r\n        } else {\r\n  \r\n          for (var i = 0; i < filterParams.length; i++) {\r\n            var key = \"\" + filterParams[i];\r\n            if (val[key] != undefined && val[key].match(patt)) {\r\n              results.push(val);\r\n              break;\r\n            }\r\n  \r\n  \r\n          }\r\n        }\r\n      });\r\n  \r\n      results.sort(function(a, b) {\r\n        if ($rootScope.sort == \"on\" || $rootScope.sort == true) {\r\n          if (a[$rootScope.firstName] < b[$rootScope.firstName])\r\n            return -1;\r\n          if (a[$rootScope.firstName] > b[$rootScope.firstName])\r\n            return 1;\r\n          return 0;\r\n        } else {\r\n          if (a[$rootScope.lastName] < b[$rootScope.lastName])\r\n            return -1;\r\n          if (a[$rootScope.lastName] > b[$rootScope.lastName])\r\n            return 1;\r\n          return 0;\r\n        }\r\n      });\r\n  \r\n  \r\n      $scope.DirectoryResult = results;\r\n      $rootScope.DirectoryResult = results;\r\n  \r\n      if ($scope.DirectoryResult.length > 0) {\r\n        $scope.resultfound = true;\r\n        $.unblockUI();\r\n      } else {\r\n        $scope.resultfound = false;\r\n  \r\n        $.unblockUI();\r\n      }\r\n  \r\n  \r\n  \r\n  \r\n      $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n  \r\n      setTimeout(function() {\r\n        $(\".nano\").nanoScroller();\r\n        $(\".nano\").nanoScroller({\r\n          alwaysVisible: true,\r\n          flashDelay: 1000\r\n        });\r\n        $scope.$apply();\r\n      }, 0);\r\n    };\r\n  \r\n    $scope.search = function() {\r\n      $.blockUI();\r\n      if (!$rootScope.fetched) {\r\n        var url = pagedef.directoryxmlurl;\r\n        if (window.device) {} else {\r\n  \r\n          url = \"/websimulator/xml?url=\" + pagedef.directoryxmlurl;\r\n        }\r\n        var xhr = $.ajax({\r\n          url: url,\r\n          dataType: \"xml\",\r\n          async: true,\r\n          data: {},\r\n          success: function(resp) {\r\n            try {\r\n  \r\n              var results = $.xml2json(resp);\r\n              console.log('json result', results);\r\n              $rootScope.fetched = true;\r\n              $rootScope.DirectoryList = results;\r\n              /*Department dropdown-start*/\r\n              if ($scope.departmentDropDownHtml) {\r\n                var tempdept = \"\";\r\n                var depts = [];\r\n                $.each(results[pagedef['item_id']], function(i, v) {\r\n                  if (tempdept.indexOf(v.department) == -1 && v.department != undefined) {\r\n                    depts.push({\r\n                      \"DEPT_CODE\": v.department,\r\n                      \"DEPT_NAME\": v.department\r\n                    });\r\n                    tempdept += v.department;\r\n                  }\r\n                });\r\n                depts.sort(function(a, b) {\r\n                  if (a.DEPT_CODE < b.DEPT_CODE) {\r\n                    return -1;\r\n                  } else if (a.DEPT_CODE > b.DEPT_CODE) {\r\n                    return 1;\r\n                  }\r\n  \r\n                });\r\n                depts.unshift({\r\n                  \"DEPT_CODE\": 0,\r\n                  \"DEPT_NAME\": 'All'\r\n                });\r\n  \r\n                $scope.depts = depts;\r\n                $rootScope.depts = depts;\r\n              }\r\n              /*Department dropdown-end*/\r\n              $scope.filterresult();\r\n              $scope.$apply();\r\n              $.unblockUI();\r\n            } catch (E) {\r\n              //alert(\"Exception : \" + E);\r\n            }\r\n          },\r\n          error: function(e) {\r\n            // alert(\"Error : \" + e);\r\n            $.unblockUI();\r\n            apprise(\"Error occured. Please try again later.\", {\r\n              \"verify\": false,\r\n              \"textYes\": \"Ok\"\r\n            }, function(r) {\r\n              $window.history.back();\r\n            });\r\n          }\r\n        });\r\n      } else {\r\n        $scope.filterresult();\r\n      }\r\n    }\r\n  \r\n    setTimeout(function() {\r\n      $scope.search();\r\n    }, 300);\r\n  \r\n  \r\n    $scope.checkInitials = function(index) {\r\n      if ($rootScope.sort == \"on\" ||$rootScope.sort == true) {\r\n        if (index == 0) {\r\n          return $scope.DirectoryResult[index][$rootScope.firstName].substring(0, 1).toUpperCase();\r\n        } else if ($scope.DirectoryResult[index - 1][$rootScope.firstName].substring(0, 1) == $scope.DirectoryResult[index][$rootScope.firstName].substring(0, 1)) {\r\n          return;\r\n        } else {\r\n          return $scope.DirectoryResult[index][$rootScope.firstName].substring(0, 1).toUpperCase();\r\n        }\r\n      } else {\r\n        if (index == 0) {\r\n          return $scope.DirectoryResult[index][$rootScope.lastName].substring(0, 1).toUpperCase();\r\n        } else if ($scope.DirectoryResult[index - 1][$rootScope.lastName].substring(0, 1) == $scope.DirectoryResult[index][$rootScope.lastName].substring(0, 1)) {\r\n          return;\r\n        } else {\r\n          return $scope.DirectoryResult[index][$rootScope.lastName].substring(0, 1).toUpperCase();\r\n        }\r\n      }\r\n    }\r\n  \r\n    $scope.showOnlyContacts = function(id) {\r\n      var contactsBoxTop = $('.nano-content').scrollTop();\r\n      var currentContactTop = $(\"#ContactBox\" + id).position().top;\r\n      $('.nano-content').animate({\r\n        scrollTop: contactsBoxTop + currentContactTop\r\n      }, 'slow');\r\n    }\r\n  \r\n    $scope.showInfo = function(user) {\r\n      $rootScope.directoryUserInfo = user;\r\n      $location.path(\"/app/EDUDirectory/EDUDirectoryPage2\");\r\n    }\r\n    $('input:text').focusout(function() {\r\n      $(\"#footerContentContainer\").addClass('footerGroupIcons').removeClass('hideFooter');\r\n      $(\"#bottomPoweredBy\").removeClass('hideFooter');\r\n  \r\n    });\r\n  \r\n    $('input:text').focusin(function() {\r\n      $(\"#footerContentContainer\").addClass('hideFooter').removeClass('footerGroupIcons');\r\n      $(\"#bottomPoweredBy\").addClass('hideFooter');\r\n    });\r\n  \r\n  }",
+          "datatemplate": "<style>\r\n  .app-body {\r\n    background: #fff !important;\r\n  }\r\n  \r\n  .regularFontColor {\r\n    color: #252729 !important;\r\n  }\r\n  \r\n  .fontWeight600 {\r\n    font-weight: 600;\r\n  }\r\n  \r\n  .lineHeight18 {\r\n    line-height: 18px;\r\n  }\r\n  \r\n  .styleInitials {\r\n    width: 50px;\r\n    height: 50px;\r\n    text-align: center;\r\n    line-height: 50px;\r\n    font-size: 18px;\r\n    border-radius: 50%;\r\n    color: #fff;\r\n  }\r\n  \r\n  .initialsWidth {\r\n    font-size: 18px;\r\n  }\r\n  \r\n  #ContactsList {\r\n    height: calc(100vh - 192px);\r\n    overflow-y: hidden;\r\n  }\r\n  \r\n  .alert-info {\r\n    color: #c2c2c2;\r\n    background-color: transparent;\r\n    border-color: transparent;\r\n  }\r\n  \r\n  @media (min-width: 769px) {\r\n    .initialsWidth {\r\n      width: 6%;\r\n      font-size: 20px;\r\n    }\r\n    .userInitials {\r\n      width: 13%;\r\n    }\r\n    .userInfo {\r\n      width: 80%;\r\n      font-size: 20px;\r\n    }\r\n    .boxPadding {\r\n      padding: 6px 15px;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 768px) {\r\n    .lg_webAppletContentPadding {\r\n      padding: 10px !important;\r\n    }\r\n    .initialsWidth {\r\n      width: 4%;\r\n    }\r\n    .userInitials {\r\n      width: 11%;\r\n    }\r\n    .userInfo {\r\n      width: 84%;\r\n      font-size: 18px;\r\n    }\r\n    .styleInitials {\r\n      width: 48px;\r\n      height: 48px;\r\n      text-align: center;\r\n      line-height: 48px;\r\n      font-size: 26px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n    .boxPadding {\r\n      padding: 9px 10px;\r\n    }\r\n    #ContactsList {\r\n      height: calc(100vh - 158px);\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 414px) {\r\n    .initialsWidth {\r\n      width: 6%;\r\n    }\r\n    .userInitials {\r\n      width: 17%;\r\n    }\r\n    .userInfo {\r\n      width: 80%;\r\n      font-size: 18px;\r\n    }\r\n    .boxPadding {\r\n      padding: 6px 5px;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 375px) {\r\n    .initialsWidth {\r\n      width: 8%;\r\n    }\r\n    .userInitials {\r\n      width: 16%;\r\n    }\r\n    .styleInitials {\r\n      width: 40px;\r\n      height: 40px;\r\n      text-align: center;\r\n      line-height: 40px;\r\n      font-size: 20px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n  }\r\n  \r\n  @media (max-width: 320px) {\r\n    .initialsWidth {\r\n      width: 8%;\r\n    }\r\n    .userInitials {\r\n      width: 18%;\r\n    }\r\n    .styleInitials {\r\n      width: 36px;\r\n      height: 36px;\r\n      text-align: center;\r\n      line-height: 36px;\r\n      font-size: 18px;\r\n      border-radius: 50%;\r\n      color: #fff;\r\n    }\r\n    .userInfo {\r\n      font-size: 14px;\r\n    }\r\n    .userInfo .fontSize14 {\r\n      font-size: 12px;\r\n    }\r\n  }\r\n  \r\n  .alphabetContainer {\r\n    transform: translateY(-50%);\r\n    top: 50%;\r\n  }\r\n  \r\n  .alphabet {\r\n    font-size: 12px;\r\n    text-align: center;\r\n    line-height: 15px;\r\n  }\r\n  \r\n  .alphabet:hover {\r\n    color: #252729;\r\n    font-weight: bold;\r\n  }\r\n  \r\n  .nano {}\r\n  \r\n  .nano .nano-content {\r\n    padding: 0px;\r\n  }\r\n  \r\n  .nano .nano-pane {\r\n    background: #fff;\r\n    display: block !important\r\n  }\r\n  \r\n  .nano .nano-slider {\r\n    background: #767676;\r\n  }\r\n<\/style>\r\n<div class=\"text-center list-group-item greyBorder backgroundWhite borderBottom rounded-0 borderRight0px borderLeft0px\" ng-show=\"departmentDropDownHtml\">\r\n  <div class=\"dropdown dropdownMenuSelect\">\r\n    <button class=\"btn  dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">\r\n      <span>{{selDepartment}}<\/span>\r\n      <span class=\"fa fa-angle-down pull-right\"><\/span><\/button>\r\n    <ul class=\"dropdown-menu\" ng-show=\"depts.length != 0\">\r\n      <li ng-repeat=\"department in depts\" ng-click=\"deptSelect($index)\"><a>{{department.DEPT_NAME}}<\/a><\/li>\r\n    <\/ul>\r\n  <\/div>\r\n<\/div>\r\n<div class=\"proximaFont backgroundNone\" ng-class=\"{lg_webAppletContentPadding : !window.device}\" style=\"position: relative;\">\r\n\r\n  <div class=\"whiteBackground\" style=\"padding: 5px;\">\r\n    <form style=\"background: rgb(239, 239, 239) none repeat scroll 0% 0%; border-radius: 3px; box-shadow: none; border: medium none;\" ng-submit=\"filterresult();\" class=\"form-horizontal ng-pristine ng-valid\">\r\n      <div style=\"box-shadow: none; border: 0px none;\" class=\"input-group\">\r\n        <input style=\"background: rgb(239, 239, 239) none repeat scroll 0% 0%; box-shadow: none; border: 0px none;\" id=\"Directorytxt\" ng-model=\"Directoryval\" class=\"form-control ng-pristine ng-valid\" type=\"text\" placeholder=\"Search by first, last name, or by department\"\r\n        /><span class=\"input-group-btn\"><button type=\"submit\" ng-click=\"filterresult();\" style=\"padding:0px 11px;background: transparent;outline: none;\" class=\"btn borderNone\" id=\"srchbtn\" type=\"button\" style=\"\"><img style=\"width: 22px; opacity: 0.5;\" src=\"images/search.png\"><\/button>\r\n                <\/span>\r\n      <\/div>\r\n    <\/form>\r\n  <\/div>\r\n\r\n  <div class=\"whiteBackground positionRelative\" style=\"overflow: hidden;\">\r\n    <div class=\"\" id=\"ContactsList\">\r\n      <div class=\"nano\">\r\n        <div class=\"nano-content\" ng-cloak>\r\n          <div class=\"displayTable boxPadding\" ng-repeat=\"user in DirectoryResult track by $index\" style=\"width:100%;\" ng-attr-id=\"{{'ContactBox'+checkInitials($index)}}\">\r\n            <div class=\"displayTableCell verticalAlignMiddle initialsWidth\" ng-bind=\"checkInitials($index)\"><\/div>\r\n            <div class=\"displayTableCell verticalAlignMiddle userInitials fontSize18 fontBold\">\r\n              <div class=\"styleInitials cursorPointer\" ng-show=\"sortHtmlDataFirstName\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(user[$root.firstName],user[$root.lastName])}\">{{user[$root.firstName].substring(0,1)}}{{user[$root.lastName].substring(0,1)}}<\/div>\r\n              <div class=\"styleInitials cursorPointer\" ng-show=\"sortHtmlDataLastName\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(user[$root.lastName], user[$root.firstName])}\">{{user[$root.lastName].substring(0,1)}}{{user[$root.firstName].substring(0,1)}}<\/div>\r\n            <\/div>\r\n            <div class=\"displayTableCell verticalAlignMiddle userInfo cursorPointer\" ng-click=\"showInfo(user);\" style=\"padding-right:8px;\">\r\n              <div class=\"media-heading colorDark font16\" ng-show=\"sortHtmlDataFirstName\" style=\"margin-bottom: 0px;\">\r\n                <span>{{user[$root.firstName]}} <\/span><span>{{user[$root.lastName]}} <\/span>\r\n              <\/div>\r\n              <div class=\"media-heading colorDark font16\" ng-show=\"sortHtmlDataLastName\" style=\"margin-bottom: 0px;\"><span>{{user[$root.lastName]}} <\/span><span>{{user[$root.firstName]}} <\/span>\r\n              <\/div>\r\n              <div ng-if=\"page1Params\">\r\n                <div class=\"fontSize14 lightgreytext\" ng-repeat=\"param in page1Params track by $index\">{{user[param.nodeName]}}<\/div>\r\n              <\/div>\r\n            <\/div>\r\n            <div class=\"clearfix\"><\/div>\r\n          <\/div>\r\n          <div class=\"alert alert-info aligncenter\" style=\"margin:20% 30%; \" ng-hide=\"resultfound \"><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfhCxEQDTuWOld1AAADnElEQVRo3u3ZW4hVZRjG8Z/moO7GQzilaREjYzoVhGJpVlCBleWkgV12UTdddIJBwiAC6Va8CEwDhbqTwIrMzmgHUelCI6YxnWIoDzGQsp0ZZzRz3i7a4ji5915fsxYk9Cz2zf6e93v+a7G+w1prjHSNt9g9lphlmmk44YRj9thtn7P/or8klazWI6ocPVYrpXU4Jsm9wAdmoVenLl0O68IcN5tjjltMxlFtvivm7B91WvjVc1XOsuQFR4U+DxYRP1NZ2Omamq4m3wgnzcgf4F1hv4a6vvG+F7blHT9PGLIok3eR88K8fAHWCF9ndn8lrMlmHZuxyzvwSWaATysVOQJMxZHMAEcqFTkCTMGZzAD9lYocAcbhqswAFypyBEhTwvz6P8AVAtCgKQlgLJoyTNuZ1S70J0yu8/QL7fkB7BQ2JFVsEHbmB9AtLEuqWCZ0ZzFmuwfGIJIAQsZbsZhRkKArBGAQE5P6vRqn8wP4Fo8nATyBL0Z7dS5qqSHhlYzuFjuEcF9+ALwm/Jbxer0lnPFknvE06hXuzuCcakBYkW88vCmsz+B7XtidfzwLhZMm13GNc0h4oAgA9guv1vG0C7uKiecZoWxmDccMp4R7iwIY54Cwo4Zjm/BZUfEw3znhqSqtLwp/WlgkAJuFTVXatgqvp3aYuhj9Xqf9eNEAueuKA2im6lbrGDUHaQ66UVmYX6X1IeGnxH1DkpboFn6suteb6JSwV3MR4XO9J4RO19dwLdAj/GFzvhAzbHJOCO+4to63xV6RJ0SjtfqF8KU7M9Y8nBdEg2crr2U7LE+szQHiMYeFcNTTie9GLgdxQ1rpBBuFUPbyKIfVBYhyyh5xvD1CeMO0UYVfhDgghI1ZC7YIvVbmEv63Gqx1PusD+3JhqIBd7UvCebfXN35eY8UfnT4U3q5nmi0M5f2iuaK7hLP1prIVQkch8dAlLL30r5HL8Wx0FQZwGC21Aa5DT2EAxxg5JY0ESPuIlaoh/3jj/J/bkg1iemFp0ysJNdQqhC0m5B4+wRYhtNYzrhNCn61WpX4FraKSVbbqE8K6kY2Xu+lWWl9Zwwft0uGggw7qTYydrFWrVre5v7Kidmv3fhYAuFWbNouH3SPHdfrZKf369Q370WjSsF+jKVq0DtugD9lnu+1+uFxQ7WHX5BHLzNWc9RPUJSrrdsjHPqr1QJd13E/VXDluMklJyUQlJSUMGDBg0IABfX7RXTnKWTr+CyrFKnbqTSJCAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTExLTE3VDE2OjEzOjU5KzAxOjAwpe2fHQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0xMS0xN1QxNjoxMzo1OSswMTowMNSwJ6EAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC'\r\n            style=\"opacity: 0.3; width: 40px;\" />\r\n            <div class=\"marginTop5\">No matches found<\/div>\r\n          <\/div>\r\n        <\/div>\r\n      <\/div>\r\n    <\/div>\r\n    <div class=\"positionAbsolute alphabetContainer\" style=\"right:10px;width:24px;\">\r\n      <div class=\"cursorPointer alphabet colorGrey\" ng-repeat=\"a in alphabetsArray\" ng-click=\"showOnlyContacts(a)\">{{a}}<\/div>\r\n    <\/div>\r\n  <\/div>\r\n<\/div>",
           "directoryxmlurl": "https://apps.qc.cuny.edu/phonestream/api/values",
           "filterparams": "[{\"fparam\":\"lastName\"},{\"fparam\":\"firstName\"},{\"fparam\":\"email\"}]",
           "item_id": "QC_DIRECTORY",
@@ -260,9 +260,9 @@
         {
           "pageid": "EDUDirectoryPage2",
           "pageTemplate": "<div><\/div>",
-          "pageprocessor": "function pageprocessorEDUDirectoryPage2(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n  $scope.DirectoryDetails = $rootScope.directoryUserInfo;\r\n  var template = pagedef.datatemplate;\r\n  //console.log(pagedef);\r\n  var data1 = $compile($(template))($scope);\r\n  $(\"#appContent\")\r\n    .append(data1);\r\n\r\n  $scope.addContacts = function() {\r\n    var dirContact = navigator.contacts.create();\r\n    var details = $scope.DirectoryDetails;\r\n\r\n    if (window.device.platform == \"Android\") {\r\n      dirContact.displayName = details[$rootScope.firstName] + \" \" + details[$rootScope.lastName];\r\n      var phoneNo = details[$rootScope.phone];\r\n      if (phoneNo) {\r\n        var phoneNumbers = [1];\r\n        phoneNumbers[0] = new ContactField('work', phoneNo, true); // preferred number  \r\n        dirContact.phoneNumbers = phoneNumbers;\r\n      }\r\n\r\n      var personEmail = details[$rootScope.email];\r\n\r\n      if (personEmail) {\r\n        var emails = [1];\r\n        emails[0] = new ContactField('emails', personEmail, false);\r\n        dirContact.emails = emails;\r\n      }\r\n\r\n      ///for ios displayName is not supported insted of displayName we can use name object\r\n      var name = new ContactName();\r\n\r\n      if (details[$rootScope.firstName] == \"n/a\") {\r\n        name.givenName = \"\";\r\n      } else {\r\n        name.givenName = details[$rootScope.firstName];\r\n      }\r\n\r\n      if (details[$rootScope.lastName] == \"n/a\") {\r\n        name.familyName = \"\";\r\n      } else {\r\n        name.familyName = details[$rootScope.lastName];;\r\n      }\r\n\r\n      dirContact.name = name;\r\n\r\n      dirContact.save(preLoginSaveContacts, preLoginSaveError);\r\n    }\r\n\r\n\r\n    if (window.device.platform == \"iOS\") {\r\n\r\n      var phoneNumbers = [2];\r\n      // phoneNumbers[0] = new ContactField('mobile', $(\"#phone\").text(), true); // preferred number\r\n      phoneNumbers[0] = new ContactField('work', details[$rootScope.phone], true); // Work/Dept. number\r\n      dirContact.phoneNumbers = phoneNumbers;\r\n\r\n      var emails = [1];\r\n      emails[0] = new ContactField('emails', details[$rootScope.email], false);\r\n      dirContact.emails = emails;\r\n\r\n      ///for ios displayName is not supported insted of displayName we can use name object\r\n      var name = new ContactName();\r\n      if (details[$rootScope.firstName] == \"n/a\") {\r\n        name.givenName = \"\";\r\n      } else {\r\n        name.givenName = details[$rootScope.firstName];\r\n      }\r\n\r\n      if (details[$rootScope.lastName] == \"n/a\") {\r\n        name.familyName = \"\";\r\n      } else {\r\n        name.familyName = details[$rootScope.lastName];;\r\n      }\r\n\r\n      dirContact.name = name;\r\n\r\n      dirContact.save(preLoginSaveContacts, preLoginSaveError);\r\n    }\r\n\r\n  }\r\n\r\n  function preLoginSaveContacts(contact) {\r\n    navigator.notification.alert(\"Contact Saved Successfully\");\r\n  }\r\n\r\n  function preLoginSaveError(contactError) {\r\n    if (contactError.code == 20) {\r\n      navigator.notification.alert(\"Permission denied\");\r\n    } else {\r\n      navigator.notification.alert(\"Contact already saved\");\r\n    }\r\n  }\r\n\r\n  $scope.goBack = function() {\r\n     $.blockUI();\r\n    $location.path(\"/app/EDUDirectory/EDUDirectory\");\r\n  }\r\n\r\n}",
+          "pageprocessor": "function pageprocessorEDUDirectoryPage2(pagedef, $scope, $routeParams, $compile, $http, $rootScope, $sce, $window, $location) {\r\n  $scope.DirectoryDetails = $rootScope.directoryUserInfo;\r\n  var template = pagedef.datatemplate;\r\n  //console.log(pagedef);\r\n  var data1 = $compile($(template))($scope);\r\n  $(\"#appContent\")\r\n    .append(data1);\r\n\r\n\r\n\r\n  $scope.addContacts = function() {\r\n    try{\r\n    var dirContact = navigator.contacts.create();\r\n    var details = $scope.DirectoryDetails;\r\n\r\n    if (window.device.platform == \"Android\") {\r\n      dirContact.displayName = details[$rootScope.firstName] + \" \" + details[$rootScope.lastName];\r\n      var phoneNo = details[$rootScope.phone];\r\n      if (phoneNo) {\r\n        var phoneNumbers = [1];\r\n        phoneNumbers[0] = new ContactField('work', phoneNo, true); // preferred number  \r\n        dirContact.phoneNumbers = phoneNumbers;\r\n      }\r\n\r\n      var personEmail = details[$rootScope.email];\r\n\r\n      if (personEmail) {\r\n        var emails = [1];\r\n        emails[0] = new ContactField('emails', personEmail, false);\r\n        dirContact.emails = emails;\r\n      }\r\n\r\n      ///for ios displayName is not supported insted of displayName we can use name object\r\n      var name = new ContactName();\r\n\r\n      if (details[$rootScope.firstName] == \"n/a\") {\r\n        name.givenName = \"\";\r\n      } else {\r\n        name.givenName = details[$rootScope.firstName];\r\n      }\r\n\r\n      if (details[$rootScope.lastName] == \"n/a\") {\r\n        name.familyName = \"\";\r\n      } else {\r\n        name.familyName = details[$rootScope.lastName];;\r\n      }\r\n\r\n      dirContact.name = name;\r\n\r\n      dirContact.save(preLoginSaveContacts, preLoginSaveError);\r\n    }\r\n\r\n\r\n    if (window.device.platform == \"iOS\") {\r\n\r\n      var phoneNumbers = [2];\r\n      // phoneNumbers[0] = new ContactField('mobile', $(\"#phone\").text(), true); // preferred number\r\n      phoneNumbers[0] = new ContactField('work', details[$rootScope.phone], true); // Work/Dept. number\r\n      dirContact.phoneNumbers = phoneNumbers;\r\n\r\n      var emails = [1];\r\n      emails[0] = new ContactField('emails', details[$rootScope.email], false);\r\n      dirContact.emails = emails;\r\n\r\n      ///for ios displayName is not supported insted of displayName we can use name object\r\n      var name = new ContactName();\r\n      if (details[$rootScope.firstName] == \"n/a\") {\r\n        name.givenName = \"\";\r\n      } else {\r\n        name.givenName = details[$rootScope.firstName];\r\n      }\r\n\r\n      if (details[$rootScope.lastName] == \"n/a\") {\r\n        name.familyName = \"\";\r\n      } else {\r\n        name.familyName = details[$rootScope.lastName];;\r\n      }\r\n\r\n      dirContact.name = name;\r\n\r\n      dirContact.save(preLoginSaveContacts, preLoginSaveError);\r\n    }\r\n\r\n  }catch(e){\r\n    console.log(e);\r\n  }\r\n\r\n  }\r\n\r\n\r\n  function preLoginSaveContacts(contact) {\r\n    navigator.notification.alert(\"Contact Saved Successfully\");\r\n  }\r\n\r\n  function preLoginSaveError(contactError) {\r\n    if (contactError.code == 20) {\r\n      navigator.notification.alert(\"Permission denied\");\r\n    } else {\r\n      navigator.notification.alert(\"Contact already saved\");\r\n    }\r\n  }\r\n\r\n  $scope.goBack = function() {\r\n     $.blockUI();\r\n    $location.path(\"/app/EDUDirectory/EDUDirectory\");\r\n  }\r\n\r\n}",
           "endpoint": "",
-          "datatemplate": "<style>\r\n    .app-body {\r\n        background: #fff !important;\r\n    }\r\n    .styleInitials {\r\n        width: 80px;\r\n        height: 80px;\r\n        text-align: center;\r\n        line-height: 80px;\r\n        font-size: 35px;\r\n        border-radius: 50%;\r\n        color: #FFF;\r\n        margin: auto;\r\n        border: #fff 2px solid;\r\n    }\r\n    .userInfoBg{\r\n        padding:60px 0px;\r\n        background-image:url('images/directorybg.png');text-align: center;background-size: cover;\r\n    }\r\n    @media (max-width: 414px) {\r\n        .userInfoBg{\r\n        padding:35px 0px;\r\n    }\r\n    }\r\n<\/style>\r\n<div class=\"proximaFont lg_webAppletContentPadding\">\r\n     <div class=\"col-lg-12 col-sm-12 col-md-12 float-none marginBottom15px paddingNone verticalAlignMiddle clearfix\">\r\n        <div class=\"backButton cursorPointer\" ng-click=\"goBack()\" ng-if=\"$root.webApp\">\r\n          <span class=\"fa fa-angle-left\"><\/span>&nbsp;&nbsp;Back\r\n        <\/div>\r\n      <\/div>\r\n    <div class=\"clearfix\"><\/div>\r\n    <div class=\"list-group-item colPadding\">\r\n    <div class=\"userInfoBg\" ng-style=\"{'background-color': randomBackground(DirectoryDetails[$root.firstName], DirectoryDetails[$root.lastName])}\">\r\n        <div class=\"styleInitials cursorPointer\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(DirectoryDetails[$root.firstName], DirectoryDetails[$root.lastName])}\">{{DirectoryDetails[$root.firstName].substring(0,1)}}{{DirectoryDetails[$root.lastName].substring(0,1)}}<\/div>\r\n        <div style=\"margin-top:15px;\" class=\"fontSize20 whiteTextColor\">{{DirectoryDetails[$root.firstName]}}&nbsp;{{DirectoryDetails[$root.lastName]}}<\/div>\r\n        <div style=\"margin-top:11px;\" class=\"fontSize15 whiteTextColor\">{{DirectoryDetails[$root.title]}}<\/div>\r\n    <\/div>\r\n\r\n\r\n    <a ng-if=\"DirectoryDetails[$root.phone]\" href=\"tel:{{DirectoryDetails[$root.phone]}}\" class=\"list-group-item borderNone colorDark displayTable\"><img class=\"displayTableCell verticalAlignMiddle\" src=\"images/all-icons-02.png\" style=\"width:30px;margin-right: 15px;\" /><span class=\"colorDark displayTableCell verticalAlignMiddle\" style=\"width: 95%;\">{{DirectoryDetails[$root.phone]}}<\/span><\/a>\r\n\r\n    <a class=\"list-group-item borderNone displayTable\" href=\"mailto:{{DirectoryDetails[$root.email]}}\"><i class=\"fa fa-envelope-o colorDark\" style=\"font-size: 30px;margin-right: 15px;\" aria-hidden=\"true\"><\/i><span class=\"colorDark displayTableCell verticalAlignMiddle fontSize14\" style=\"width: 95%;\">{{DirectoryDetails[$root.email]}}<\/span><div class=\"displayTableCell verticalAlignMiddle\"><img style=\"width:18px;\" src=\"images/right-icon.png\" /><\/div><div class=\"clearfix\"><\/div><\/a>\r\n    <div class=\"list-group-item borderNone lightgreytext\"><div style=\"background: #efefef;height: 2px;width: 100%;\"><\/div><\/div>\r\n    \r\n    <div class=\"list-group-item borderNone fontSize16\" ng-repeat=\"param in page2Params\">{{param.name}}:<span class=\"colorDark\"> {{DirectoryDetails[param.nodeName]}}<\/span><\/div>\r\n    \r\n    <div class=\"list-group-item borderNone lightgreytext\"><div style=\"background: #fff;height: 2px;width: 100%;\"><\/div><\/div>\r\n    <div ng-if=\"!$root.webApp\" class=\"list-group-item borderNone backgroundNone textcenter\" style=\"text-align: center;margin-top: 30px;\"><div style=\"margin: auto;\" ng-click=\"addContacts();\" class=\"btn btn-primary boxradius\">Add to Contacts<\/div><\/div>\r\n<\/div>\r\n<\/div>"
+          "datatemplate": "<style>\r\n  .app-body {\r\n    background: #fff !important;\r\n  }\r\n  \r\n  .styleInitials {\r\n    width: 80px;\r\n    height: 80px;\r\n    text-align: center;\r\n    line-height: 80px;\r\n    font-size: 35px;\r\n    border-radius: 50%;\r\n    color: #FFF;\r\n    margin: auto;\r\n    border: #fff 2px solid;\r\n  }\r\n  \r\n  .userInfoBg {\r\n    padding: 60px 0px;\r\n    background-image: url('images/directorybg.png');\r\n    text-align: center;\r\n    background-size: cover;\r\n  }\r\n  \r\n  @media (max-width: 414px) {\r\n    .userInfoBg {\r\n      padding: 35px 0px;\r\n    }\r\n  }\r\n<\/style>\r\n<div class=\"proximaFont lg_webAppletContentPadding\">\r\n  <div class=\"col-lg-12 col-sm-12 col-md-12 float-none marginBottom15px paddingNone verticalAlignMiddle clearfix\">\r\n    <div class=\"backButton cursorPointer\" ng-click=\"goBack()\" ng-if=\"$root.webApp\">\r\n      <span class=\"fa fa-angle-left\"><\/span>&nbsp;&nbsp;Back\r\n    <\/div>\r\n  <\/div>\r\n  <div class=\"clearfix\"><\/div>\r\n  <div class=\"list-group-item colPadding\">\r\n    <div class=\"userInfoBg\" ng-style=\"{'background-color': randomBackground(DirectoryDetails[$root.firstName], DirectoryDetails[$root.lastName])}\">\r\n      <div class=\"styleInitials cursorPointer\" ng-click=\"showInfo(user);\" ng-style=\"{background: randomBackground(DirectoryDetails[$root.firstName], DirectoryDetails[$root.lastName])}\">{{DirectoryDetails[$root.firstName].substring(0,1)}}{{DirectoryDetails[$root.lastName].substring(0,1)}}<\/div>\r\n      <div style=\"margin-top:15px;\" class=\"fontSize20 whiteTextColor\">{{DirectoryDetails[$root.firstName]}}&nbsp;{{DirectoryDetails[$root.lastName]}}<\/div>\r\n      <div style=\"margin-top:11px;\" class=\"fontSize15 whiteTextColor\">{{DirectoryDetails[$root.title]}}<\/div>\r\n    <\/div>\r\n\r\n\r\n    <a ng-if=\"DirectoryDetails[$root.phone]\" href=\"tel:{{DirectoryDetails[$root.phone]}}\" class=\"list-group-item borderNone colorDark displayTable\"><img class=\"displayTableCell verticalAlignMiddle\" src=\"images/all-icons-02.png\" style=\"width:30px;margin-right: 15px;\" /><span class=\"colorDark displayTableCell verticalAlignMiddle\" style=\"width: 95%;\">{{DirectoryDetails[$root.phone]}}<\/span><\/a>\r\n\r\n    <a class=\"list-group-item borderNone displayTable\" href=\"mailto:{{DirectoryDetails[$root.email]}}\"><i class=\"fa fa-envelope-o colorDark\" style=\"font-size: 30px;margin-right: 15px;\" aria-hidden=\"true\"><\/i><span class=\"colorDark displayTableCell verticalAlignMiddle fontSize14\" style=\"width: 95%;\">{{DirectoryDetails[$root.email]}}<\/span><div class=\"displayTableCell verticalAlignMiddle\"><img style=\"width:18px;\" src=\"images/right-icon.png\" /><\/div><div class=\"clearfix\"><\/div><\/a>\r\n    <div class=\"list-group-item borderNone lightgreytext\">\r\n      <div style=\"background: #efefef;height: 2px;width: 100%;\"><\/div>\r\n    <\/div>\r\n\r\n    <div class=\"list-group-item borderNone fontSize16\" ng-repeat=\"param in page2Params\">{{param.name}}:<span class=\"colorDark\"> {{DirectoryDetails[param.nodeName]}}<\/span><\/div>\r\n\r\n    <div class=\"list-group-item borderNone lightgreytext\">\r\n      <div style=\"background: #fff;height: 2px;width: 100%;\"><\/div>\r\n    <\/div>\r\n    <div ng-if=\"!$root.webApp\" class=\"list-group-item borderNone backgroundNone textcenter\" style=\"text-align: center;margin-top: 30px;\">\r\n      <div style=\"margin: auto;\" ng-click=\"addContacts();\" class=\"btn btn-primary boxradius ng-hide\" >Add to Contacts<\/div>\r\n    <\/div>\r\n  <\/div>\r\n<\/div>"
         }
       ]
     },
@@ -368,557 +368,557 @@
           "mapMarkers": 
           [
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
-              "phone": "(340) 693-1160",
               "long": "-64.975076",
-              "name": "Access and Enrollment Services, ACC"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Access and Enrollment Services, ACC",
+              "phone": "(340) 693-1160",
+              "lat": "18.341002"
             },
             {
-              "long": "-64.975076",
-              "phone": "(340) 693-1430",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002",
+              "phone": "(340) 693-1430",
+              "long": "-64.975076",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Accounting, ACC"
             },
             {
-              "long": "-64.975076",
               "lat": "18.341002",
-              "name": "Administration & Finance, Room No. 315",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Administration & Finance, Room No. 315",
+              "long": "-64.975076",
               "phone": "(340) 693-1400"
             },
             {
-              "lat": "18.341002",
-              "long": "-64.975076",
-              "name": "Admissions, ACC",
-              "phone": "(340) 693-1160",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "name": "Cashier Services, ACC",
-              "lat": "18.341002",
               "long": "-64.975076",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1437"
+              "lat": "18.341002",
+              "name": "Admissions, ACC",
+              "phone": "(340) 693-1160"
             },
             {
-              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1437",
+              "name": "Cashier Services, ACC",
+              "long": "-64.975076"
+            },
+            {
+              "long": "-64.975076",
+              "lat": "18.341002",
               "phone": "(340) 693-1003",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
-              "long": "-64.975076"
+              "name": "Center for the Study of Spirituality & Professionalism, Room No. 340"
             },
             {
-              "name": "Financial Aid, ACC",
+              "lat": "18.341002",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076",
-              "phone": "(340) 693-1090",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002"
+              "name": "Financial Aid, ACC",
+              "phone": "(340) 693-1090"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975076",
               "phone": "(340) 693-1410",
-              "name": "Human Resources, ACC",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002",
-              "long": "-64.975076"
+              "name": "Human Resources, ACC"
             },
             {
+              "lat": "18.341002",
+              "long": "-64.975076",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1000",
-              "lat": "18.341002",
-              "name": "President's Office, ACC",
-              "long": "-64.975076"
+              "name": "President's Office, ACC"
             },
             {
               "lat": "18.341002",
               "long": "-64.975076",
-              "name": "Provost's Office, ACC",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Provost's Office, ACC",
               "phone": "(340) 693-1200"
             },
             {
-              "name": "Public Relations, ACC",
               "phone": "(340) 693-1057",
-              "long": "-64.975076",
               "lat": "18.341002",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "phone": "(340) 693-1480",
-              "long": "-64.975076",
-              "lat": "18.341002",
+              "name": "Public Relations, ACC",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Purchasing, ACC"
-            },
-            {
-              "lat": "18.341002",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Registrar, ACC",
-              "long": "-64.975076",
-              "phone": "(340) 693-1151"
-            },
-            {
-              "phone": "(340) 693-1062",
-              "name": "Research & Public Service",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341002",
               "long": "-64.975076"
             },
             {
-              "name": "Title III & Sponsored Programs",
+              "name": "Purchasing, ACC",
+              "phone": "(340) 693-1480",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975076",
-              "phone": "(340) 693-1054; (340) 693-1202",
               "lat": "18.341002"
+            },
+            {
+              "name": "Registrar, ACC",
+              "lat": "18.341002",
+              "phone": "(340) 693-1151",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.975076"
+            },
+            {
+              "lat": "18.341002",
+              "long": "-64.975076",
+              "name": "Research & Public Service",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1062"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.341002",
-              "phone": "(340) 693-1392",
+              "phone": "(340) 693-1054; (340) 693-1202",
               "long": "-64.975076",
-              "name": "Water Resources Research Institute (WRRI)"
+              "name": "Title III & Sponsored Programs"
             },
             {
-              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Water Resources Research Institute (WRRI)",
+              "lat": "18.341002",
+              "phone": "(340) 693-1392",
+              "long": "-64.975076"
+            },
+            {
               "lat": "18.339663",
-              "name": "Athletic Fields",
+              "long": "-64.97061",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.97061"
+              "phone": null,
+              "name": "Athletic Fields"
             },
             {
-              "long": "-64.972253",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.33984",
               "phone": null,
-              "name": "Ball Fields"
-            },
-            {
-              "phone": null,
-              "name": "Basketball Courts",
-              "long": "-64.971144",
-              "lat": "18.344103",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "name": "Beach Showers & Restrooms",
-              "long": "-64.976263",
-              "phone": null,
-              "lat": "18.342838",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Ball Fields",
+              "long": "-64.972253"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Bookstore",
-              "lat": "18.342573",
-              "phone": "(340) 693-1561",
-              "long": "-64.972328"
+              "lat": "18.344103",
+              "phone": null,
+              "long": "-64.971144",
+              "name": "Basketball Courts"
             },
             {
-              "long": "-64.976613",
+              "lat": "18.342838",
               "phone": null,
+              "name": "Beach Showers & Restrooms",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.976263"
+            },
+            {
+              "phone": "(340) 693-1561",
+              "lat": "18.342573",
+              "name": "Bookstore",
+              "long": "-64.972328",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Brewers Bay Beach",
-              "lat": "18.343094"
+              "lat": "18.343094",
+              "phone": null,
+              "long": "-64.976613"
             },
             {
               "name": "Business, Chase Auditorium",
-              "phone": null,
+              "long": "-64.973079",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.34385",
-              "long": "-64.973079"
-            },
-            {
-              "lat": "18.34385",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Business, School of Business",
-              "phone": "(340) 693-1300",
-              "long": "-64.973079"
-            },
-            {
-              "name": "Campus East Housing",
-              "lat": "18.343789",
-              "phone": null,
-              "long": "-64.968683",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "long": "-64.969183",
-              "phone": "(340) 693-1628",
-              "name": "Caribbean Green Technology Center",
-              "lat": "18.343158",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "name": "CELL-Community Engagement and Lifelong Learning Center",
-              "lat": "18.343339",
-              "phone": "(340) 693-1100",
-              "long": "-64.968472",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "name": "Center for Advising & Tutorial Services",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.974293",
-              "lat": "18.339413",
               "phone": null
             },
             {
-              "lat": "18.339413",
+              "phone": "(340) 693-1300",
+              "lat": "18.34385",
+              "name": "Business, School of Business",
+              "long": "-64.973079",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "long": "-64.968683",
+              "lat": "18.343789",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Campus East Housing",
+              "phone": null
+            },
+            {
+              "phone": "(340) 693-1628",
+              "name": "Caribbean Green Technology Center",
+              "long": "-64.969183",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343158"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "CELL-Community Engagement and Lifelong Learning Center",
+              "long": "-64.968472",
+              "lat": "18.343339",
+              "phone": "(340) 693-1100"
+            },
+            {
+              "long": "-64.974293",
+              "name": "Center for Advising & Tutorial Services",
+              "lat": "18.339413",
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "phone": "(340) 693-1583",
               "name": "Center for Student Success (CBA)",
               "long": "-64.974293",
-              "phone": "(340) 693-1583"
+              "lat": "18.339413",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
+              "phone": null,
+              "long": "-64.974293",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Little Theatre, CAB",
-              "lat": "18.339413",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "long": "-64.974293"
-            },
-            {
-              "long": "-64.974293",
-              "lat": "18.339413",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1130",
-              "name": "University Bound (CBA)"
-            },
-            {
-              "name": "Classroom Administration Building",
-              "phone": null,
-              "long": "-64.974293",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.339413"
             },
             {
+              "phone": "(340) 693-1130",
+              "name": "University Bound (CBA)",
+              "lat": "18.339413",
+              "long": "-64.974293",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "long": "-64.974293",
+              "lat": "18.339413",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343158",
+              "name": "Classroom Administration Building"
+            },
+            {
               "long": "-64.969183",
               "name": "CMES Annex",
-              "phone": null
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.343158"
             },
             {
               "name": "Cooperative Extension Service",
-              "lat": "18.342438",
-              "phone": "(340) 693-1080",
               "long": "-64.971589",
+              "phone": "(340) 693-1080",
+              "lat": "18.342438",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Dining Pavilion - Cafeteria, Food Services",
-              "lat": "18.3431",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972157",
-              "phone": "(340) 693-1139"
+              "name": "Dining Pavilion - Cafeteria, Food Services",
+              "phone": "(340) 693-1139",
+              "lat": "18.3431"
             },
             {
-              "lat": "18.342967",
-              "name": "Eastern Caribbean Center (ECC), Eastern Caribbean Center (ECC)",
               "long": "-64.968359",
+              "name": "Eastern Caribbean Center (ECC), Eastern Caribbean Center (ECC)",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1020",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.342967"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
+              "long": "-64.968499",
               "lat": "18.343436",
               "phone": "(340) 693-1422",
-              "name": "Experimental Program to Stimulate Competitive Research (EPSCoR)",
-              "long": "-64.968499"
-            },
-            {
-              "name": "FAA Tower",
-              "long": "-64.974733",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.339273"
-            },
-            {
-              "lat": "18.340998",
-              "name": "Faculty & Staff Housing",
-              "long": "-64.97588",
-              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "GeoCAS Institute",
+              "lat": "18.339273",
+              "long": "-64.974733",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "name": "FAA Tower"
+            },
+            {
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.97588",
+              "lat": "18.340998",
+              "name": "Faculty & Staff Housing"
+            },
+            {
+              "long": "-64.969183",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1647",
-              "lat": "18.343158",
-              "long": "-64.969183"
+              "name": "GeoCAS Institute",
+              "lat": "18.343158"
             },
             {
               "lat": "18.342041",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Health Services Center, Health Services",
               "phone": "(340) 693-1124",
-              "long": "-64.973043",
-              "name": "Health Services Center, Health Services"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973043"
             },
             {
-              "lat": "18.341193",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Herman E. Moore Golf Course",
               "phone": null,
               "long": "-64.969852",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Herman E. Moore Golf Course"
+              "lat": "18.341193"
             },
             {
-              "lat": "18.339658",
-              "long": "-64.973863",
-              "phone": null,
               "name": "Humanities",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.973863",
+              "lat": "18.339658",
+              "phone": null
+            },
+            {
+              "phone": null,
+              "lat": "18.339975",
+              "long": "-64.971164",
+              "name": "Info Kiosk",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Info Kiosk",
-              "lat": "18.339975",
-              "long": "-64.971164"
-            },
-            {
-              "name": "Institutional Advancement",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.975806",
+              "name": "Institutional Advancement",
               "phone": "(340) 693-1040",
               "lat": "18.340828"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 693-1380",
               "long": "-64.976642",
               "lat": "18.340045",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "MMSC- Center for Marine & Environmental Studies (CMES)"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1000",
-              "long": "-64.968913",
               "name": "Medical Building, School of Medicine",
+              "phone": "(340) 693-1000",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.968913",
               "lat": "18.342594"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972544",
-              "lat": "18.341857",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Music Center",
+              "lat": "18.341857",
               "phone": null
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Nisky Shopping Center- (SBDC)",
-              "phone": "(340) 776-3206",
-              "lat": "18.336559",
               "long": "-64.953474",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.336559",
+              "phone": "(340) 776-3206"
             },
             {
-              "name": "Nursing, School of Nursing",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1290",
               "lat": "18.343563",
+              "phone": "(340) 693-1290",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Nursing, School of Nursing",
               "long": "-64.973097"
             },
             {
+              "phone": null,
               "long": "-64.971515",
-              "lat": "18.341548",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Penha House, ATM Cash Machine",
-              "phone": null
+              "lat": "18.341548",
+              "name": "Penha House, ATM Cash Machine"
             },
             {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Penha House, Security",
-              "long": "-64.971549",
               "phone": "(340) 693-1530",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.341572"
+              "lat": "18.341572",
+              "long": "-64.971549"
             },
             {
-              "name": "Penha House, WUVI Radio Station",
-              "lat": "18.341548",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.971515",
-              "phone": "(340) 643-1670"
-            },
-            {
-              "lat": "18.341348",
-              "phone": "(340) 693-1510",
+              "name": "Penha House, WUVI Radio Station",
+              "phone": "(340) 643-1670",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Physical Plant",
-              "long": "-64.967624"
+              "lat": "18.341548"
             },
             {
+              "name": "Physical Plant",
+              "phone": "(340) 693-1510",
+              "long": "-64.967624",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.341348"
+            },
+            {
+              "phone": "(340) 693-1178",
+              "long": "-64.973027",
               "lat": "18.342906",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.973027",
-              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)",
-              "phone": "(340) 693-1178"
+              "name": "Quarters B, Caribbean Exploratory Research Center (CERC)"
             },
             {
               "name": "Ralph M. Paiewonsky Library, IT Services",
+              "lat": "18.344026",
               "phone": "(340) 693-1466",
-              "long": "-64.972841",
-              "lat": "18.344026",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "name": "Ralph M. Paiewonsky Library, I R&P",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.344026",
-              "phone": "(340) 693-1010",
               "long": "-64.972841"
             },
             {
+              "lat": "18.344026",
               "long": "-64.972841",
+              "phone": "(340) 693-1010",
+              "name": "Ralph M. Paiewonsky Library, I R&P",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "lat": "18.344026",
               "name": "Ralph M. Paiewonsky Library, Library",
+              "long": "-64.972841",
               "phone": "(340) 693-1367",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.344026"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
               "name": "Recreation Center",
-              "lat": "18.343847",
-              "long": "-64.971202"
-            },
-            {
-              "long": "-64.973724",
-              "lat": "18.345035",
+              "phone": null,
+              "long": "-64.971202",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1550",
-              "name": "Reichhold Center for the Arts"
+              "lat": "18.343847"
             },
             {
-              "name": "Research and Public Service",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.345035",
+              "name": "Reichhold Center for the Arts",
+              "phone": "(340) 693-1550",
+              "long": "-64.973724"
+            },
+            {
+              "phone": "(340) 693-1062",
               "lat": "18.343399",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 693-1062",
-              "long": "-64.968547"
+              "long": "-64.968547",
+              "name": "Research and Public Service"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Residence Hall - East Hall",
               "long": "-64.971744",
               "phone": null,
-              "name": "Residence Hall - East Hall",
-              "lat": "18.343563"
+              "lat": "18.343563",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "name": "Residence Hall - Middle Hall",
               "phone": null,
               "lat": "18.343524",
-              "long": "-64.972378",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.972378"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Residence Hall - North Hall",
+              "long": "-64.972236",
+              "lat": "18.344219",
+              "phone": null
+            },
+            {
+              "long": "-64.972189",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "18.342837",
+              "name": "Residence Hall - South Hall",
+              "phone": null
+            },
+            {
+              "lat": "18.343243",
+              "long": "-64.973581",
+              "name": "Residence Hall - West Hall",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "phone": null,
-              "name": "Residence Hall - North Hall",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.344219",
-              "long": "-64.972236"
-            },
-            {
-              "name": "Residence Hall - South Hall",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "long": "-64.972189",
-              "lat": "18.342837"
-            },
-            {
-              "phone": null,
-              "name": "Residence Hall - West Hall",
-              "long": "-64.973581",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343243"
-            },
-            {
-              "lat": "18.342",
-              "phone": "(340) 693-1136",
               "long": "-64.972145",
               "name": "Roupp House, Counseling & Career Services",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "lat": "18.342",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1136"
             },
             {
               "name": "Roupp House, Housing Services",
-              "long": "-64.972145",
-              "phone": "(340) 693-1110",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342"
+              "lat": "18.342",
+              "phone": "(340) 693-1110",
+              "long": "-64.972145"
             },
             {
-              "phone": "(340) 693-1230",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972871",
               "name": "Science & Math, College of Science & Mathematics",
+              "phone": "(340) 693-1230",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.343553"
             },
             {
-              "long": "-64.9735158",
               "phone": "(340) 693-1260",
-              "name": "Social Sciences, College of Liberal Arts and Social Sciences",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.3426381",
+              "long": "-64.9735158",
+              "name": "Social Sciences, College of Liberal Arts and Social Sciences"
+            },
+            {
+              "name": "Social Sciences, Social Sciences",
+              "long": "-64.973531",
+              "phone": null,
+              "lat": "18.342642",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "phone": null,
-              "name": "Social Sciences, Social Sciences",
-              "long": "-64.973531",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.342642"
-            },
-            {
-              "lat": "18.340004",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Sports & Fitness Center",
               "long": "-64.972962",
-              "phone": null
+              "lat": "18.340004",
+              "name": "Sports & Fitness Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "long": "-64.971879",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "18.343517",
+              "phone": null,
               "name": "St. Thomas Campus Dorms",
-              "phone": null
+              "lat": "18.343517"
             },
             {
+              "long": "-64.972072",
               "name": "Student Activities Center",
               "lat": "18.343853",
               "phone": "(340) 693-1640",
-              "long": "-64.972072",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "name": "Student Laundry",
               "long": "-64.972995",
-              "lat": "18.341981"
+              "lat": "18.341981",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "name": "Student Laundry"
             },
             {
+              "phone": "(340) 693-1320",
+              "name": "Teachers Education, School of Education",
               "long": "-64.972807",
               "lat": "18.343854",
-              "name": "Teachers Education, School of Education",
-              "phone": "(340) 693-1320",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "name": "Teachers Education, VIUCEDD",
-              "lat": "18.343854",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.972807",
-              "phone": "(340) 693-1322"
+              "name": "Teachers Education, VIUCEDD",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 693-1322",
+              "lat": "18.343854"
             },
             {
-              "long": "-64.97018",
+              "name": "Tennis Courts",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "18.343802",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Tennis Courts"
+              "long": "-64.97018",
+              "phone": null
             },
             {
-              "long": "-64.973453",
-              "phone": "(340) 693-1075",
               "lat": "18.339411",
+              "long": "-64.973453",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Wellness Center"
+              "name": "Wellness Center",
+              "phone": "(340) 693-1075"
             }
           ],
           "mapcenter": "18.343563,-64.971744",
@@ -1404,304 +1404,304 @@
           [
             {
               "phone": "(340) 692-4041",
-              "name": "Agricultural Experiment Station, Field Labs",
               "long": "-64.796226",
-              "lat": "17.71991",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Agricultural Experiment Station, Field Labs",
+              "lat": "17.71991"
             },
             {
+              "long": "-64.799381",
+              "phone": null,
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.718069",
-              "phone": null,
-              "name": "Campus Information Center, Map, Phone",
-              "long": "-64.799381"
+              "name": "Campus Information Center, Map, Phone"
             },
             {
-              "phone": null,
-              "name": "Animal Science",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
               "long": "-64.796441",
+              "name": "Animal Science",
               "lat": "17.714822"
             },
             {
-              "img": null,
-              "lat": "17.716113",
               "phone": "(340) 692-4162",
               "long": "-64.798715",
-              "name": "Bookstore"
+              "name": "Bookstore",
+              "lat": "17.716113",
+              "img": null
             },
             {
+              "lat": "17.715507",
+              "name": "Center for Marine & Environmental Studies (CMES)",
               "phone": "(340) 692-4046",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for Marine & Environmental Studies (CMES)",
-              "long": "-64.799784",
-              "lat": "17.715507"
-            },
-            {
-              "lat": "17.716563",
-              "long": "-64.799280",
-              "phone": null,
-              "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "long": "-64.799784"
             },
             {
               "long": "-64.799280",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C",
               "lat": "17.716563",
+              "name": "Caribbean Exploratory Research Center (CERC), Delta M. J D C",
               "phone": null
             },
             {
+              "phone": null,
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799280",
+              "name": "Center for the Study of Spirituality & Professionalism, Delta M. J.D.C",
+              "lat": "17.716563"
+            },
+            {
+              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.716563",
-              "long": "-64.799280",
-              "name": "Human Resources, Delta M. Jackson Dorsch Complex",
-              "phone": "(340) 692-4280"
+              "phone": "(340) 692-4280",
+              "long": "-64.799280"
             },
             {
               "name": "Residence Halls, Delta M. Jackson Dorsch Complex",
               "phone": null,
-              "long": "-64.799643",
               "lat": "17.716445",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.799643"
             },
             {
+              "long": "-64.799280",
+              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4272",
-              "name": "Virgin Islands Caribbean Cultural Center, Delta M. Jackson Dorsch Complex",
-              "long": "-64.799280",
               "lat": "17.716563"
             },
             {
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
               "long": "-64.797374",
-              "lat": "17.717391",
-              "name": "Academic Affairs, Evans Center"
-            },
-            {
-              "long": "-64.797374",
-              "name": "Business Affairs, Evans Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": null,
-              "lat": "17.717391"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374",
-              "name": "Campus Operations, Evans Center",
-              "phone": null,
-              "lat": "17.717391"
-            },
-            {
-              "name": "Classrooms, Evans Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797374",
+              "name": "Academic Affairs, Evans Center",
               "lat": "17.717391",
               "phone": null
             },
             {
-              "name": "Counseling & Placement, Evans Center",
-              "phone": "(340) 692-4187",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.797374",
+              "lat": "17.717391",
+              "phone": null,
+              "name": "Business Affairs, Evans Center"
+            },
+            {
+              "long": "-64.797374",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "lat": "17.717391",
+              "phone": null,
+              "name": "Campus Operations, Evans Center"
+            },
+            {
+              "lat": "17.717391",
+              "phone": null,
+              "name": "Classrooms, Evans Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797374"
             },
             {
-              "phone": "(340) 692-4193",
               "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Counseling & Placement, Evans Center",
               "long": "-64.797374",
-              "name": "Financial Aid, Evans Center",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "phone": "(340) 692-4187"
             },
             {
-              "name": "Library, Evans Center",
-              "lat": "17.717391",
               "long": "-64.797374",
+              "phone": "(340) 692-4193",
+              "lat": "17.717391",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Financial Aid, Evans Center"
+            },
+            {
+              "lat": "17.717391",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.797374",
+              "name": "Library, Evans Center",
               "phone": "(340) 692-4130"
             },
             {
-              "name": "Security, Evans Center",
-              "long": "-64.797374",
               "lat": "17.717391",
+              "name": "Security, Evans Center",
+              "phone": "(340) 692-4155",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4155"
+              "long": "-64.797374"
             },
             {
-              "name": "Student Affairs, Evans Center",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4188",
-              "long": "-64.797374",
-              "lat": "17.717391"
+              "lat": "17.717391",
+              "name": "Student Affairs, Evans Center",
+              "long": "-64.797374"
             },
             {
-              "phone": null,
               "long": "-64.797374",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Student Government, Evans Center",
               "lat": "17.717391",
-              "name": "Student Government, Evans Center"
+              "phone": null
             },
             {
+              "long": "-64.799638",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "Experimental Program to Stimulate Competitive Research (EPSCoR), Great House",
               "lat": "17.715638",
-              "phone": "(340) 692-4003",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.799638"
+              "phone": "(340) 692-4003"
             },
             {
-              "phone": "(340) 692-4214",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.799638",
               "name": "Health Services, Great House",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.715638"
-            },
-            {
-              "long": "-64.799638",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4024",
-              "name": "President's Office, Great House",
+              "phone": "(340) 692-4214",
               "lat": "17.715638"
             },
             {
               "lat": "17.715638",
               "long": "-64.799638",
-              "phone": "(340) 692-4022",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "President's Office, Great House",
+              "phone": "(340) 692-4024"
+            },
+            {
+              "lat": "17.715638",
               "name": "Provost's Office, Great House",
+              "long": "-64.799638",
+              "phone": "(340) 692-4022",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.715371",
               "phone": null,
+              "lat": "17.715371",
+              "long": "-64.799561",
               "name": "Modular Building, Math Center/Writing Center",
-              "long": "-64.799561"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
               "name": "North West Wing, Classrooms & Computer Lab",
+              "lat": "17.717682",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.797771",
+              "phone": null
+            },
+            {
               "phone": null,
+              "lat": "17.717682",
               "long": "-64.797771",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.717682"
+              "name": "North West Wing, Great Hall"
             },
             {
-              "name": "North West Wing, Great Hall",
-              "lat": "17.717682",
               "long": "-64.797771",
-              "phone": null,
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
-            },
-            {
-              "lat": "17.717682",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4130",
-              "name": "North West Wing, Information Technology Services",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "long": "-64.797771"
+              "lat": "17.717682",
+              "name": "North West Wing, Information Technology Services"
             },
             {
-              "long": "-64.796902",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Nursing, School of Nursing",
               "phone": "(340) 692-4010",
+              "long": "-64.796902",
+              "name": "Nursing, School of Nursing",
               "lat": "17.716742"
             },
             {
-              "phone": "(340) 692-4171",
               "long": "-64.799784",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.715507",
               "name": "Physical Plant",
-              "lat": "17.715507"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4171"
             },
             {
-              "phone": "(340) 692-4230",
-              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension",
               "lat": "17.718009",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.797331",
+              "phone": "(340) 692-4230",
+              "name": "CenterCELL - Community Engagement and Lifelong Learning Center, Research & Extension"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "Cooperative Extension Service, Research & Extension",
+              "lat": "17.718009",
+              "phone": "(340) 692-4080",
+              "long": "-64.797331"
+            },
+            {
+              "long": "-64.797331",
+              "lat": "17.718009",
+              "phone": "(340) 692-4023",
+              "name": "Institutional Advancement, Research & Extension",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
             },
             {
-              "lat": "17.718009",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Cooperative Extension Service, Research & Extension",
-              "long": "-64.797331",
-              "phone": "(340) 692-4080"
-            },
-            {
-              "phone": "(340) 692-4023",
-              "long": "-64.797331",
-              "name": "Institutional Advancement, Research & Extension",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.718009"
-            },
-            {
-              "lat": "17.718009",
-              "long": "-64.797331",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": "(340) 692-4024",
+              "lat": "17.718009",
+              "long": "-64.797331",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "name": "President's Office, Research & Extension"
             },
             {
               "name": "College of Science & Mathematics, Research and Technology Park",
-              "long": "-64.800617",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4282",
               "lat": "17.719256",
-              "phone": "(340) 692-4282"
-            },
-            {
-              "lat": "17.719256",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 773-5000",
-              "name": "Research and Technology Park",
               "long": "-64.800617"
             },
             {
-              "lat": "17.713916",
-              "phone": null,
-              "name": "Soccer Fields",
-              "long": "-64.798945",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+              "name": "Research and Technology Park",
+              "lat": "17.719256",
+              "phone": "(340) 773-5000",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "long": "-64.800617"
             },
             {
-              "lat": "17.716272",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "name": "Cafeteria, Student Center",
-              "long": "-64.798345",
+              "name": "Soccer Fields",
+              "lat": "17.713916",
+              "long": "-64.798945",
               "phone": null
             },
             {
+              "name": "Cafeteria, Student Center",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": null,
+              "lat": "17.716272",
+              "long": "-64.798345"
+            },
+            {
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "phone": null,
               "name": "Snack Bar, Student Center",
-              "long": "-64.798527",
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "lat": "17.716231"
+              "lat": "17.716231",
+              "long": "-64.798527"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4228",
+              "lat": "17.716231",
               "name": "Student Activities Center, Student Center",
               "long": "-64.798527",
-              "lat": "17.716231"
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "phone": "(340) 692-4228"
             },
             {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
               "long": "-64.798738",
               "lat": "17.714845",
               "phone": null,
-              "name": "Tennis/Basketball Courts"
-            },
-            {
-              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
-              "phone": "(340) 692-4182",
-              "long": "-64.799784",
-              "lat": "17.715507",
-              "name": "University Bound"
-            },
-            {
-              "phone": null,
-              "long": "-64.797009",
-              "lat": "17.720293",
-              "name": "UVI Farm Store",
+              "name": "Tennis/Basketball Courts",
               "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png"
+            },
+            {
+              "name": "University Bound",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "lat": "17.715507",
+              "long": "-64.799784",
+              "phone": "(340) 692-4182"
+            },
+            {
+              "lat": "17.720293",
+              "long": "-64.797009",
+              "img": "https://kryptosda.kryptosmobile.com/kryptosds/imagegallery/8371d10b-a0bb-490e-863c-fe642d7e7188.png",
+              "name": "UVI Farm Store",
+              "phone": null
             }
           ],
           "mapcenter": "17.718009, -64.797331",
@@ -1956,8 +1956,8 @@
               "name": "Albert A. Sheen Campus Main"
             },
             {
-              "number": "(340) 692-4155",
-              "name": "Albert A. Sheen Campus Security"
+              "name": "Albert A. Sheen Campus Security",
+              "number": "(340) 692-4155"
             },
             {
               "number": "(340) 692-4168",
@@ -1968,20 +1968,20 @@
               "number": "(340) 776-9200"
             },
             {
-              "number": "(340) 693-1530",
-              "name": "St. Thomas Campus Security"
+              "name": "St. Thomas Campus Security",
+              "number": "(340) 693-1530"
             },
             {
-              "number": "(340) 693-1016",
-              "name": "St. Thomas Campus Hotline"
+              "name": "St. Thomas Campus Hotline",
+              "number": "(340) 693-1016"
             },
             {
-              "name": "Virgin Islands Emergency Services",
-              "number": "911"
+              "number": "911",
+              "name": "Virgin Islands Emergency Services"
             },
             {
-              "name": "ITS Help Desk",
-              "number": "(340) 693-1466"
+              "number": "(340) 693-1466",
+              "name": "ITS Help Desk"
             }
           ]
         }
