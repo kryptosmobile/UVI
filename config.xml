@@ -3,7 +3,7 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id = "com.unifyed.uviproduction" version   = "2.0.1">
         <name>UVI Mobile</name>
-        <description>UVI PROD U8</description>
+        <description>UVI Mobile</description>
         <author href="http://kryptosmobile.com" email="info@kryptosmobile.com">Kryptos Mobile Team</author>
         <feature name="http://api.phonegap.com/1.0/device" />
         <!--<preference name="phonegap-version"           value="cli-6.5.0" />-->
